@@ -1,6 +1,6 @@
 package dnd.bot.maven.eclipse;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -15,10 +15,10 @@ public class Bot extends TelegramLongPollingBot{
 	private static Map<String, ICommand> commands;
 	
 	public void Init() {
-		commands = new HashMap<String, ICommand>();
+		commands = new LinkedHashMap<String, ICommand>();
 		commands.put("/info", new InfoCommand());
 		commands.put("/authors", new AuthorsCommand());
-
+		commands.put("/help", new HelpCommand(commands));
 	}
 	
 	@Override
@@ -30,7 +30,7 @@ public class Bot extends TelegramLongPollingBot{
 	    {
 	    	var command = commands.get(msg.getText());
 	    	System.out.println(command);
-	    	sendText(id, command.execute());
+	    	sendText(id, command.executeCommand());
 	    }
 	    else 
 	    {

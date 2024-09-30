@@ -2,5 +2,6 @@ package dnd.bot.maven.eclipse.Interfaces;
 
 public interface ICommand {
 	
-	String execute();
+	String executeCommand();
+	String getDescription();
 }
