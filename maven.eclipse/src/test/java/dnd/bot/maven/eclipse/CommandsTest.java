@@ -10,9 +10,7 @@ import dnd.bot.maven.eclipse.Commands.HelpCommand;
 import dnd.bot.maven.eclipse.Commands.InfoCommand;
 import dnd.bot.maven.eclipse.Interfaces.ICommand;
 
-/**
- * Unit test for simple App.
- */
+
 public class CommandsTest {
 
     @Test
