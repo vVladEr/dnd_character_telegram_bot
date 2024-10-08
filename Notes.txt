@@ -1,0 +1,17 @@
+Создать класс Singleton Router:
+ var router = null
+ router = this
+
+ if (router !== null) {
+    return router;
+ }
+* Стек вызовов
+* Принимает команду 
+* Выводит состояние
+* GetNextState() => Render()
+У состояния в стеке есть список переходов
+При команде "Назад" удаляет состояние из стека
+
+Создать класс abstract class State:
+* HashMap<string, State> - словарь переходов (по колбеку кнопки в связанное состояние)
+* absract void Render()
