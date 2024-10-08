@@ -8,8 +8,6 @@ public abstract class GeneralStat {
 	public String name;
 	public int value;
 	public Dictionary<String, Skill> skills;
-
-	public abstract int checkValue();
-
-	public abstract void saveThrowValue();
+	public int checkValue;
+	public int saveThrowValue;
 }

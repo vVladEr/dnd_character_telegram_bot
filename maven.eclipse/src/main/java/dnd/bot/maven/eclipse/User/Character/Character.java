@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Character {
     Dictionary<String, GeneralStat> stats;
-    public Description[] descriptions;
+    public Description description;
     public Inventory inventory;
     public Dictionary<Integer, Grade> grades;
     public List<BasicDescription> notes;
