@@ -14,13 +14,16 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import dnd.bot.maven.eclipse.Interfaces.ICommand;
+import dnd.bot.maven.eclipse.Routing.Router;
 import dnd.bot.maven.eclipse.Commands.*;
 
 public class Bot extends TelegramLongPollingBot{
 
 	private static Map<String, ICommand> commands;
+	private Router router;
 	
 	public void Init() {
+		router = Router.getInstance();
 		commands = new LinkedHashMap<String, ICommand>();
 		commands.put("/info", new InfoCommand());
 		commands.put("/authors", new AuthorsCommand());
