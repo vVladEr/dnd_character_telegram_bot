@@ -5,7 +5,8 @@ public class AuthorsCommand implements ICommand{
 	public String executeCommand() {
 		return "Создатели Телеграм-бота : \n"
 				+ "Ермаков Владислав \n"
-				+ "Щеглеватов Артём";
+				+ "Щеглеватов Артём \n"
+				+ "Попов Егор";
 	}
 
 	public String getDescription() {
