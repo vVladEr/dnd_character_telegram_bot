@@ -7,7 +7,8 @@ public class Appearance {
     public int height;
     public int age;
     public int weight;
-    public BasicDescription background;
+    public String backGround;
+    public BasicDescription characterBackground;
     public BasicDescription allies;
     public BasicDescription personality;
     public BasicDescription ideals;

@@ -10,7 +10,7 @@ public class Personality {
     public int Speed;
     public int PossessionBonus;
     public HP hp;
-    public int inspiration;
+    public boolean inspiration;
     public int exhaustion;
     public Level level;
     public Appearance appearance;
