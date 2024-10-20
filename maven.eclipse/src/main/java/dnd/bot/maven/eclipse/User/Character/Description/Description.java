@@ -8,7 +8,7 @@ import java.util.Dictionary;
 import java.util.List;
 
 public class Description {
-    Personality personality;
-    List<BasicDescription> features;
-    Dictionary<String, List<Possession>> possessions;
+    public Personality personality;
+    public List<BasicDescription> features;
+    public Dictionary<String, List<Possession>> possessions;
 }
