@@ -1,14 +1,14 @@
 package dnd.bot.maven.eclipse.db;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.Commands.InfoCommand;
-
 import org.bson.Document;
+import org.bson.UuidRepresentation;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -16,37 +16,42 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 
 public class dbConnector {
-    public static void establishConnections()
+	
+	public MongoDatabase DB;
+	
+	public dbConnector(String dataBaseName) 
+	{
+		DB = establishConnection(dataBaseName);
+	}
+	
+	public dbConnector() 
+	{
+		DB = establishConnection("java-dnd-telegram-bot");
+	}
+	
+    private static MongoDatabase establishConnection(String dataBaseName)
     {
  
         try {
+        	ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017");
         	MongoClient mongoClient
-                =  MongoClients.create("mongodb://localhost:27017");
+                =  MongoClients.create(MongoClientSettings.builder()
+                        .uuidRepresentation(UuidRepresentation.STANDARD)
+                        .applyConnectionString(connectionString)
+                        .build());
  
             System.out.println(
                 "Successfully Connected"
                 + " to the database");
             
-            MongoDatabase mongoDatabase = mongoClient.getDatabase("test");
-            CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
-            MongoCollection<TestCustomer> employeePojoCollection = mongoDatabase.getCollection("employees", TestCustomer.class).withCodecRegistry(pojoCodecRegistry);
-            var testCustomer = new TestCustomer();
-            testCustomer.firstName = "Emer";
-            testCustomer.lastName = "Mullen";
-            testCustomer.email = "testemail";
-            testCustomer.phone = "phone number";
-            employeePojoCollection.insertOne(testCustomer);
-            
-            var doc = employeePojoCollection.find(new Document("firstName", "Emer")).first();
+            return mongoClient.getDatabase(dataBaseName);
 
- 
-            mongoClient.listDatabaseNames().forEach(s->System.out.println(s));
-            mongoClient.close();
         }
         catch (Exception e) {
             System.out.println(
                 "Connection establishment failed");
             System.out.println(e);
         }
+		return null;
     }
 }
