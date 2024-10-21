@@ -4,5 +4,5 @@ import java.util.HashMap;
 public abstract class State {
     public HashMap<String, State> possibleTransitions;
 
-    abstract void render();
+    public abstract void render();
 }

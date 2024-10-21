@@ -1,8 +1,9 @@
 package dnd.bot.maven.eclipse.User.Character.Description.Personality.Appearance;
 
+import dnd.bot.maven.eclipse.Routing.State;
 import dnd.bot.maven.eclipse.User.Character.BasicDescription.BasicDescription;
 
-public class Appearance {
+public class Appearance extends State {
     public String alignment;
     public int height;
     public int age;
@@ -14,4 +15,9 @@ public class Appearance {
     public BasicDescription ideals;
     public BasicDescription bonds;
     public BasicDescription flaws;
+
+    @Override
+	public void render() {
+		
+	}
 }

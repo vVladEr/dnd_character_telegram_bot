@@ -1,11 +1,19 @@
 package dnd.bot.maven.eclipse.User.Character.Grade;
 
-import dnd.bot.maven.eclipse.User.Character.BasicDescription.BasicDescription;
+import java.util.HashMap;
 
-import java.util.List;
+import dnd.bot.maven.eclipse.Routing.State;
+import dnd.bot.maven.eclipse.User.Character.Grade.Spells.Spells;
 
-public class Grade {
+public class Grade extends State {
     public int maxCount;
     public int count;
-    public List<BasicDescription> spells;
+    public Spells spells;
+
+    @Override
+	public void render() {
+		possibleTransitions = new HashMap<String, State>() {{
+            possibleTransitions.put("moveToSpells", spells);
+        }};
+	}
 }
