@@ -2,7 +2,6 @@ package dnd.bot.maven.eclipse.db.repos;
 
 import java.util.UUID;
 
-import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -16,24 +15,25 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Updates;
 
 import dnd.bot.maven.eclipse.User.User;
+import dnd.bot.maven.eclipse.db.dbo.UserDBO;
 
 
 public class MongoUserRepository {
 
-	private MongoCollection<User> userCollection;
+	private MongoCollection<UserDBO> userCollection;
 	
 	public MongoUserRepository(MongoDatabase db) 
 	{
 		CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 				CodecRegistries.fromProviders(PojoCodecProvider.builder()
-						.register(User.class).build()));
-        userCollection = db.getCollection("users", User.class).withCodecRegistry(pojoCodecRegistry);
+						.register(UserDBO.class).build()));
+        userCollection = db.getCollection("users", UserDBO.class).withCodecRegistry(pojoCodecRegistry);
 	}
 	
-	public User AddNewUser(String userId) 
+	public User InsertUser(User user) 
 	{
-		var user = new User(userId);
-		userCollection.insertOne(user);
+		var userDbo = new UserDBO(user);
+		userCollection.insertOne(userDbo);
 		return user;
 	}
 	
@@ -45,7 +45,7 @@ public class MongoUserRepository {
 	
 	public User GetUserById(String userId) 
 	{
-		return userCollection.find(eq("_id", new ObjectId(userId))).first();
+		return new User(userCollection.find(eq("_id", new ObjectId(userId))).first());
 	}
 
 }

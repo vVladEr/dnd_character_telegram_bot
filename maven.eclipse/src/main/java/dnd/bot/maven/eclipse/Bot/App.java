@@ -1,12 +1,9 @@
 package dnd.bot.maven.eclipse.Bot;
 
-import java.util.UUID;
 
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import dnd.bot.maven.eclipse.db.dbConnector;
-import dnd.bot.maven.eclipse.db.repos.MongoUserRepository;
 
 /**
  * Hello world!
