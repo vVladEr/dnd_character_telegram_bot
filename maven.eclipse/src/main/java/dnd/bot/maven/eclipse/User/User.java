@@ -25,7 +25,7 @@ public class User extends State{
     public User(UserDBO userDbo) 
     {
         id = userDbo.GetId();
-        characters = userDbo.GetCharactersUUIDs();
+        characters = userDbo.GetCharacters();
         possibleTransitions = new HashMap<String, State>();
     }
 
