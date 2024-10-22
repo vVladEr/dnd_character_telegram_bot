@@ -21,4 +21,12 @@ public class User {
     {
     }
 
+    public User() {
+        possibleTransitions = new HashMap<String, State>();
+    }
+
+    @Override
+    public void render() {
+        
+    }
 }
