@@ -17,11 +17,10 @@ public class Router {
         return transitionsStack.peek();
     }
 
-    public void MakeTransition(String callBackCommand) {
+    public void makeTransition(String callBackCommand) {
         if (callBackCommand == "back")
         {
             transitionsStack.pop();
-            transitionsStack.peek().render();
             return;
         }
 
@@ -34,6 +33,5 @@ public class Router {
         var nextState = currentState.possibleTransitions.get(callBackCommand);
 
         transitionsStack.add(nextState);
-        nextState.render();
     }
 }   
