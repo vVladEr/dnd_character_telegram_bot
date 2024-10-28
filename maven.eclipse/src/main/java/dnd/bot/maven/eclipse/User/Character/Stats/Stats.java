@@ -1,16 +1,27 @@
 package dnd.bot.maven.eclipse.User.Character.Stats;
 
+import java.util.List;
 
-import java.util.HashMap;
-
+import dnd.bot.maven.eclipse.Response.MessageObject;
+import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.State;
 import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.GeneralStat;
 
 public class Stats extends State {
-    HashMap<String, GeneralStat> generalStats;
+    List<GeneralStat> generalStats;
     
     @Override
-	public void render() {
-		possibleTransitions = new HashMap<String, State>();
+	public ResponseObject getStateMessages() {
+		var response = new ResponseObject();
+
+		var generalStatsMessageObject = new MessageObject("Выберите стату", "");
+
+		for (var i = 0; i < generalStats.size(); i++) {
+			generalStatsMessageObject.addInlineKeybordButton(getInlineKeybordButton(generalStats.get(i).name, generalStats.get(i).name));
+		}
+
+		response.addMessageObject(generalStatsMessageObject);
+
+		return response;
 	}
 }
