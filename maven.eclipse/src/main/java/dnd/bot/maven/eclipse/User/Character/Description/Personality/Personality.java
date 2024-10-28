@@ -12,9 +12,9 @@ public class Personality extends State {
     public int Armor;
     public int Speed;
     public int PossessionBonus;
-    public HP hp;
     public boolean inspiration;
     public int exhaustion;
+    public HP hp;
     public Level level;
     public Appearance appearance;
     public Social social;
