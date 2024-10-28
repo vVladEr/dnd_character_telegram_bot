@@ -8,7 +8,7 @@ import dnd.bot.maven.eclipse.Routing.State;
 import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.GeneralStat;
 
 public class Stats extends State {
-    List<GeneralStat> generalStats;
+    public List<GeneralStat> generalStats;
     
     @Override
 	public ResponseObject getStateMessages() {
