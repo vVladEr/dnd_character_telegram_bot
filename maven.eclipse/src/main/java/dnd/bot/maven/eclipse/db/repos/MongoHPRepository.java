@@ -17,7 +17,8 @@ public class MongoHPRepository  extends BaseRepo<HPDbo, ObjectId> {
     {
         super(db);
     }
-
+    
+    @Override
     protected MongoCollection<HPDbo> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
