@@ -23,4 +23,11 @@ public class PersonalityDbo {
 
     @BsonProperty
     public int exhaustion;
+
+    public PersonalityDbo(){}
+
+	public PersonalityDbo(ObjectId characterId)
+	{
+		this.characterId = characterId;
+	}
 }

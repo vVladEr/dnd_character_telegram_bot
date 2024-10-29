@@ -17,4 +17,12 @@ public class SocialDbo {
 
     @BsonProperty
     public String characterClass;
+
+    public SocialDbo() {}
+
+	public SocialDbo(ObjectId characterId, String name)
+	{
+		this.characterId = characterId;
+		characterName = name;
+	}
 }

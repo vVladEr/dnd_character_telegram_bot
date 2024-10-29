@@ -43,7 +43,10 @@ public class AppearenceDbo {
     @BsonProperty
     public String flaws;
 
-    public AppearenceDbo()
+    public AppearenceDbo() {}
+
+    public AppearenceDbo(ObjectId characterId)
     {
+        this.characterId = characterId;
     }
 }

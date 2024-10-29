@@ -19,4 +19,9 @@ public class LevelDbo {
     public int necessaryExp;
 
     public LevelDbo(){}
+
+    public LevelDbo(ObjectId characterId)
+	{
+		this.characterId = characterId;
+	}
 }

@@ -21,4 +21,9 @@ public class HPDbo {
     public int tempHP;
 
     public HPDbo() {}
+    
+    public HPDbo(ObjectId characterId)
+	{
+		this.characterId = characterId;
+	}
 }

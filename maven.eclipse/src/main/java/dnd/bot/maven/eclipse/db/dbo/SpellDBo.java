@@ -20,4 +20,13 @@ public class SpellDBo {
 
     @BsonProperty
     public HashMap<String, String> spells;
+
+    public SpellDBo(){}
+
+	public SpellDBo(ObjectId characterId, int grade)
+	{
+		this.characterId = characterId;
+		this.grade = grade;
+		spells = new HashMap<String, String>();
+	}
 }

@@ -33,4 +33,11 @@ public class GeneralStatDBO {
     public GeneralStatDBO()
     {
     }
+    
+    public GeneralStatDBO(ObjectId characterId, String statName)
+	{
+		this.characterId = characterId;
+		this.statName = statName;
+		//TODO Влад: дописать создание скиллов
+	}
 }

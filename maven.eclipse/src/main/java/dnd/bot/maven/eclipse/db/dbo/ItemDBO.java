@@ -4,7 +4,6 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-import dnd.bot.maven.eclipse.User.Character.Inventory.Item.Item;
 
 public class ItemDBO {
 
@@ -34,15 +33,10 @@ public class ItemDBO {
 
     public ItemDBO(){}
 
-    public ItemDBO(Item item)
+    public ItemDBO(ObjectId characterId, String description, int amount)
     {
-        itemId = item.itemId;
-        characterId = item.characterId;
-        category = item.category;
-        weight = item.weight;
-        amount = item.amount;
-        isMagic = item.isMagic;
-        isEquiped = item.isEquiped;
-        description = item.description;
+        this.characterId = characterId;
+        this.description = description;
+        this.amount = amount;
     }
 }

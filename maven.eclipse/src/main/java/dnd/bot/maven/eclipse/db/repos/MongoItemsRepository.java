@@ -11,7 +11,6 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.User.Character.Inventory.Item.Item;
 import dnd.bot.maven.eclipse.db.dbo.ItemDBO;
 
 import java.util.ArrayList;
@@ -32,13 +31,13 @@ public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>{
         return db.getCollection("stats", ItemDBO.class).withCodecRegistry(pojoCodecRegistry);
     }
 
-    public ArrayList<Item> getCharactersItems(ObjectId characterId)
+    public ArrayList<ItemDBO> getCharactersItems(ObjectId characterId)
     {
         var dboItems = mongoCollection.find(eq("characterId", characterId));
-        var items = new ArrayList<Item>();
+        var items = new ArrayList<ItemDBO>();
         for(var dboItem: dboItems)
         {
-            items.add(new Item(dboItem));
+            items.add(dboItem);
         }
         return items;
     }
