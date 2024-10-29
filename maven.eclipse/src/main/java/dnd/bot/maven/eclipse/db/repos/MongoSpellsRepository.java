@@ -1,6 +1,5 @@
 package dnd.bot.maven.eclipse.db.repos;
 
-import org.bson.BsonDocument;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -16,9 +15,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.db.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.dbo.SpellDBo;
-import dnd.bot.maven.eclipse.db.dbo.UserDBO;
 import java.util.ArrayList;
 
 public class MongoSpellsRepository {
