@@ -4,8 +4,6 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-import dnd.bot.maven.eclipse.User.Character.Description.Personality.Level.Level;
-
 public class LevelDbo {
 
     @BsonId

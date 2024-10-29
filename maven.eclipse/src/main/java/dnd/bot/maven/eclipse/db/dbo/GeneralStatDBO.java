@@ -27,6 +27,9 @@ public class GeneralStatDBO {
     @BsonProperty
 	public int saveThrowValue;
 
+    @BsonProperty
+    public boolean IsMastered;
+
     public GeneralStatDBO()
     {
     }

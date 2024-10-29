@@ -33,8 +33,8 @@ public class dbUserRepositoryTest {
 	{
 		String userId = new ObjectId().toString();
 		var user = new UserDBO(userId);
-		rep.InsertUser(user);
-        var dbUser = rep.GetUserById(userId);
+		rep.InsertDocument(user);
+        var dbUser = rep.GetDocumentById(userId);
         assertTrue(dbUser != null);
         assertTrue(dbUser.GetId().equals(user.GetId()));
 	}
@@ -44,12 +44,12 @@ public class dbUserRepositoryTest {
 	{
 		String userId = new ObjectId().toString();
 		var user = new UserDBO(userId);
-		rep.InsertUser(user);
+		rep.InsertDocument(user);
 		var uuid1 = new ObjectId();
 		var uuid2 = new ObjectId();
 		rep.AddCharacterToUser(userId, uuid1);
 		rep.AddCharacterToUser(userId, uuid2);
-        var dbUser = rep.GetUserById(userId);
+        var dbUser = rep.GetDocumentById(userId);
         assertTrue(dbUser != null);
         assertTrue(dbUser.characters.size() == 2);
         assertTrue(dbUser.GetId().equals(user.GetId()));
