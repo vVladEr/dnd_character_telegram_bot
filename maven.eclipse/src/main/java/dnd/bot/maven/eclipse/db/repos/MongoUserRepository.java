@@ -14,7 +14,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.User.User;
 import dnd.bot.maven.eclipse.db.dbo.UserDBO;
 
 
@@ -30,22 +29,21 @@ public class MongoUserRepository {
         userCollection = db.getCollection("users", UserDBO.class).withCodecRegistry(pojoCodecRegistry);
 	}
 	
-	public User InsertUser(User user) 
+	public UserDBO InsertUser(UserDBO user) 
 	{
-		var userDbo = new UserDBO(user);
-		userCollection.insertOne(userDbo);
+		userCollection.insertOne(user);
 		return user;
 	}
 	
-	public void AddCharacterToUser(String userId, UUID characterId) 
+	public void AddCharacterToUser(String userId, ObjectId characterId) 
 	{
-		userCollection.updateOne(eq("_id", new ObjectId(userId)), Updates.addToSet("characters", characterId));
+		userCollection.updateOne(eq("_id", userId), Updates.addToSet("characters", characterId));
 		
 	}
 	
-	public User GetUserById(String userId) 
+	public UserDBO GetUserById(String userId) 
 	{
-		return new User(userCollection.find(eq("_id", new ObjectId(userId))).first());
+		return userCollection.find(eq("_id", userId)).first();
 	}
 
 }

@@ -21,11 +21,4 @@ public class LevelDbo {
     public int necessaryExp;
 
     public LevelDbo(){}
-
-    public LevelDbo(Level lv)
-    {
-        currentLevel = lv.currentLevel;
-        currentExp = lv.currentExp;
-        necessaryExp = lv.necessaryExp;
-    }
 }

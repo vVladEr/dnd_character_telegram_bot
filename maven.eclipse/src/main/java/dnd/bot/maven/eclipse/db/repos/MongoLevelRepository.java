@@ -13,7 +13,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.User.Character.Description.Personality.Level.Level;
 import dnd.bot.maven.eclipse.db.dbo.LevelDbo;
 
 public class MongoLevelRepository {
@@ -30,16 +29,15 @@ public class MongoLevelRepository {
    
     }
 
-    public Level InsertCharacterLevel(Level lv)
+    public LevelDbo InsertCharacterLevel(LevelDbo lv)
     {
-        levelCollection.insertOne(new LevelDbo(lv));
+        levelCollection.insertOne(lv);
         return lv;
     }
 
-    public Level GetCharacterLevel(ObjectId characterId)
+    public LevelDbo GetCharacterLevel(ObjectId characterId)
     {
-        var characterLevelDbo = levelCollection.find(eq("_id", characterId)).first();
-        return new Level(characterLevelDbo);
+        return levelCollection.find(eq("_id", characterId)).first();
     }
 
     public void UpdateCharacterLevelField(ObjectId characterId, String fieldName, String fieldNewValue)

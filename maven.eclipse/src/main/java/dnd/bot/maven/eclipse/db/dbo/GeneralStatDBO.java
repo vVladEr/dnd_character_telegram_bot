@@ -1,6 +1,5 @@
 package dnd.bot.maven.eclipse.db.dbo;
 
-import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.GeneralStat;
 import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Skill;
 import java.util.HashMap;
 
@@ -27,16 +26,6 @@ public class GeneralStatDBO {
 
     @BsonProperty
 	public int saveThrowValue;
-
-    public GeneralStatDBO(GeneralStat stat)
-    {
-        characterId = stat.characterId;
-        statName = stat.name;
-        value = stat.value;
-        skills = stat.skills;
-        checkValue = stat.checkValue;
-        saveThrowValue = stat.saveThrowValue;
-    }
 
     public GeneralStatDBO()
     {

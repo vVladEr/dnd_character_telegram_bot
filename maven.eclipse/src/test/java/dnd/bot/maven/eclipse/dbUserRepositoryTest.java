@@ -2,15 +2,13 @@ package dnd.bot.maven.eclipse;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.UUID;
-
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.User.User;
 import dnd.bot.maven.eclipse.db.dbConnector;
+import dnd.bot.maven.eclipse.db.dbo.UserDBO;
 import dnd.bot.maven.eclipse.db.repos.MongoUserRepository;
 
 public class dbUserRepositoryTest {
@@ -34,7 +32,7 @@ public class dbUserRepositoryTest {
 	public void AddUserTest() 
 	{
 		String userId = new ObjectId().toString();
-		var user = new User(userId);
+		var user = new UserDBO(userId);
 		rep.InsertUser(user);
         var dbUser = rep.GetUserById(userId);
         assertTrue(dbUser != null);
@@ -45,10 +43,10 @@ public class dbUserRepositoryTest {
 	public void AddCharactersToUserTest() 
 	{
 		String userId = new ObjectId().toString();
-		var user = new User(userId);
+		var user = new UserDBO(userId);
 		rep.InsertUser(user);
-		var uuid1 = UUID.randomUUID();
-		var uuid2 = UUID.randomUUID();
+		var uuid1 = new ObjectId();
+		var uuid2 = new ObjectId();
 		rep.AddCharacterToUser(userId, uuid1);
 		rep.AddCharacterToUser(userId, uuid2);
         var dbUser = rep.GetUserById(userId);

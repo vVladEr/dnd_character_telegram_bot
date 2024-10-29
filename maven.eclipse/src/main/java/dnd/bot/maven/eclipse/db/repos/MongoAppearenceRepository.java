@@ -2,9 +2,6 @@ package dnd.bot.maven.eclipse.db.repos;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -16,8 +13,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.User.Character.Description.Personality.Appearance.Appearance;
-import dnd.bot.maven.eclipse.User.Character.Inventory.Item.Item;
 import dnd.bot.maven.eclipse.db.dbo.AppearenceDbo;
 
 public class MongoAppearenceRepository {
@@ -33,16 +28,16 @@ public class MongoAppearenceRepository {
     
     }
 
-    public Appearance InsertAppearence(Appearance ap)
+    public AppearenceDbo InsertAppearence(AppearenceDbo ap)
     {
-        appearanceCollection.insertOne(new AppearenceDbo(ap));
+        appearanceCollection.insertOne(ap);
         return ap;
     }
 
-    public Appearance GetCharacterAppearence(ObjectId characterId)
+    public AppearenceDbo GetCharacterAppearence(ObjectId characterId)
     {
         var dboAppearence = appearanceCollection.find(eq("_id", characterId)).first();
-        return new Appearance(dboAppearence);
+        return dboAppearence;
     }
 
     public void UpdateBaseField(ObjectId characterId, String baseFieldName, String newValue)
@@ -51,19 +46,5 @@ public class MongoAppearenceRepository {
         var filter = eq("_id", characterId);
         var options = new UpdateOptions().upsert(false);
         appearanceCollection.updateOne(filter, update, options);
-    }
-
-    public void AddOrUpdateNewValueToListFields(ObjectId characterId, String listFieldName, String newListItemName, String newValue)
-    {
-        var update = Updates.set(listFieldName+"."+newListItemName, newValue);
-        var filter = eq("_id", characterId);
-        appearanceCollection.updateOne(filter, update);
-    }
-
-    public void RemoveNewValueFromListFields(ObjectId characterId, String listFieldName, String newListItemName, String newValue)
-    {
-        var update = Updates.unset(listFieldName+"."+newListItemName);
-        var filter = eq("_id", characterId);
-        appearanceCollection.updateOne(filter, update);
     }
 }

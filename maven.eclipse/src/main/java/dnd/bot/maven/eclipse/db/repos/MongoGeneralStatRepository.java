@@ -13,7 +13,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.GeneralStat;
 import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Skill;
 import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Knowledge.KnowledgeLevel;
 import dnd.bot.maven.eclipse.db.dbo.GeneralStatDBO;
@@ -32,29 +31,29 @@ public class MongoGeneralStatRepository {
     }
     
 
-    public void InstertStats(GeneralStat ...stats)
+    public void InstertStats(GeneralStatDBO ...stats)
     {
         for(var stat: stats)
         {
-            statsColletion.insertOne(new GeneralStatDBO(stat));
+            statsColletion.insertOne(stat);
         }
     }
 
-    public ArrayList<GeneralStat> GetCharacterStats(ObjectId characterId)
+    public ArrayList<GeneralStatDBO> GetCharacterStats(ObjectId characterId)
     {
         var dboStats = statsColletion.find(eq("_id", characterId));
-        var stats = new ArrayList<GeneralStat>();
+        var stats = new ArrayList<GeneralStatDBO>();
         for(var dboStat: dboStats)
         {
-            stats.add(new GeneralStat(dboStat));
+            stats.add(dboStat);
         }
         return stats;
     }
 
-    public GeneralStat GetCharacterStat(ObjectId characterId, String statName)
+    public GeneralStatDBO GetCharacterStat(ObjectId characterId, String statName)
     {
         var dboStat = statsColletion.find(and(eq("_id", characterId), eq("statName", statName))).first();
-        return new GeneralStat(dboStat);
+        return dboStat;
     }
 
     public void UpdateStatField(ObjectId characterId, String statName, String fieldName, String fieldNewValue)

@@ -13,8 +13,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.User.Character.Description.Personality.Appearance.Appearance;
-import dnd.bot.maven.eclipse.User.Character.Description.Personality.HP.HP;
 import dnd.bot.maven.eclipse.db.dbo.HPDbo;
 
 public class MongoHPRepository {
@@ -29,9 +27,9 @@ public class MongoHPRepository {
 
     }
 
-    public HP insetCharacterHp(HP characterHp)
+    public HPDbo insetCharacterHp(HPDbo characterHp)
     {
-        hpCollection.insertOne(new HPDbo(characterHp));
+        hpCollection.insertOne(characterHp);
         return characterHp;
     }
 
