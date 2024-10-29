@@ -5,12 +5,16 @@ import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.State;
 
 public class Social extends State {
-    public String race;
-    public String characterName;
-    public String characterClass;
+    private SocialRepository socialRepository;
 
     @Override
 	public ResponseObject getStateMessages() {
+        var data = socialRepository.getData();
+
+        var race = data.race;
+        var characterName = data.characterName;
+        var characterClass = data.characterClass;
+
 		var response = new ResponseObject();	
 
         var raceMessageObject = new MessageObject("Раса", String.format("%s", race));

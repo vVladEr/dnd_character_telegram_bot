@@ -5,16 +5,20 @@ import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.State;
 
 public abstract class Item extends State {
-    public String category;
-    public String name;
-    public int weight;
-    public int amount;
-    public boolean isMagic;
-    public boolean isEquiped;
-    public String description;
+    private ItemRepository itemRepository;
 
     @Override
 	public ResponseObject getStateMessages() {
+        var data = itemRepository.getData();
+
+        var category = data.category;
+        var name = data.name;
+        var weight = data.weight;
+        var amount = data.amount;
+        var isMagic = data.isMagic;
+        var isEquiped = data.isEquiped;
+        var description = data.description;
+
 		var response = new ResponseObject();	
 
         var nameMessageObject = new MessageObject("Название", name);

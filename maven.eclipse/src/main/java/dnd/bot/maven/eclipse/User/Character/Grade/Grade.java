@@ -8,8 +8,7 @@ import dnd.bot.maven.eclipse.Routing.State;
 import dnd.bot.maven.eclipse.User.Character.Grade.Spells.Spells;
 
 public class Grade extends State {
-    public int maxCount;
-    public int count;
+    private GradeRepository gradeRepository;
     public Spells spells;
 
     public Grade() {
@@ -20,6 +19,11 @@ public class Grade extends State {
 
     @Override
 	public ResponseObject getStateMessages() {
+        var data = gradeRepository.getData();
+
+        var maxCount = data.maxCount;
+        var count = data.count;
+
         var response = new ResponseObject();
 
         var maxCountMessageObject = new MessageObject("Максимум ячеек", String.format("%d", maxCount));

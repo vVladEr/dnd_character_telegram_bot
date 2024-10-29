@@ -2,9 +2,6 @@ package dnd.bot.maven.eclipse.User.Character.Description.Personality;
 
 import java.util.HashMap;
 
-import org.apache.http.impl.entity.StrictContentLengthStrategy;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.State;
@@ -14,12 +11,8 @@ import dnd.bot.maven.eclipse.User.Character.Description.Personality.Level.Level;
 import dnd.bot.maven.eclipse.User.Character.Description.Personality.Social.Social;
 
 public class Personality extends State {
-    public int armor;
-    public int speed;
-    public int possessionBonus;
+    private personalityRepository personalityPRepository;
     public HP hp;
-    public boolean inspiration;
-    public int exhaustion;
     public Level level;
     public Appearance appearance;
     public Social social;
@@ -35,6 +28,14 @@ public class Personality extends State {
 
     @Override
 	public ResponseObject getStateMessages() {
+        var data = personalityRepository.getData();
+
+        var armor = data.armor;
+        var speed = data.speed;
+        var possessionBonus = data.possessionBonus;
+        var inspiration = data.inspiration;
+        var exhaustion = data.exhaustion;
+
 		var response = new ResponseObject();	
 
         var armorMessageObject = new MessageObject("КД", String.format("%d", armor));

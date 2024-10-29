@@ -24,7 +24,7 @@ public class Bot extends TelegramLongPollingBot{
 	private List<SendMessage> sendMessages;
 	
 	public void Init() {
-		router = Router.getInstance();
+		router = new Router();
 		commands = new LinkedHashMap<String, ICommand>();
 		commands.put("/info", new InfoCommand());
 		commands.put("/authors", new AuthorsCommand());
