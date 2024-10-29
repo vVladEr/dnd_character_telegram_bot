@@ -1,0 +1,26 @@
+package dnd.bot.maven.eclipse.db.dbo;
+
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
+
+
+public class PersonalityDbo {
+    @BsonId
+    public ObjectId characterId;
+
+    @BsonProperty
+    public int armor;
+
+    @BsonProperty
+    public int speed;
+
+    @BsonProperty
+    public int possessionBonus;
+
+    @BsonProperty
+    public boolean inspiration;
+
+    @BsonProperty
+    public int exhaustion;
+}
