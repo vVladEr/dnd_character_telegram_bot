@@ -13,7 +13,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import dnd.bot.maven.eclipse.Interfaces.ICommand;
 import dnd.bot.maven.eclipse.Routing.Router;
+import dnd.bot.maven.eclipse.User.User;
 import dnd.bot.maven.eclipse.Commands.*;
+
 
 public class Bot extends TelegramLongPollingBot{
 
@@ -29,6 +31,7 @@ public class Bot extends TelegramLongPollingBot{
 		commands.put("/info", new InfoCommand());
 		commands.put("/authors", new AuthorsCommand());
 		commands.put("/help", new HelpCommand(commands));
+		commands.put("/start", new StartCommand(router));
 	}
 	
 	@Override
@@ -41,16 +44,25 @@ public class Bot extends TelegramLongPollingBot{
 	    var msg = update.getMessage();
 	    var user = msg.getFrom();
 	    var id = user.getId();
+		var text = msg.getText();
 
-	    if(msg.isCommand()) 
+	    if (msg.isCommand())
 	    {
-	    	var command = commands.get(msg.getText());
-	    	System.out.println(command);
-	    	sendText(id, command.executeCommand());
-	    }
-	    else 
-	    {
-		    sendText(id, msg.getText());
+			if (commands.containsKey(text)) {
+				var command = commands.get(msg.getText());
+
+				if (text.equals("/start")) {
+					command.executeCommand();
+					packageResponse(id.toString());
+					sendMessages();
+					return ;
+				}
+
+				System.out.println(command);
+				sendText(id, command.executeCommand());
+			}
+			
+			return;
 	    }
 	}
 
@@ -77,21 +89,28 @@ public class Bot extends TelegramLongPollingBot{
 
 	private void processClickedButton(Update update) {
 		var callbackQuery = update.getCallbackQuery();
+		var callback = (callbackQuery == null) ? "" : callbackQuery.getData();
 		var currentState = router.getCurrentState();
 
 		for (var callBackText : currentState.possibleTransitions.keySet()) {
-			if (callbackQuery.getData().equals(callBackText)) {
-				router.makeTransition(callBackText);
+			if (callback.equals(callBackText)) {
+				System.out.println(router.makeTransition(callBackText));
 				break;
 			}
 		}
+		
+		var id = callbackQuery.getFrom().getId().toString();
 
-		packageResponse(update.getMessage().getChatId().toString());
+		System.out.println(id);
+
+		packageResponse(id);
 		sendMessages();
 	}
 
-	private void packageResponse(String chatId) {
-
+	private void packageResponse(String chatId) 
+	{
+		System.out.println(router.getCurrentState().getClass());
+		System.out.println(router.getCurrentState().possibleTransitions);
 		var responseObject = router.getCurrentState().getStateMessages();
 
 		sendMessages = new ArrayList<SendMessage>();
@@ -125,5 +144,7 @@ public class Bot extends TelegramLongPollingBot{
 				throw new RuntimeException(e); 
 			}
 		}
+
+		sendMessages.clear();
 	}
 }

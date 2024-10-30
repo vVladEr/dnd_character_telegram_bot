@@ -1,10 +1,13 @@
 package dnd.bot.maven.eclipse.User.Character.Inventory.Items.Item;
 
+import java.util.HashMap;
+
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
+import dnd.bot.maven.eclipse.Routing.Back;
 import dnd.bot.maven.eclipse.Routing.State;
 
-public abstract class Item extends State {
+public class Item extends State {
     public String category;
     public String name;
     public int weight;
@@ -12,6 +15,11 @@ public abstract class Item extends State {
     public boolean isMagic;
     public boolean isEquiped;
     public String description;
+
+    public Item() {
+        possibleTransitions = new HashMap<>();
+        possibleTransitions.put("back", new Back());
+    }
 
     @Override
 	public ResponseObject getStateMessages() {
@@ -23,19 +31,21 @@ public abstract class Item extends State {
         var categoryMessageObject = new MessageObject("Категория", category);
         response.addMessageObject(categoryMessageObject);
 
-        var weightMessageObject = new MessageObject("Вес", String.format("%d", weight));
+        var weightMessageObject = new MessageObject("Вес", String.format("%d фнт", weight));
         response.addMessageObject(weightMessageObject);
 
         var amountMessageObject = new MessageObject("Количество", String.format("%d", amount));
         response.addMessageObject(amountMessageObject);
 
-        var isMagicMessageObject = new MessageObject("Магическое", (isMagic) ? "+" : "-");
+        var isMagicMessageObject = new MessageObject("Магическое", (isMagic) ? "да" : "нет");
         response.addMessageObject(isMagicMessageObject);
 
-        var isEquipedMessageObject = new MessageObject("Экипировано", (isEquiped) ? "+" : "-");
+        var isEquipedMessageObject = new MessageObject("Экипировано", (isEquiped) ? "да" : "нет");
         response.addMessageObject(isEquipedMessageObject);
 
         var descriptionMessageObject = new MessageObject("Описание", description);
+        var backInlineKeybordButton = getInlineKeybordButton("Назад", "back");
+		descriptionMessageObject.addInlineKeybordButton(backInlineKeybordButton);
         response.addMessageObject(descriptionMessageObject);
 
         return response;

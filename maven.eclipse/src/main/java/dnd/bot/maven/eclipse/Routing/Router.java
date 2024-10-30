@@ -17,21 +17,34 @@ public class Router {
         return transitionsStack.peek();
     }
 
-    public void makeTransition(String callBackCommand) {
-        if (callBackCommand == "back")
+    public void addState(State newState) {
+        transitionsStack.add(newState);
+    }
+
+    public String makeTransition(String callBackCommand) {
+        if (callBackCommand.equals("back"))
         {
             transitionsStack.pop();
-            return;
+            return "ok";
         }
 
         var currentState = transitionsStack.peek();
 
+        System.out.println(currentState.possibleTransitions);
+
         if (!currentState.possibleTransitions.containsKey(callBackCommand)) {
-            throw new IllegalArgumentException("wrong callBack");
+            return "no";
+            
         }
 
         var nextState = currentState.possibleTransitions.get(callBackCommand);
 
         transitionsStack.add(nextState);
+
+        return "ok";
     }
+
+    public void clear() {
+		transitionsStack.clear();
+	}
 }   

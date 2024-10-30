@@ -1,9 +1,11 @@
 package dnd.bot.maven.eclipse.User.Character.Description.Personality.Appearance;
 
+import java.util.HashMap;
+
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
+import dnd.bot.maven.eclipse.Routing.Back;
 import dnd.bot.maven.eclipse.Routing.State;
-import dnd.bot.maven.eclipse.User.Character.BasicDescription.BasicDescription;
 
 public class Appearance extends State {
     public String alignment;
@@ -11,12 +13,17 @@ public class Appearance extends State {
     public int age;
     public int weight;
     public String backGround;
-    public BasicDescription characterBackground;
-    public BasicDescription allies;
-    public BasicDescription personality;
-    public BasicDescription ideals;
-    public BasicDescription bonds;
-    public BasicDescription flaws;
+    public String characterBackground;
+    public String allies;
+    public String personality;
+    public String ideals;
+    public String bonds;
+    public String flaws;
+
+    public Appearance() {
+		possibleTransitions = new HashMap<>();
+		possibleTransitions.put("back", new Back());
+	}
 
     @Override
 	public ResponseObject getStateMessages() {
@@ -25,31 +32,36 @@ public class Appearance extends State {
         var alignmentMessageObject = new MessageObject("Мировоззрение", alignment);
         response.addMessageObject(alignmentMessageObject);
 
-        var heightMessageObject = new MessageObject("Мировоззрение", String.format("%d", height));
+        var heightMessageObject = new MessageObject("Рост", String.format("%d", height));
         response.addMessageObject(heightMessageObject);
 
-        var ageMessageObject = new MessageObject("Мировоззрение", String.format("%d", age));
+        var ageMessageObject = new MessageObject("Возраст", String.format("%d", age));
         response.addMessageObject(ageMessageObject);
 
-        var weightMessageObject = new MessageObject("Мировоззрение", String.format("%d", weight));
+        var weightMessageObject = new MessageObject("Вес", String.format("%d фнт", weight));
         response.addMessageObject(weightMessageObject);
 
         var backGroundMessageObject = new MessageObject("Предыстория", backGround);
         response.addMessageObject(backGroundMessageObject);
 
-        var characterBackgroundMessageObject = new MessageObject(characterBackground.name, characterBackground.description);
+        var characterBackgroundMessageObject = new MessageObject("Предыстория персонажа", characterBackground);
         response.addMessageObject(characterBackgroundMessageObject);
 
-        var alliesMessageObject = new MessageObject(allies.name, allies.description);
+        var alliesMessageObject = new MessageObject("Организации", allies);
         response.addMessageObject(alliesMessageObject);
 
-        var personalityMessageObject = new MessageObject(personality.name, personality.description);
+        var personalityMessageObject = new MessageObject("Черты характера", personality);
         response.addMessageObject(personalityMessageObject);
 
-        var idealsMessageObject = new MessageObject(ideals.name, ideals.description);
+        var idealsMessageObject = new MessageObject("Идеалы", ideals);
         response.addMessageObject(idealsMessageObject);
 
-        var flawsMessageObject = new MessageObject(flaws.name, flaws.description);
+        var bondsMessageObject = new MessageObject("Привязанности", bonds);
+        response.addMessageObject(bondsMessageObject);
+
+        var flawsMessageObject = new MessageObject("Слабости", flaws);
+        var backInlineKeybordButton = getInlineKeybordButton("Назад", "back");
+		flawsMessageObject.addInlineKeybordButton(backInlineKeybordButton);
         response.addMessageObject(flawsMessageObject);
 
         return response; 

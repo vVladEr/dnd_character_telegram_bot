@@ -1,20 +1,28 @@
-package dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills;
+package dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills;
+
+import java.util.HashMap;
 
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
+import dnd.bot.maven.eclipse.Routing.Back;
 import dnd.bot.maven.eclipse.Routing.State;
-import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Knowledge.KnowledgeLevel;
+import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
 
 public class Skill extends State {
     public String name;
-    KnowledgeLevel knowledgeLevel;
+    public KnowledgeLevel knowledgeLevel;
     public int totalBonus;
+
+    public Skill() {
+		possibleTransitions = new HashMap<>();
+		possibleTransitions.put("back", new Back());
+	}
 
     @Override
     public ResponseObject getStateMessages() {
         var response = new ResponseObject();
 
-        var nameMessageObject = new MessageObject("", name);
+        var nameMessageObject = new MessageObject(name);
         response.addMessageObject(nameMessageObject);
 
         var knowledgeLevelMessageObject = new MessageObject();
@@ -34,6 +42,8 @@ public class Skill extends State {
         response.addMessageObject(knowledgeLevelMessageObject);
         
         var totalBonusMessageObject = new MessageObject("Общий бонус", String.format("%d", totalBonus));
+        var backInlineKeybordButton = getInlineKeybordButton("Назад", "back");
+		totalBonusMessageObject.addInlineKeybordButton(backInlineKeybordButton);
         response.addMessageObject(totalBonusMessageObject);
         
         return response;
