@@ -27,4 +27,14 @@ public class MongoLevelRepository extends BaseRepo<LevelDbo, ObjectId> {
 						.register(LevelDbo.class).build()));
         return db.getCollection("levels", LevelDbo.class).withCodecRegistry(pojoCodecRegistry);
     }
+
+    @Override
+    public void UpdateField(ObjectId characterId, String fieldName, Object newFieldValue){
+        super.UpdateField(characterId, fieldName, newFieldValue);
+    }
+
+    @Override
+    public void DeleteDocument(ObjectId characterId){
+        super.DeleteDocument(characterId);
+    }
 }

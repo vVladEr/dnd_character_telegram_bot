@@ -48,7 +48,7 @@ public class MongoSpellsRepository {
         return spells;
     }
 
-    public ArrayList<SpellDBo> GetCharacterSpells(ObjectId id, int grade)
+    public ArrayList<SpellDBo> GetCharacterSpellsByGrade(ObjectId id, int grade)
     {
         var dboSpells = spellsCollection.find(and(eq("_id", id), eq("grade", grade)));
         var spells = new ArrayList<SpellDBo>();

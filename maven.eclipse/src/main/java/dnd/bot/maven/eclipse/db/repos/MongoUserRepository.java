@@ -36,4 +36,10 @@ public class MongoUserRepository extends BaseRepo<UserDBO, String>{
 		mongoCollection.updateOne(eq("_id", userId), Updates.addToSet("characters", characterId));
 		
 	}
+
+	public void RemoveCharacterFromUser(String userId, ObjectId characterId) 
+	{
+		mongoCollection.updateOne(eq("_id", userId), Updates.pull("characters", characterId));
+		
+	}
 }

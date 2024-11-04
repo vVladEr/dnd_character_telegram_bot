@@ -7,6 +7,8 @@ import com.mongodb.client.model.Updates;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import org.bson.codecs.configuration.CodecConfigurationException;
+
 
 public abstract class BaseRepo<T, IdType> {
     protected MongoCollection<T> mongoCollection;
@@ -29,7 +31,7 @@ public abstract class BaseRepo<T, IdType> {
         return mongoCollection.find(eq("_id", id)).first();
     }
 
-    protected void UpdateField(IdType id, String fieldName, String newFieldValue)
+    protected void UpdateField(IdType id, String fieldName, Object newFieldValue) throws CodecConfigurationException
     {
         var update = Updates.set(fieldName, newFieldValue);
         var filter = eq("_id", id);
