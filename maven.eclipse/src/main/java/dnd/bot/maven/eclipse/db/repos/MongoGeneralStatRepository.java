@@ -41,7 +41,7 @@ public class MongoGeneralStatRepository {
 
     public ArrayList<GeneralStatDBO> GetCharacterStats(ObjectId characterId)
     {
-        var dboStats = statsColletion.find(eq("_id", characterId));
+        var dboStats = statsColletion.find(eq("characterId", characterId));
         var stats = new ArrayList<GeneralStatDBO>();
         for(var dboStat: dboStats)
         {
@@ -52,22 +52,22 @@ public class MongoGeneralStatRepository {
 
     public GeneralStatDBO GetCharacterStat(ObjectId characterId, String statName)
     {
-        var dboStat = statsColletion.find(and(eq("_id", characterId), eq("statName", statName))).first();
+        var dboStat = statsColletion.find(and(eq("characterId", characterId), eq("statName", statName))).first();
         return dboStat;
     }
 
-    public void UpdateStatField(ObjectId characterId, String statName, String fieldName, String fieldNewValue)
+    public void UpdateStatField(ObjectId characterId, String statName, String fieldName, Object fieldNewValue)
     {
         var update = Updates.set(fieldName, fieldNewValue);
-        var filter = and(eq("_id", characterId), eq("statName", statName));
+        var filter = and(eq("characterId", characterId), eq("statName", statName));
         var options = new UpdateOptions().upsert(false);
         statsColletion.updateOne(filter, update, options);
     }
 
-    public void UpdateSkillField(ObjectId characterId, String statName, String skillName, String fieldName, String fieldNewValue)
+    public void UpdateSkillField(ObjectId characterId, String statName, String skillName, String fieldName, Object fieldNewValue)
     {
         var update = Updates.set("skills." + skillName + "." + fieldName, fieldNewValue);
-        var filter = and(eq("_id", characterId), eq("statName", statName));
+        var filter = and(eq("characterId", characterId), eq("statName", statName));
         var options = new UpdateOptions().upsert(false);
         statsColletion.updateOne(filter, update, options);
     }

@@ -31,7 +31,7 @@ public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>{
         return db.getCollection("stats", ItemDBO.class).withCodecRegistry(pojoCodecRegistry);
     }
 
-    public ArrayList<ItemDBO> getCharactersItems(ObjectId characterId)
+    public ArrayList<ItemDBO> GetCharactersItems(ObjectId characterId)
     {
         var dboItems = mongoCollection.find(eq("characterId", characterId));
         var items = new ArrayList<ItemDBO>();

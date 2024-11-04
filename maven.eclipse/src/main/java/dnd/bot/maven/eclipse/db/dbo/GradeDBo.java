@@ -1,12 +1,11 @@
 package dnd.bot.maven.eclipse.db.dbo;
 
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 import java.util.HashMap;
 
-public class SpellDBo {
-    @BsonId
+public class GradeDBo {
+    @BsonProperty
     public ObjectId characterId;
 
     @BsonProperty
@@ -21,9 +20,9 @@ public class SpellDBo {
     @BsonProperty
     public HashMap<String, String> spells;
 
-    public SpellDBo(){}
+    public GradeDBo(){}
 
-	public SpellDBo(ObjectId characterId, int grade)
+	public GradeDBo(ObjectId characterId, int grade)
 	{
 		this.characterId = characterId;
 		this.grade = grade;

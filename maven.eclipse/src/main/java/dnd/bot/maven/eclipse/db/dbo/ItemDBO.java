@@ -14,6 +14,9 @@ public class ItemDBO {
     public ObjectId characterId;
 
     @BsonProperty
+    public String name;
+
+    @BsonProperty
     public String category;
 
     @BsonProperty
@@ -33,10 +36,16 @@ public class ItemDBO {
 
     public ItemDBO(){}
 
-    public ItemDBO(ObjectId characterId, String description, int amount)
+    public ItemDBO(ObjectId characterId, String name, String description, int amount)
     {
         this.characterId = characterId;
+        this.name = name;
         this.description = description;
         this.amount = amount;
+    }
+
+    public ItemDBO(ObjectId characterId, String name, String description)
+    {
+        this(characterId, name, description, 1);
     }
 }

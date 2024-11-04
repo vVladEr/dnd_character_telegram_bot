@@ -3,13 +3,12 @@ package dnd.bot.maven.eclipse.db.dbo;
 import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Skill;
 import java.util.HashMap;
 
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 public class GeneralStatDBO {
     
-    @BsonId
+    @BsonProperty
     public ObjectId characterId;
 
     @BsonProperty

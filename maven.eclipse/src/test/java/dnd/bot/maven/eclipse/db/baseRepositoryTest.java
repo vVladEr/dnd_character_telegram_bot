@@ -2,6 +2,8 @@ package dnd.bot.maven.eclipse.db;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.UUID;
+
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import dnd.bot.maven.eclipse.db.dbo.LevelDbo;
 import dnd.bot.maven.eclipse.db.repos.MongoLevelRepository;
 
-public class baseRepositoryTest {
-private static MongoLevelRepository rep;
+public class BaseRepositoryTest {
+    private static MongoLevelRepository rep;
 	private static dbConnector conn;
 	
 	@BeforeAll
@@ -50,7 +52,22 @@ private static MongoLevelRepository rep;
         assertTrue(dbLv.currentExp == 5);
 	}
 
-    @Test void DeleteDocTest()
+	@Test
+	public void UpdateUnexpectedField_ShouldNotUpdategAnythingTest() 
+	{
+		var characterId = new ObjectId();
+		var lv = new LevelDbo(characterId);
+		rep.InsertDocument(lv);
+        rep.UpdateField(characterId, UUID.randomUUID().toString(), 5);
+        var dbLv = rep.GetDocumentById(characterId);
+        assertTrue(dbLv != null);
+		assertTrue(dbLv.currentLevel == lv.currentLevel);
+        assertTrue(dbLv.currentExp == lv.currentExp);
+		assertTrue(dbLv.necessaryExp == lv.necessaryExp);
+	}
+
+    @Test 
+	public void DeleteDocTest()
     {
         var characterId = new ObjectId();
 		var lv = new LevelDbo(characterId);

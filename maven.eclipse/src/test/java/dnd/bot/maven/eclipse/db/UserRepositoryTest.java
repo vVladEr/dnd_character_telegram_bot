@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import dnd.bot.maven.eclipse.db.dbo.UserDBO;
 import dnd.bot.maven.eclipse.db.repos.MongoUserRepository;
 
-public class dbUserRepositoryTest {
+public class UserRepositoryTest{
 	private static MongoUserRepository rep;
 	private static dbConnector conn;
 	

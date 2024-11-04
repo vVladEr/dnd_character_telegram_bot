@@ -31,7 +31,7 @@ public class MongoFeaturesRepository  extends BaseRepo<BasicDescriptionDbo, Obje
 
     public ArrayList<BasicDescriptionDbo> GetCharacterFeatures(ObjectId characterId)
     {
-        var feacturesDbo = mongoCollection.find(eq("_id", characterId));
+        var feacturesDbo = mongoCollection.find(eq("characterId", characterId));
         var features = new ArrayList<BasicDescriptionDbo>();
         for(var dboStat: feacturesDbo)
         {

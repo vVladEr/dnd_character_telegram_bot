@@ -29,14 +29,14 @@ public class MongoPossesionsRepository  extends BaseRepo<BasicDescriptionDbo, Ob
         return db.getCollection("possesions", BasicDescriptionDbo.class).withCodecRegistry(pojoCodecRegistry);
     }
 
-    public ArrayList<BasicDescriptionDbo> GetCharacterFeatures(ObjectId characterId)
+    public ArrayList<BasicDescriptionDbo> GetCharacterPossesions(ObjectId characterId)
     {
-        var feacturesDbo = mongoCollection.find(eq("_id", characterId));
-        var features = new ArrayList<BasicDescriptionDbo>();
-        for(var dboStat: feacturesDbo)
+        var possesionsDbo = mongoCollection.find(eq("characterId", characterId));
+        var possesions = new ArrayList<BasicDescriptionDbo>();
+        for(var possesionBdo: possesionsDbo)
         {
-            features.add(dboStat);
+            possesions.add(possesionBdo);
         }
-        return features;
+        return possesions;
     }
 }
