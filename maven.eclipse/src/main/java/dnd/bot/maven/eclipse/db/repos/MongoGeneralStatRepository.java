@@ -13,9 +13,10 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Skill;
 import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Knowledge.KnowledgeLevel;
 import dnd.bot.maven.eclipse.db.dbo.GeneralStatDBO;
+import dnd.bot.maven.eclipse.db.dbo.SkillDbo;
+
 import java.util.ArrayList;
 
 public class MongoGeneralStatRepository {
@@ -26,7 +27,7 @@ public class MongoGeneralStatRepository {
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
-						.register(GeneralStatDBO.class, Skill.class, KnowledgeLevel.class).build()));
+						.register(GeneralStatDBO.class, SkillDbo.class, KnowledgeLevel.class).build()));
         statsColletion = db.getCollection("stats", GeneralStatDBO.class).withCodecRegistry(pojoCodecRegistry);
     }
     

@@ -1,6 +1,5 @@
 package dnd.bot.maven.eclipse.db.dbo;
 
-import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Skill;
 import java.util.HashMap;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -18,7 +17,7 @@ public class GeneralStatDBO {
 	public int value;
 
     @BsonProperty
-	public HashMap<String, Skill> skills;
+	public HashMap<String, SkillDbo> skills;
 
     @BsonProperty
 	public int checkValue;
@@ -37,6 +36,13 @@ public class GeneralStatDBO {
 	{
 		this.characterId = characterId;
 		this.statName = statName;
-		//TODO Влад: дописать создание скиллов
+        skills = new HashMap<String, SkillDbo>();
+	}
+
+    public GeneralStatDBO(ObjectId characterId, String statName, HashMap<String, SkillDbo> skills)
+	{
+		this.characterId = characterId;
+		this.statName = statName;
+        this.skills = skills;
 	}
 }
