@@ -13,7 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import dnd.bot.maven.eclipse.Interfaces.ICommand;
 import dnd.bot.maven.eclipse.Routing.Router;
-import dnd.bot.maven.eclipse.User.User;
 import dnd.bot.maven.eclipse.Commands.*;
 
 
@@ -26,7 +25,7 @@ public class Bot extends TelegramLongPollingBot{
 	private List<SendMessage> sendMessages;
 	
 	public void Init() {
-		router = Router.getInstance();
+		router = new Router();
 		commands = new LinkedHashMap<String, ICommand>();
 		commands.put("/info", new InfoCommand());
 		commands.put("/authors", new AuthorsCommand());

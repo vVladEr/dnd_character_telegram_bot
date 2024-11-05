@@ -3,14 +3,9 @@ import java.util.Stack;
 
 
 public class Router {
-    private static final Router router = new Router();
     private static final Stack<State> transitionsStack = new Stack<State>();
 
-    private Router() {
-    }
-
-    public static Router getInstance() {
-        return router;
+    public Router() {
     }
 
     public State getCurrentState() {
