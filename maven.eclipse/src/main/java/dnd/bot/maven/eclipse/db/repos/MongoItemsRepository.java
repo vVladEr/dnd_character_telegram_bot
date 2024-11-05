@@ -1,5 +1,6 @@
 package dnd.bot.maven.eclipse.db.repos;
 
+import org.bson.codecs.configuration.CodecConfigurationException;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -40,5 +41,11 @@ public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>{
             items.add(dboItem);
         }
         return items;
+    }
+
+    @Override
+    public void UpdateField(ObjectId id, String fieldName, Object newFieldValue) throws CodecConfigurationException
+    {
+        super.UpdateField(id, fieldName, newFieldValue);
     }
 }

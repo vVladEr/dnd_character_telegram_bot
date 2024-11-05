@@ -1,5 +1,6 @@
 package dnd.bot.maven.eclipse.db.repos;
 
+import org.bson.codecs.configuration.CodecConfigurationException;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -25,5 +26,11 @@ public class MongoHPRepository  extends BaseRepo<HPDbo, ObjectId> {
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(HPDbo.class).build()));
         return db.getCollection("hps", HPDbo.class).withCodecRegistry(pojoCodecRegistry);
+    }
+
+    @Override
+    public void UpdateField(ObjectId id, String fieldName, Object newFieldValue) throws CodecConfigurationException
+    {
+        super.UpdateField(id, fieldName, newFieldValue);
     }
 }

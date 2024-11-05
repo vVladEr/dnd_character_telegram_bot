@@ -4,6 +4,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 
+import org.bson.codecs.configuration.CodecConfigurationException;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -38,5 +39,11 @@ public class MongoPossesionsRepository  extends BaseRepo<BasicDescriptionDbo, Ob
             possesions.add(possesionBdo);
         }
         return possesions;
+    }
+
+    @Override
+    public void UpdateField(ObjectId id, String fieldName, Object newFieldValue) throws CodecConfigurationException
+    {
+        super.UpdateField(id, fieldName, newFieldValue);
     }
 }
