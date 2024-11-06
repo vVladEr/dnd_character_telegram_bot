@@ -23,15 +23,15 @@ public class Item extends State {
 
     @Override
 	public ResponseObject getStateMessages() {
-        var data = itemRepository.getData();
+        // var data = itemRepository.getData();
 
-        var category = data.category;
-        var name = data.name;
-        var weight = data.weight;
-        var amount = data.amount;
-        var isMagic = data.isMagic;
-        var isEquiped = data.isEquiped;
-        var description = data.description;
+        // var category = data.category;
+        // var name = data.name;
+        // var weight = data.weight;
+        // var amount = data.amount;
+        // var isMagic = data.isMagic;
+        // var isEquiped = data.isEquiped;
+        // var description = data.description;
 
 		var response = new ResponseObject();	
 

@@ -2,7 +2,9 @@ package dnd.bot.maven.eclipse.db.dbo;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
-import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Knowledge.KnowledgeLevel;
+import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
+
+
 
 public class SkillDbo {
 

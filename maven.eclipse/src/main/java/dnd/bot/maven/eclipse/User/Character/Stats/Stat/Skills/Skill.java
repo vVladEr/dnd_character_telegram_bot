@@ -9,7 +9,7 @@ import dnd.bot.maven.eclipse.Routing.State;
 import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
 
 public class Skill extends State {
-    private SkillRepository skillRepository;
+    //private SkillRepository skillRepository;
     public String name;
     public KnowledgeLevel knowledgeLevel;
     public int totalBonus;
@@ -21,11 +21,11 @@ public class Skill extends State {
 
     @Override
     public ResponseObject getStateMessages() {
-        var data = skillRepository.getData();
+        // var data = skillRepository.getData();
 
-        var name = data.name;
-        var knowledgeLevel = data.knowledgeLevel;
-        var totalBonus = data.totalBonus;
+        // var name = data.name;
+        // var knowledgeLevel = data.knowledgeLevel;
+        // var totalBonus = data.totalBonus;
 
         var response = new ResponseObject();
 

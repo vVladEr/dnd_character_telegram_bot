@@ -2,8 +2,6 @@ package dnd.bot.maven.eclipse.User.Character.Inventory.Money;
 
 import java.util.HashMap;
 
-import org.checkerframework.checker.units.qual.m;
-
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.Back;

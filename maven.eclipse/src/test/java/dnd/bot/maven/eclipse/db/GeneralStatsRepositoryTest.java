@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.User.Character.Stats.GeneralStat.Skills.Knowledge.KnowledgeLevel;
+import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
 import dnd.bot.maven.eclipse.db.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.dbo.SkillDbo;
 import dnd.bot.maven.eclipse.db.repos.MongoGeneralStatRepository;

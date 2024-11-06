@@ -8,7 +8,11 @@ import dnd.bot.maven.eclipse.Routing.Back;
 import dnd.bot.maven.eclipse.Routing.State;
 
 public class HP extends State {
-    private HPRepository hpRepository;
+    //private HPRepository hpRepository;
+    public int maxHP;
+    public int bonusMaxHP;
+    public String hpDice;
+    public int tempHP;
 
     public HP() {
 		possibleTransitions = new HashMap<>();
@@ -17,12 +21,12 @@ public class HP extends State {
 
     @Override
 	public ResponseObject getStateMessages() {
-        var data = hpRepository.getData();
+        // var data = hpRepository.getData();
 
-        var maxHP = data.maxHP;
-        var bonusMaxHP = data.bonusMaxHP;
-        var hpDice = data.hpDice;
-        var tempHP = data.tempHP;
+        // var maxHP = data.maxHP;
+        // var bonusMaxHP = data.bonusMaxHP;
+        // var hpDice = data.hpDice;
+        // var tempHP = data.tempHP;
 
 		var response = new ResponseObject();
 

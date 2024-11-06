@@ -2,7 +2,6 @@ package dnd.bot.maven.eclipse.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.List;
 
 import dnd.bot.maven.eclipse.Response.MessageObject;

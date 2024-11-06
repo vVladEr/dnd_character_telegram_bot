@@ -8,7 +8,10 @@ import dnd.bot.maven.eclipse.Routing.Back;
 import dnd.bot.maven.eclipse.Routing.State;
 
 public class Level extends State {
-    private LevelRepository levelRepository;
+    //private LevelRepository levelRepository;
+    public int currentLevel;
+    public int currentExp;
+    public int necessaryExp;
 
     public Level() {
 		possibleTransitions = new HashMap<>();
@@ -17,11 +20,11 @@ public class Level extends State {
 
     @Override
 	public ResponseObject getStateMessages() {
-        var data = levelRepository.getData();
+        // var data = levelRepository.getData();
 
-        var currentLevel = data.currentLevel;
-        var currentExp = data.currentExp;
-        var necessaryExp = data.necessaryExp;
+        // var currentLevel = data.currentLevel;
+        // var currentExp = data.currentExp;
+        // var necessaryExp = data.necessaryExp;
 
         var response = new ResponseObject();
 

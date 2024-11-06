@@ -18,11 +18,11 @@ public class Social extends State {
 
     @Override
 	public ResponseObject getStateMessages() {
-        var data = socialRepository.getData();
+        // var data = socialRepository.getData();
 
-        var race = data.race;
-        var characterName = data.characterName;
-        var characterClass = data.characterClass;
+        // var race = data.race;
+        // var characterName = data.characterName;
+        // var characterClass = data.characterClass;
 
 		var response = new ResponseObject();	
 
