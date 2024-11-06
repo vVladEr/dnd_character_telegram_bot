@@ -3,10 +3,7 @@ import java.util.Stack;
 
 
 public class Router {
-    private static final Stack<State> transitionsStack = new Stack<State>();
-
-    public Router() {
-    }
+    private final Stack<State> transitionsStack = new Stack<State>();
 
     public State getCurrentState() {
         return transitionsStack.peek();

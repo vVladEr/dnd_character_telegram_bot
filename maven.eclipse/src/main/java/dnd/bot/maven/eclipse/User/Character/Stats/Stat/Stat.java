@@ -24,6 +24,14 @@ public class Stat extends State {
 
 	@Override
 	public ResponseObject getStateMessages() {
+		var data = skillRepository.getData();
+
+        var name = data.name;
+        var value = data.value;
+		var checkBonus = data.checkBonus;
+		var totalBonus = data.totalBonus;
+		var saveThrowBonus = data.saveThrowBonus;
+
 		var response = new ResponseObject();
 
 		var nameMessageObject = new MessageObject(name);

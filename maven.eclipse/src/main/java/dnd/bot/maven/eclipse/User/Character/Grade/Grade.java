@@ -22,6 +22,11 @@ public class Grade extends State {
 
     @Override
 	public ResponseObject getStateMessages() {
+        var data = gradeRepository.getData();
+
+        var maxCount = data.maxCount;
+        var count = data.count;
+
         var response = new ResponseObject();
 
         var maxCountMessageObject = new MessageObject("Максимум ячеек", String.format("%d", maxCount));
