@@ -3,35 +3,40 @@ import java.util.Stack;
 
 
 public class Router {
-    private static final Router router = new Router();
-    private static final Stack<State> transitionsStack = new Stack<State>();
-
-    private Router() {
-    }
-
-    public static Router getInstance() {
-        return router;
-    }
+    private final Stack<State> transitionsStack = new Stack<State>();
 
     public State getCurrentState() {
         return transitionsStack.peek();
     }
 
-    public void makeTransition(String callBackCommand) {
-        if (callBackCommand == "back")
+    public void addState(State newState) {
+        transitionsStack.add(newState);
+    }
+
+    public String makeTransition(String callBackCommand) {
+        if (callBackCommand.equals("back"))
         {
             transitionsStack.pop();
-            return;
+            return "ok";
         }
 
         var currentState = transitionsStack.peek();
 
+        System.out.println(currentState.possibleTransitions);
+
         if (!currentState.possibleTransitions.containsKey(callBackCommand)) {
-            throw new IllegalArgumentException("wrong callBack");
+            return "no";
+            
         }
 
         var nextState = currentState.possibleTransitions.get(callBackCommand);
 
         transitionsStack.add(nextState);
+
+        return "ok";
     }
+
+    public void clear() {
+		transitionsStack.clear();
+	}
 }   

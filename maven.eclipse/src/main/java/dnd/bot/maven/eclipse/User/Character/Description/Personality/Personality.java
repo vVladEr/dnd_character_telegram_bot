@@ -2,11 +2,9 @@ package dnd.bot.maven.eclipse.User.Character.Description.Personality;
 
 import java.util.HashMap;
 
-import org.apache.http.impl.entity.StrictContentLengthStrategy;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
+import dnd.bot.maven.eclipse.Routing.Back;
 import dnd.bot.maven.eclipse.Routing.State;
 import dnd.bot.maven.eclipse.User.Character.Description.Personality.Appearance.Appearance;
 import dnd.bot.maven.eclipse.User.Character.Description.Personality.HP.HP;
@@ -17,20 +15,21 @@ public class Personality extends State {
     public int armor;
     public int speed;
     public int possessionBonus;
-    public HP hp;
     public boolean inspiration;
     public int exhaustion;
-    public Level level;
-    public Appearance appearance;
-    public Social social;
 
-    public Personality() {
-        possibleTransitions = new HashMap<String, State>() {{
-            possibleTransitions.put("moveToHP", hp);
-            possibleTransitions.put("moveToLevel", level);
-            possibleTransitions.put("moveToAppearance", appearance);
-            possibleTransitions.put("moveToSocial", social);
-        }};
+    public Personality(
+            HP hp, 
+            Level level, 
+            Appearance appearance,
+            Social social
+        ) {
+        possibleTransitions = new HashMap<String, State>();
+        possibleTransitions.put("moveToHP", hp);
+        possibleTransitions.put("moveToLevel", level);
+        possibleTransitions.put("moveToAppearance", appearance);
+        possibleTransitions.put("moveToSocial", social);
+        possibleTransitions.put("back", new Back());
     }
 
     @Override
@@ -44,20 +43,22 @@ public class Personality extends State {
         response.addMessageObject(speedMessageObject);
 
         var possessionBonusMessageObject = new MessageObject("Бонус владения", String.format("%d", possessionBonus));
-        var hpInlineKeybordButton = getInlineKeybordButton("ХП", "moveToHP");
-        possessionBonusMessageObject.addInlineKeybordButton(hpInlineKeybordButton);
         response.addMessageObject(possessionBonusMessageObject);
 
         var exhaustionMessageObject = new MessageObject("Степень истощения", String.format("%d", exhaustion));
         response.addMessageObject(exhaustionMessageObject);
 
-        var inspirationMessageObject = new MessageObject("Вдохновение", (inspiration) ? "+" : "-");
+        var inspirationMessageObject = new MessageObject("Вдохновение", (inspiration) ? "есть" : "нет");
         var levelInlineKeybordButton = getInlineKeybordButton("Уровень", "moveToLevel");
         var appearanceInlineKeybordButton = getInlineKeybordButton("Внешность", "moveToAppearance");
         var socialInlineKeybordButton = getInlineKeybordButton("Общественность", "moveToSocial");
+        var hpInlineKeybordButton = getInlineKeybordButton("ХП", "moveToHP");
+        var backInlineKeybordButton = getInlineKeybordButton("Назад", "back");
+        inspirationMessageObject.addInlineKeybordButton(hpInlineKeybordButton);
         inspirationMessageObject.addInlineKeybordButton(levelInlineKeybordButton);
         inspirationMessageObject.addInlineKeybordButton(appearanceInlineKeybordButton);
         inspirationMessageObject.addInlineKeybordButton(socialInlineKeybordButton);
+		inspirationMessageObject.addInlineKeybordButton(backInlineKeybordButton);
         response.addMessageObject(inspirationMessageObject);
 
         return response;
