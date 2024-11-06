@@ -1,5 +1,6 @@
 package dnd.bot.maven.eclipse.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +14,6 @@ import dnd.bot.maven.eclipse.User.Character.Character;
 public class User extends State {
     public int id;
     public List<Character> characters;
-
-    public User() {
-        var user = this;
-        possibleTransitions = new HashMap<String, State>() {{
-            possibleTransitions.put("start", user);
-        }};
-    }
 
     public User(Character[] characters) {
         var user = this;

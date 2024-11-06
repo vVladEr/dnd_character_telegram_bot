@@ -34,14 +34,6 @@ public class Personality extends State {
 
     @Override
 	public ResponseObject getStateMessages() {
-        var data = personalityRepository.getData();
-
-        var armor = data.armor;
-        var speed = data.speed;
-        var possessionBonus = data.possessionBonus;
-        var inspiration = data.inspiration;
-        var exhaustion = data.exhaustion;
-
 		var response = new ResponseObject();	
 
         var armorMessageObject = new MessageObject("КД", String.format("%d", armor));

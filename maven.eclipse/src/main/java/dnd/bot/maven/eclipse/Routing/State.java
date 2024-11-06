@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import dnd.bot.maven.eclipse.Response.ResponseObject;
 
 public abstract class State {
+    @BsonIgnore
     public HashMap<String, State> possibleTransitions;
 
     public abstract ResponseObject getStateMessages();
