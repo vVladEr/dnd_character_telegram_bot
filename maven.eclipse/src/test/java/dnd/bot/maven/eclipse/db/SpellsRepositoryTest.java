@@ -8,7 +8,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.db.dbo.GradeDBo;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
+import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
 import dnd.bot.maven.eclipse.db.repos.MongoGradesRepository;
 
 public class SpellsRepositoryTest {
@@ -33,10 +34,11 @@ public class SpellsRepositoryTest {
     {
         var characterId = new ObjectId();
         var grade = 2;
+        var compositeKey = new GradeCompositeKey(characterId, grade);
         var gradeDbo = new GradeDBo(characterId, grade);
-        rep.InsertGrade(gradeDbo);
+        rep.InsertDocument(gradeDbo);
 
-        var dbGradeDbo = rep.GetCharacterGrade(characterId, grade);
+        var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(grade == dbGradeDbo.grade);
@@ -47,12 +49,14 @@ public class SpellsRepositoryTest {
     {
         var characterId = new ObjectId();
         var grade = 2;
+        var compositeKey = new GradeCompositeKey(characterId, grade);
+
         var gradeDbo = new GradeDBo(characterId, grade);
-        rep.InsertGrade(gradeDbo);
+        rep.InsertDocument(gradeDbo);
 
         rep.UpdateField(characterId, grade, "maxCount", 2);
 
-        var dbGradeDbo = rep.GetCharacterGrade(characterId, grade);
+        var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(grade == dbGradeDbo.grade);
@@ -65,14 +69,15 @@ public class SpellsRepositoryTest {
     {
         var characterId = new ObjectId();
         var grade = 2;
+        var compositeKey = new GradeCompositeKey(characterId, grade);
         var gradeDbo = new GradeDBo(characterId, grade);
         var spellName = "TestSpell";
         var spellDesc = "testDesk";
-        rep.InsertGrade(gradeDbo);
+        rep.InsertDocument(gradeDbo);
 
         rep.AddSpell(characterId, grade, spellName, spellDesc);
 
-        var dbGradeDbo = rep.GetCharacterGrade(characterId, grade);
+        var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(dbGradeDbo.spells.size() == 1);
@@ -85,16 +90,17 @@ public class SpellsRepositoryTest {
     {
         var characterId = new ObjectId();
         var grade = 2;
+        var compositeKey = new GradeCompositeKey(characterId, grade);
         var gradeDbo = new GradeDBo(characterId, grade);
         var spellName = "TestSpell";
         var oldSpellDesc = "oldTestDesc";
         var newSpellDesc = "newTestDesc";
-        rep.InsertGrade(gradeDbo);
+        rep.InsertDocument(gradeDbo);
 
         rep.AddSpell(characterId, grade, spellName, oldSpellDesc);
         rep.UpdateSpellDesc(characterId, grade, spellName, newSpellDesc);
 
-        var dbGradeDbo = rep.GetCharacterGrade(characterId, grade);
+        var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(dbGradeDbo.spells.size() == 1);

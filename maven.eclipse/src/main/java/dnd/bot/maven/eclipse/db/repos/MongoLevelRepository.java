@@ -10,7 +10,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.LevelDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.LevelDbo;
 
 public class MongoLevelRepository extends BaseRepo<LevelDbo, ObjectId> {
 

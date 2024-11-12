@@ -1,4 +1,4 @@
-package dnd.bot.maven.eclipse.db.dbo;
+package dnd.bot.maven.eclipse.db.Models.dbo;
 
 import java.util.HashMap;
 

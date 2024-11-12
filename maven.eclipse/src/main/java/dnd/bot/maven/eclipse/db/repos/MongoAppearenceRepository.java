@@ -10,7 +10,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.AppearenceDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.AppearenceDbo;
 
 public class MongoAppearenceRepository extends BaseRepo<AppearenceDbo, ObjectId>{
 

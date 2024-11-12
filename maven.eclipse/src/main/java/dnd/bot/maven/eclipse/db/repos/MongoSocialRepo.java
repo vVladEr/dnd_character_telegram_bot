@@ -10,7 +10,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.SocialDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.SocialDbo;
 
 public class MongoSocialRepo extends BaseRepo<SocialDbo, ObjectId> {
 

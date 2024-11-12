@@ -10,7 +10,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.PersonalityDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.PersonalityDbo;
 
 public class MongoPersonalityRepository extends BaseRepo<PersonalityDbo, ObjectId>{
 

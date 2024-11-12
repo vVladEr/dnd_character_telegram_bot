@@ -11,8 +11,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
-import dnd.bot.maven.eclipse.db.dbo.GeneralStatDBO;
-import dnd.bot.maven.eclipse.db.dbo.SkillDbo;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
+import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
+import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
 import dnd.bot.maven.eclipse.db.repos.MongoGeneralStatRepository;
 
 public class GeneralStatsRepositoryTest {
@@ -37,10 +38,11 @@ private static MongoGeneralStatRepository rep;
     {
         var characterId = new ObjectId();
         var statName = "testStat";
+        var compositeKey = new StatCompositeKey(characterId, statName);
         var stat = new GeneralStatDBO(characterId, statName);
-        rep.InstertStats(stat);
+        rep.InsertDocument(stat);
 
-        var dbStat = rep.GetCharacterStat(characterId, statName);
+        var dbStat = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbStat != null);
         assertTrue(dbStat.statName.equals(statName));
     }
@@ -66,16 +68,17 @@ private static MongoGeneralStatRepository rep;
     {
         var characterId = new ObjectId();
         var statName = "testStat";
+        var compositeKey = new StatCompositeKey(characterId, statName);
         var stat = new GeneralStatDBO(characterId, statName);
         rep.InstertStats(stat);
 
-        var dbStat = rep.GetCharacterStat(characterId, statName);
+        var dbStat = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbStat != null);
         assertTrue(dbStat.statName.equals(statName));
         var oldFieldValue = dbStat.value;
 
         rep.UpdateStatField(characterId, statName, "value", 10);
-        dbStat = rep.GetCharacterStat(characterId, statName);
+        dbStat = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbStat != null);
         assertFalse(dbStat.value == oldFieldValue);
         assertTrue(dbStat.value == 10);
@@ -86,14 +89,17 @@ private static MongoGeneralStatRepository rep;
     {
         var characterId = new ObjectId();
         var statName = "testStat";
+        var compositeKey = new StatCompositeKey(characterId, statName);
+
         var skillName = "testSkill";
         var skill = new SkillDbo(skillName);
         var skills = new HashMap<String, SkillDbo>();
+
         skills.put(skillName, skill);
         var stat = new GeneralStatDBO(characterId, statName, skills);
         rep.InstertStats(stat);
 
-        var dbStat = rep.GetCharacterStat(characterId, statName);
+        var dbStat = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbStat != null);
         assertTrue(dbStat.skills != null);
         assertTrue(dbStat.skills.containsKey(skillName));
@@ -106,6 +112,8 @@ private static MongoGeneralStatRepository rep;
     {
         var characterId = new ObjectId();
         var statName = "testStat";
+        var compositeKey = new StatCompositeKey(characterId, statName);
+
         var skillName = "testSkill";
         var skill = new SkillDbo(skillName);
         var skills = new HashMap<String, SkillDbo>();
@@ -118,7 +126,7 @@ private static MongoGeneralStatRepository rep;
         rep.UpdateSkillField(characterId, statName, skillName, "knowledgeLevel", newKnowledgeLevelValue); 
         rep.UpdateSkillField(characterId, statName, skillName, "totalBonuses", newtotalBonusesValue); 
 
-        var dbStat = rep.GetCharacterStat(characterId, statName);
+        var dbStat = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbStat != null);
         assertTrue(dbStat.skills != null);
         assertTrue(dbStat.skills.containsKey(skillName));
@@ -128,6 +136,4 @@ private static MongoGeneralStatRepository rep;
         assertTrue(dbStat.skills.get(skillName).knowledgeLevel.equals(newKnowledgeLevelValue));
         assertTrue(dbStat.skills.get(skillName).totalBonuses == newtotalBonusesValue);
     }
-
-    //TODO Влад дописать тесты на изменение параметров скиллов
 }

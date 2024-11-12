@@ -7,7 +7,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.db.dbo.UserDBO;
+import dnd.bot.maven.eclipse.db.Models.dbo.UserDBO;
 import dnd.bot.maven.eclipse.db.repos.MongoUserRepository;
 
 public class UserRepositoryTest{
@@ -34,7 +34,7 @@ public class UserRepositoryTest{
 		var user = new UserDBO(userId);
 		rep.InsertDocument(user);
 		
-        var dbUser = rep.GetDocumentById(userId);
+        var dbUser = rep.GetDocumentByKey(userId);
         assertTrue(dbUser != null);
         assertTrue(dbUser.GetId().equals(user.GetId()));
 	}
@@ -51,7 +51,7 @@ public class UserRepositoryTest{
 		rep.AddCharacterToUser(userId, uuid1);
 		rep.AddCharacterToUser(userId, uuid2);
 
-        var dbUser = rep.GetDocumentById(userId);
+        var dbUser = rep.GetDocumentByKey(userId);
         assertTrue(dbUser != null);
         assertTrue(dbUser.characters.size() == 2);
         assertTrue(dbUser.GetId().equals(user.GetId()));
@@ -71,7 +71,7 @@ public class UserRepositoryTest{
 		rep.AddCharacterToUser(userId, characterId1);
 		rep.AddCharacterToUser(userId, characterId2);
 
-        var dbUser = rep.GetDocumentById(userId);
+        var dbUser = rep.GetDocumentByKey(userId);
         assertTrue(dbUser != null);
         assertTrue(dbUser.characters.size() == 2);
         assertTrue(dbUser.GetId().equals(user.GetId()));
@@ -79,7 +79,7 @@ public class UserRepositoryTest{
 		assertTrue(dbUser.characters.get(1).equals(characterId2));
 
 		rep.RemoveCharacterFromUser(userId, characterId1);
-		dbUser = rep.GetDocumentById(userId);
+		dbUser = rep.GetDocumentByKey(userId);
         assertTrue(dbUser != null);
         assertTrue(dbUser.characters.size() == 1);
 		assertTrue(dbUser.characters.get(0).equals(characterId2));

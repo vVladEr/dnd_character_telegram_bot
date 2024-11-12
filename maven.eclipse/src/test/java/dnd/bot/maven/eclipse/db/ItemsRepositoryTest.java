@@ -7,7 +7,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.db.dbo.ItemDBO;
+import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
 import dnd.bot.maven.eclipse.db.repos.MongoItemsRepository;
 
 public class ItemsRepositoryTest {

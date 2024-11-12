@@ -14,7 +14,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.BasicDescriptionDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
 
 public class MongoFeaturesRepository  extends BaseRepo<BasicDescriptionDbo, ObjectId>{
 

@@ -14,35 +14,49 @@ import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
 import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
-import dnd.bot.maven.eclipse.db.dbo.GeneralStatDBO;
-import dnd.bot.maven.eclipse.db.dbo.SkillDbo;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
+import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
+import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
 
 import java.util.ArrayList;
 
-public class MongoGeneralStatRepository {
-
-    private MongoCollection<GeneralStatDBO> statsColletion;
+public class MongoGeneralStatRepository extends BaseRepo<GeneralStatDBO, StatCompositeKey> {
 
     public MongoGeneralStatRepository(MongoDatabase db)
+    {
+        super(db);
+    }
+
+    @Override
+    protected MongoCollection<GeneralStatDBO>  InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(GeneralStatDBO.class, SkillDbo.class, KnowledgeLevel.class).build()));
-        statsColletion = db.getCollection("stats", GeneralStatDBO.class).withCodecRegistry(pojoCodecRegistry);
-    }
+        return db.getCollection("stats", GeneralStatDBO.class).withCodecRegistry(pojoCodecRegistry);
     
+    }
+
+    @Override
+    public GeneralStatDBO GetDocumentByKey(StatCompositeKey compositeKey)
+    {
+        var dboStat = mongoCollection.find(and(
+            eq("characterId", compositeKey.characterId), 
+            eq("statName", compositeKey.statName))).first();
+        return dboStat;
+    }
 
     public void InstertStats(GeneralStatDBO ...stats)
     {
-        for(var stat: stats)
+        for (var stat: stats)
         {
-            statsColletion.insertOne(stat);
+            mongoCollection.insertOne(stat);
         }
     }
 
     public ArrayList<GeneralStatDBO> GetCharacterStats(ObjectId characterId)
     {
-        var dboStats = statsColletion.find(eq("characterId", characterId));
+        var dboStats = mongoCollection.find(eq("characterId", characterId));
         var stats = new ArrayList<GeneralStatDBO>();
         for(var dboStat: dboStats)
         {
@@ -51,18 +65,12 @@ public class MongoGeneralStatRepository {
         return stats;
     }
 
-    public GeneralStatDBO GetCharacterStat(ObjectId characterId, String statName)
-    {
-        var dboStat = statsColletion.find(and(eq("characterId", characterId), eq("statName", statName))).first();
-        return dboStat;
-    }
-
     public void UpdateStatField(ObjectId characterId, String statName, String fieldName, Object fieldNewValue)
     {
         var update = Updates.set(fieldName, fieldNewValue);
         var filter = and(eq("characterId", characterId), eq("statName", statName));
         var options = new UpdateOptions().upsert(false);
-        statsColletion.updateOne(filter, update, options);
+        mongoCollection.updateOne(filter, update, options);
     }
 
     public void UpdateSkillField(ObjectId characterId, String statName, String skillName, String fieldName, Object fieldNewValue)
@@ -70,6 +78,6 @@ public class MongoGeneralStatRepository {
         var update = Updates.set("skills." + skillName + "." + fieldName, fieldNewValue);
         var filter = and(eq("characterId", characterId), eq("statName", statName));
         var options = new UpdateOptions().upsert(false);
-        statsColletion.updateOne(filter, update, options);
+        mongoCollection.updateOne(filter, update, options);
     }
 }
