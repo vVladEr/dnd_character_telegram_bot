@@ -1,4 +1,4 @@
-package dnd.bot.maven.eclipse.db;
+package dnd.bot.maven.eclipse.db.Services;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;

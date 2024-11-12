@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
+import dnd.bot.maven.eclipse.db.Services.dbConnector;
 import dnd.bot.maven.eclipse.db.repos.MongoGradesRepository;
 
 public class SpellsRepositoryTest {

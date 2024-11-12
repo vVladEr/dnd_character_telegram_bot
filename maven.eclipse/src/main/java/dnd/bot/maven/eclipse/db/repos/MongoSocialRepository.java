@@ -12,9 +12,9 @@ import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.SocialDbo;
 
-public class MongoSocialRepo extends BaseRepo<SocialDbo, ObjectId> {
+public class MongoSocialRepository extends BaseRepo<SocialDbo, ObjectId> {
 
-    public MongoSocialRepo(MongoDatabase db)
+    public MongoSocialRepository(MongoDatabase db)
     {
         super(db);
     }

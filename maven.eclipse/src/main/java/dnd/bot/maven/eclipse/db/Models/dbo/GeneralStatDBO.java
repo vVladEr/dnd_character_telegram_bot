@@ -5,13 +5,16 @@ import java.util.HashMap;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
+import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
+import dnd.bot.maven.eclipse.db.Services.SkillFactory;
+
 public class GeneralStatDBO {
     
     @BsonProperty
     public ObjectId characterId;
 
     @BsonProperty
-	public String statName;
+	public StatNameEnum statName;
 
     @BsonProperty
 	public int value;
@@ -32,17 +35,18 @@ public class GeneralStatDBO {
     {
     }
     
-    public GeneralStatDBO(ObjectId characterId, String statName)
-	{
-		this.characterId = characterId;
-		this.statName = statName;
-        skills = new HashMap<String, SkillDbo>();
-	}
-
-    public GeneralStatDBO(ObjectId characterId, String statName, HashMap<String, SkillDbo> skills)
+    public GeneralStatDBO(ObjectId characterId, StatNameEnum statName, HashMap<String, SkillDbo> skills)
 	{
 		this.characterId = characterId;
 		this.statName = statName;
         this.skills = skills;
+        value = 10;
 	}
+
+    public GeneralStatDBO(ObjectId characterId, StatNameEnum statName)
+	{
+        this(characterId, statName, SkillFactory.GetSkillsByStatName(statName));
+	}
+
+
 }

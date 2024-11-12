@@ -11,9 +11,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
+import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
+import dnd.bot.maven.eclipse.db.Services.dbConnector;
 import dnd.bot.maven.eclipse.db.repos.MongoGeneralStatRepository;
 
 public class GeneralStatsRepositoryTest {
@@ -37,7 +39,7 @@ private static MongoGeneralStatRepository rep;
     public void AddStatTest()
     {
         var characterId = new ObjectId();
-        var statName = "testStat";
+        var statName = StatNameEnum.CHARISMA;
         var compositeKey = new StatCompositeKey(characterId, statName);
         var stat = new GeneralStatDBO(characterId, statName);
         rep.InsertDocument(stat);
@@ -51,23 +53,23 @@ private static MongoGeneralStatRepository rep;
     public void GetStatsByCharacterIdTest()
     {
         var characterId = new ObjectId();
-        var stat1 = new GeneralStatDBO(characterId, "testStat1");
-        var stat2 = new GeneralStatDBO(characterId, "testStat2");
-        var anotherStat = new GeneralStatDBO(new ObjectId(), "stat from another character");
+        var stat1 = new GeneralStatDBO(characterId, StatNameEnum.CHARISMA);
+        var stat2 = new GeneralStatDBO(characterId, StatNameEnum.CONSTITUTION);
+        var anotherStat = new GeneralStatDBO(new ObjectId(), StatNameEnum.DEXTERITY);
         rep.InstertStats(stat1, stat2, anotherStat);
 
         var stats = rep.GetCharacterStats(characterId);
         assertTrue(stats != null);
         assertTrue(stats.size() == 2);
-        assertTrue(stats.get(0).statName.equals("testStat1"));
-        assertTrue(stats.get(1).statName.equals("testStat2"));
+        assertTrue(stats.get(0).statName.equals(StatNameEnum.CHARISMA));
+        assertTrue(stats.get(1).statName.equals(StatNameEnum.CONSTITUTION));
     }
 
     @Test
     public void UpdateStatFieldTest()
     {
         var characterId = new ObjectId();
-        var statName = "testStat";
+        var statName = StatNameEnum.CHARISMA;
         var compositeKey = new StatCompositeKey(characterId, statName);
         var stat = new GeneralStatDBO(characterId, statName);
         rep.InstertStats(stat);
@@ -77,18 +79,19 @@ private static MongoGeneralStatRepository rep;
         assertTrue(dbStat.statName.equals(statName));
         var oldFieldValue = dbStat.value;
 
-        rep.UpdateStatField(characterId, statName, "value", 10);
+        var newValue = 5;
+        rep.UpdateStatField(characterId, statName, "value", newValue);
         dbStat = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbStat != null);
         assertFalse(dbStat.value == oldFieldValue);
-        assertTrue(dbStat.value == 10);
+        assertTrue(dbStat.value == newValue);
     }
 
     @Test
     public void AddStatWithSkillTest()
     {
         var characterId = new ObjectId();
-        var statName = "testStat";
+        var statName = StatNameEnum.CHARISMA;
         var compositeKey = new StatCompositeKey(characterId, statName);
 
         var skillName = "testSkill";
@@ -111,7 +114,7 @@ private static MongoGeneralStatRepository rep;
     public void UpdateSkillFieldTest()
     {
         var characterId = new ObjectId();
-        var statName = "testStat";
+        var statName = StatNameEnum.CHARISMA;
         var compositeKey = new StatCompositeKey(characterId, statName);
 
         var skillName = "testSkill";

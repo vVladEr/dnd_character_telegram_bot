@@ -23,5 +23,7 @@ public class LevelDbo {
     public LevelDbo(ObjectId characterId)
 	{
 		this.characterId = characterId;
+        currentLevel = 1;
+        necessaryExp = 300;
 	}
 }
