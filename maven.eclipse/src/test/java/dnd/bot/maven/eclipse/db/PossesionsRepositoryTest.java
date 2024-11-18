@@ -19,13 +19,13 @@ public class PossesionsRepositoryTest {
 	public static void SetUp() 
 	{
         conn = new dbConnector("test-java-dnd-bot");
-        rep = new MongoPossesionsRepository(conn.DB);
+        rep = new MongoPossesionsRepository(conn.getDb());
 	}
 	
 	@AfterAll
 	public static void TearDown() 
 	{
-		conn.DB.drop();
+		conn.getDb().drop();
 	}
 	
 	@Test

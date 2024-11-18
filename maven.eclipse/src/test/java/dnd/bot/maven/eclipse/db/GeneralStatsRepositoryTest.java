@@ -26,13 +26,13 @@ private static MongoGeneralStatRepository rep;
 	public static void SetUp() 
 	{
         conn = new dbConnector("test-java-dnd-bot");
-        rep = new MongoGeneralStatRepository(conn.DB);
+        rep = new MongoGeneralStatRepository(conn.getDb());
 	}
 	
 	@AfterAll
 	public static void TearDown() 
 	{
-		conn.DB.drop();
+		conn.getDb().drop();
 	}
 
     @Test

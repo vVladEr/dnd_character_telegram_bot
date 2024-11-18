@@ -21,13 +21,13 @@ public class SpellsRepositoryTest {
 	public static void SetUp() 
 	{
         conn = new dbConnector("test-java-dnd-bot");
-        rep = new MongoGradesRepository(conn.DB);
+        rep = new MongoGradesRepository(conn.getDb());
 	}
 	
 	@AfterAll
 	public static void TearDown() 
 	{
-		conn.DB.drop();
+		conn.getDb().drop();
 	}
 
     @Test

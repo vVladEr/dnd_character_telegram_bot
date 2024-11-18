@@ -41,13 +41,13 @@ public class ReposStorage {
     public ReposStorage()
     {
         var dbConnector = new dbConnector();
-        Init(dbConnector.DB);
+        Init(dbConnector.getDb());
     }
 
     public ReposStorage(String dbName)
     {
         var dbConnector = new dbConnector(dbName);
-        Init(dbConnector.DB);
+        Init(dbConnector.getDb());
     }
 
     private void Init(MongoDatabase db)

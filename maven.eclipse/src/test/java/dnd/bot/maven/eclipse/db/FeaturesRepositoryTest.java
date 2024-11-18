@@ -19,13 +19,13 @@ public class FeaturesRepositoryTest {
 	public static void SetUp() 
 	{
         conn = new dbConnector("test-java-dnd-bot");
-        rep = new MongoFeaturesRepository(conn.DB);
+        rep = new MongoFeaturesRepository(conn.getDb());
 	}
 	
 	@AfterAll
 	public static void TearDown() 
 	{
-		conn.DB.drop();
+		conn.getDb().drop();
 	}
 	
 	@Test
