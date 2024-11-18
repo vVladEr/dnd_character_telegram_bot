@@ -23,7 +23,7 @@ public class MongoFeaturesRepository  extends BaseRepo<BasicDescriptionDbo, Obje
     }
 
     @Override
-    protected MongoCollection<BasicDescriptionDbo> InitMongoCollection(MongoDatabase db) {
+    protected final MongoCollection<BasicDescriptionDbo> InitMongoCollection(MongoDatabase db) {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(BasicDescriptionDbo.class).build()));

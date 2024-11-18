@@ -27,7 +27,7 @@ public class MongoGradesRepository extends BaseRepo<GradeDBo, GradeCompositeKey>
     }
 
     @Override
-    public MongoCollection<GradeDBo> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<GradeDBo> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()

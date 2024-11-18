@@ -1,5 +1,7 @@
 package dnd.bot.maven.eclipse.db.Services;
 
+import com.mongodb.client.MongoDatabase;
+
 import dnd.bot.maven.eclipse.db.repos.MongoAppearenceRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoFeaturesRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoGeneralStatRepository;
@@ -13,6 +15,7 @@ import dnd.bot.maven.eclipse.db.repos.MongoSocialRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoUserRepository;
 
 public class ReposStorage {
+
     private MongoAppearenceRepository appearenceRepository;
 
     private MongoFeaturesRepository featuresRepository;
@@ -38,7 +41,17 @@ public class ReposStorage {
     public ReposStorage()
     {
         var dbConnector = new dbConnector();
-        var db = dbConnector.DB;
+        Init(dbConnector.DB);
+    }
+
+    public ReposStorage(String dbName)
+    {
+        var dbConnector = new dbConnector(dbName);
+        Init(dbConnector.DB);
+    }
+
+    private void Init(MongoDatabase db)
+    {
         appearenceRepository = new MongoAppearenceRepository(db);
         featuresRepository = new MongoFeaturesRepository(db);
         statRepository = new MongoGeneralStatRepository(db);

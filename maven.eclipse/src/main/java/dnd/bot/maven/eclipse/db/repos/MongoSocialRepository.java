@@ -20,7 +20,7 @@ public class MongoSocialRepository extends BaseRepo<SocialDbo, ObjectId> {
     }
 
     @Override
-    protected MongoCollection<SocialDbo> InitMongoCollection(MongoDatabase db) {
+    protected final MongoCollection<SocialDbo> InitMongoCollection(MongoDatabase db) {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(SocialDbo.class).build()));

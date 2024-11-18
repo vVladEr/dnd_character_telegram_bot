@@ -24,7 +24,7 @@ public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>{
     }
     
     @Override
-    protected MongoCollection<ItemDBO> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<ItemDBO> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()

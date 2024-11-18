@@ -29,7 +29,7 @@ public class MongoGeneralStatRepository extends BaseRepo<GeneralStatDBO, StatCom
     }
 
     @Override
-    protected MongoCollection<GeneralStatDBO>  InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<GeneralStatDBO>  InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()

@@ -20,9 +20,9 @@ public class SocialDbo {
 
     public SocialDbo() {}
 
-	public SocialDbo(ObjectId characterId, String name)
+	public SocialDbo(ObjectId characterId)
 	{
 		this.characterId = characterId;
-		characterName = name;
+		characterName = "Unknown";
 	}
 }

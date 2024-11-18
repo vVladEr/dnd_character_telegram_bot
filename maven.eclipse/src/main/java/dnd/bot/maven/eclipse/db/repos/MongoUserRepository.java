@@ -23,7 +23,7 @@ public class MongoUserRepository extends BaseRepo<UserDBO, String>{
 	}
 
 	@Override
-	public MongoCollection<UserDBO> InitMongoCollection(MongoDatabase db)
+	protected final MongoCollection<UserDBO> InitMongoCollection(MongoDatabase db)
 	{
 		CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 				CodecRegistries.fromProviders(PojoCodecProvider.builder()

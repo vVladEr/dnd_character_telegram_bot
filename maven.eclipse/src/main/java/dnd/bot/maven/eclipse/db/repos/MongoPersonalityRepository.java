@@ -19,7 +19,7 @@ public class MongoPersonalityRepository extends BaseRepo<PersonalityDbo, ObjectI
     }
 
     @Override
-    protected MongoCollection<PersonalityDbo> InitMongoCollection(MongoDatabase db) {
+    protected final MongoCollection<PersonalityDbo> InitMongoCollection(MongoDatabase db) {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(PersonalityDbo.class).build()));

@@ -20,7 +20,7 @@ public class MongoAppearenceRepository extends BaseRepo<AppearenceDbo, ObjectId>
     }
 
     @Override
-    protected MongoCollection<AppearenceDbo> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<AppearenceDbo> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()

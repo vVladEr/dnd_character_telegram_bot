@@ -20,7 +20,7 @@ public class MongoLevelRepository extends BaseRepo<LevelDbo, ObjectId> {
     }
     
     @Override
-    protected MongoCollection<LevelDbo> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<LevelDbo> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
