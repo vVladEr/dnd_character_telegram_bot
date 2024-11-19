@@ -15,8 +15,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
-public class MongoPossesionsRepository  extends BaseRepo<BasicDescriptionDbo, ObjectId>{
+public class MongoPossesionsRepository  extends BaseRepo<BasicDescriptionDbo, ObjectId>
+    implements IFieldUpdatable<ObjectId>
+{
 
     public MongoPossesionsRepository(MongoDatabase db) {
         super(db);

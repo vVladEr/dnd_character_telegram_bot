@@ -13,10 +13,13 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
 import java.util.ArrayList;
 
-public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>{
+public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>
+    implements IFieldUpdatable<ObjectId>
+{
 
     public MongoItemsRepository(MongoDatabase db)
     {
