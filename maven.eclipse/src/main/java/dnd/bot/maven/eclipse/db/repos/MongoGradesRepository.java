@@ -17,13 +17,12 @@ import com.mongodb.client.model.Updates;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 import dnd.bot.maven.eclipse.db.repos.Interfaces.IInnerFieldUpdatable;
 
 import java.util.ArrayList;
 
 public class MongoGradesRepository extends BaseRepo<GradeDBo, GradeCompositeKey> 
-    implements IFieldUpdatable<GradeCompositeKey>, IInnerFieldUpdatable<GradeCompositeKey>
+    implements IInnerFieldUpdatable<GradeCompositeKey>
 {
 
     public MongoGradesRepository(MongoDatabase db)
@@ -78,6 +77,7 @@ public class MongoGradesRepository extends BaseRepo<GradeDBo, GradeCompositeKey>
             var oldSpell = GetDocumentByKey(compositeKey).spells.get(spellName);
             RemoveSpell(compositeKey, spellName);
             AddSpell(compositeKey, (String) newValue, oldSpell.description);
+            return;
         }
         var update = Updates.set("spells." + spellName + "." + fieldName, newValue);
         var filter = and(eq("characterId", compositeKey.characterId), eq("grade", compositeKey.grade));

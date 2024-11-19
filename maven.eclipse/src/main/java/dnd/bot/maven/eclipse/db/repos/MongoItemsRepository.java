@@ -32,7 +32,7 @@ public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(ItemDBO.class).build()));
-        return db.getCollection("stats", ItemDBO.class).withCodecRegistry(pojoCodecRegistry);
+        return db.getCollection("items", ItemDBO.class).withCodecRegistry(pojoCodecRegistry);
     }
 
     public ArrayList<ItemDBO> GetCharactersItems(ObjectId characterId)
