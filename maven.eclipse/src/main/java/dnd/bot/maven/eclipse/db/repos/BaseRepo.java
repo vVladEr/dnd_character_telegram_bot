@@ -10,7 +10,7 @@ import static com.mongodb.client.model.Filters.eq;
 import org.bson.codecs.configuration.CodecConfigurationException;
 
 
-public abstract class BaseRepo<T, IdType> {
+public abstract class BaseRepo<T, KeyType> {
     protected MongoCollection<T> mongoCollection;
 
     public BaseRepo(MongoDatabase db)
@@ -26,12 +26,12 @@ public abstract class BaseRepo<T, IdType> {
         return item;
     }
 
-    public T GetDocumentById(IdType id)
+    public T GetDocumentByKey(KeyType id)
     {
         return mongoCollection.find(eq("_id", id)).first();
     }
 
-    protected void UpdateField(IdType id, String fieldName, Object newFieldValue) throws CodecConfigurationException
+    protected void UpdateField(KeyType id, String fieldName, Object newFieldValue) throws CodecConfigurationException
     {
         var update = Updates.set(fieldName, newFieldValue);
         var filter = eq("_id", id);
@@ -39,7 +39,7 @@ public abstract class BaseRepo<T, IdType> {
         mongoCollection.updateOne(filter, update, options);
     }
 
-    protected void DeleteDocument(IdType id)
+    protected void DeleteDocument(KeyType id)
     {
         mongoCollection.findOneAndDelete(eq("_id", id));
     }

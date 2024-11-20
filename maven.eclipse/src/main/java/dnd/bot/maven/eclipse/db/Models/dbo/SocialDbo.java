@@ -1,4 +1,4 @@
-package dnd.bot.maven.eclipse.db.dbo;
+package dnd.bot.maven.eclipse.db.Models.dbo;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -20,9 +20,9 @@ public class SocialDbo {
 
     public SocialDbo() {}
 
-	public SocialDbo(ObjectId characterId, String name)
+	public SocialDbo(ObjectId characterId)
 	{
 		this.characterId = characterId;
-		characterName = name;
+		characterName = "Unknown";
 	}
 }

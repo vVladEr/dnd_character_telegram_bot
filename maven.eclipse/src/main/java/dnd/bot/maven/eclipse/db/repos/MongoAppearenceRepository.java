@@ -10,7 +10,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.AppearenceDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.AppearenceDbo;
 
 public class MongoAppearenceRepository extends BaseRepo<AppearenceDbo, ObjectId>{
 
@@ -20,7 +20,7 @@ public class MongoAppearenceRepository extends BaseRepo<AppearenceDbo, ObjectId>
     }
 
     @Override
-    protected MongoCollection<AppearenceDbo> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<AppearenceDbo> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()

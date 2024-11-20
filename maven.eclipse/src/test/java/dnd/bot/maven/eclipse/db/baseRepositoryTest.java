@@ -9,7 +9,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.db.dbo.LevelDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.LevelDbo;
+import dnd.bot.maven.eclipse.db.Services.dbConnector;
 import dnd.bot.maven.eclipse.db.repos.MongoLevelRepository;
 
 public class BaseRepositoryTest {
@@ -20,13 +21,13 @@ public class BaseRepositoryTest {
 	public static void SetUp() 
 	{
         conn = new dbConnector("test-java-dnd-bot");
-        rep = new MongoLevelRepository(conn.DB);
+        rep = new MongoLevelRepository(conn.getDb());
 	}
 	
 	@AfterAll
 	public static void TearDown() 
 	{
-		conn.DB.drop();
+		conn.getDb().drop();
 	}
 	
 	@Test
@@ -35,7 +36,7 @@ public class BaseRepositoryTest {
 		var characterId = new ObjectId();
 		var lv = new LevelDbo(characterId);
 		rep.InsertDocument(lv);
-        var dbLv = rep.GetDocumentById(characterId);
+        var dbLv = rep.GetDocumentByKey(characterId);
         assertTrue(dbLv != null);
         assertTrue(dbLv.characterId.equals(lv.characterId));
 	}
@@ -47,7 +48,7 @@ public class BaseRepositoryTest {
 		var lv = new LevelDbo(characterId);
 		rep.InsertDocument(lv);
         rep.UpdateField(characterId, "currentExp", 5);
-        var dbLv = rep.GetDocumentById(characterId);
+        var dbLv = rep.GetDocumentByKey(characterId);
         assertTrue(dbLv != null);
         assertTrue(dbLv.currentExp == 5);
 	}
@@ -59,7 +60,7 @@ public class BaseRepositoryTest {
 		var lv = new LevelDbo(characterId);
 		rep.InsertDocument(lv);
         rep.UpdateField(characterId, UUID.randomUUID().toString(), 5);
-        var dbLv = rep.GetDocumentById(characterId);
+        var dbLv = rep.GetDocumentByKey(characterId);
         assertTrue(dbLv != null);
 		assertTrue(dbLv.currentLevel == lv.currentLevel);
         assertTrue(dbLv.currentExp == lv.currentExp);
@@ -72,11 +73,11 @@ public class BaseRepositoryTest {
         var characterId = new ObjectId();
 		var lv = new LevelDbo(characterId);
 		rep.InsertDocument(lv);
-        var dbLv = rep.GetDocumentById(characterId);
+        var dbLv = rep.GetDocumentByKey(characterId);
         assertTrue(dbLv != null);
         assertTrue(dbLv.characterId.equals(lv.characterId));
         rep.DeleteDocument(characterId);
-        dbLv = rep.GetDocumentById(characterId); 
+        dbLv = rep.GetDocumentByKey(characterId); 
         assertTrue(dbLv == null);
     }
 }

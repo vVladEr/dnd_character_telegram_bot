@@ -10,7 +10,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.HPDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.HPDbo;
 
 public class MongoHPRepository  extends BaseRepo<HPDbo, ObjectId> {
 
@@ -20,7 +20,7 @@ public class MongoHPRepository  extends BaseRepo<HPDbo, ObjectId> {
     }
     
     @Override
-    protected MongoCollection<HPDbo> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<HPDbo> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()

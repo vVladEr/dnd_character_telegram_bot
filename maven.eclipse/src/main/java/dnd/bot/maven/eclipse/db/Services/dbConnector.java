@@ -1,4 +1,4 @@
-package dnd.bot.maven.eclipse.db;
+package dnd.bot.maven.eclipse.db.Services;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -12,16 +12,16 @@ import org.bson.UuidRepresentation;
 
 public class dbConnector {
 	
-	public MongoDatabase DB;
+	private MongoDatabase db;
 	
 	public dbConnector(String dataBaseName) 
 	{
-		DB = establishConnection(dataBaseName);
+		db = establishConnection(dataBaseName);
 	}
 	
 	public dbConnector() 
 	{
-		DB = establishConnection("java-dnd-telegram-bot");
+		db = establishConnection("java-dnd-telegram-bot");
 	}
 	
     private static MongoDatabase establishConnection(String dataBaseName)
@@ -48,5 +48,9 @@ public class dbConnector {
             System.out.println(e);
         }
 		return null;
+    }
+
+    public MongoDatabase getDb() {
+        return db;
     }
 }

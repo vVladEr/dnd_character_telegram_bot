@@ -1,32 +1,28 @@
-package dnd.bot.maven.eclipse.db.dbo;
+package dnd.bot.maven.eclipse.db.Models.dbo;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-
-public class PersonalityDbo {
+public class HPDbo {
     @BsonId
     public ObjectId characterId;
 
     @BsonProperty
-    public int armor;
+    public int maxHP;
 
     @BsonProperty
-    public int speed;
+    public int bonusMaxHP;
 
     @BsonProperty
-    public int possessionBonus;
+    public String hpDice;
 
     @BsonProperty
-    public boolean inspiration;
+    public int tempHP;
 
-    @BsonProperty
-    public int exhaustion;
-
-    public PersonalityDbo(){}
-
-	public PersonalityDbo(ObjectId characterId)
+    public HPDbo() {}
+    
+    public HPDbo(ObjectId characterId)
 	{
 		this.characterId = characterId;
 	}

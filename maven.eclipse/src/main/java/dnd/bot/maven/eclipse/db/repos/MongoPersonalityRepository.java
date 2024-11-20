@@ -10,7 +10,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.PersonalityDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.PersonalityDbo;
 
 public class MongoPersonalityRepository extends BaseRepo<PersonalityDbo, ObjectId>{
 
@@ -19,7 +19,7 @@ public class MongoPersonalityRepository extends BaseRepo<PersonalityDbo, ObjectI
     }
 
     @Override
-    protected MongoCollection<PersonalityDbo> InitMongoCollection(MongoDatabase db) {
+    protected final MongoCollection<PersonalityDbo> InitMongoCollection(MongoDatabase db) {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(PersonalityDbo.class).build()));

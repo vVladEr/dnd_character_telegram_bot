@@ -12,7 +12,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.ItemDBO;
+import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>{
     }
     
     @Override
-    protected MongoCollection<ItemDBO> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<ItemDBO> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()

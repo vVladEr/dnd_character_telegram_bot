@@ -7,7 +7,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.db.dbo.ItemDBO;
+import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
+import dnd.bot.maven.eclipse.db.Services.dbConnector;
 import dnd.bot.maven.eclipse.db.repos.MongoItemsRepository;
 
 public class ItemsRepositoryTest {
@@ -18,13 +19,13 @@ public class ItemsRepositoryTest {
 	public static void SetUp() 
 	{
         conn = new dbConnector("test-java-dnd-bot");
-        rep = new MongoItemsRepository(conn.DB);
+        rep = new MongoItemsRepository(conn.getDb());
 	}
 	
 	@AfterAll
 	public static void TearDown() 
 	{
-		conn.DB.drop();
+		conn.getDb().drop();
 	}
 	
 	@Test

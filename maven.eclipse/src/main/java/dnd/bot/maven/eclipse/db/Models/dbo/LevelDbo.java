@@ -1,4 +1,4 @@
-package dnd.bot.maven.eclipse.db.dbo;
+package dnd.bot.maven.eclipse.db.Models.dbo;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -23,5 +23,7 @@ public class LevelDbo {
     public LevelDbo(ObjectId characterId)
 	{
 		this.characterId = characterId;
+        currentLevel = 1;
+        necessaryExp = 300;
 	}
 }
