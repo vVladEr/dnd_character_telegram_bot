@@ -14,16 +14,19 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.BasicDescriptionDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
-public class MongoPossesionsRepository  extends BaseRepo<BasicDescriptionDbo, ObjectId>{
+public class MongoPossesionsRepository  extends BaseRepo<BasicDescriptionDbo, ObjectId>
+    implements IFieldUpdatable<ObjectId>
+{
 
     public MongoPossesionsRepository(MongoDatabase db) {
         super(db);
     }
 
     @Override
-    protected MongoCollection<BasicDescriptionDbo> InitMongoCollection(MongoDatabase db) {
+    protected final MongoCollection<BasicDescriptionDbo> InitMongoCollection(MongoDatabase db) {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(BasicDescriptionDbo.class).build()));

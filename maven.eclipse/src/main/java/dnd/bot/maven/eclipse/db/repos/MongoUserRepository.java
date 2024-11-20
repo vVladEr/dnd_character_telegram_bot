@@ -12,7 +12,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.db.dbo.UserDBO;
+import dnd.bot.maven.eclipse.db.Models.dbo.UserDBO;
 
 
 public class MongoUserRepository extends BaseRepo<UserDBO, String>{
@@ -23,7 +23,7 @@ public class MongoUserRepository extends BaseRepo<UserDBO, String>{
 	}
 
 	@Override
-	public MongoCollection<UserDBO> InitMongoCollection(MongoDatabase db)
+	protected final MongoCollection<UserDBO> InitMongoCollection(MongoDatabase db)
 	{
 		CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 				CodecRegistries.fromProviders(PojoCodecProvider.builder()

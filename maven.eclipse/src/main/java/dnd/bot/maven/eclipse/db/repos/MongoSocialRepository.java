@@ -10,17 +10,20 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.SocialDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.SocialDbo;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
-public class MongoSocialRepo extends BaseRepo<SocialDbo, ObjectId> {
+public class MongoSocialRepository extends BaseRepo<SocialDbo, ObjectId> 
+    implements IFieldUpdatable<ObjectId>
+{
 
-    public MongoSocialRepo(MongoDatabase db)
+    public MongoSocialRepository(MongoDatabase db)
     {
         super(db);
     }
 
     @Override
-    protected MongoCollection<SocialDbo> InitMongoCollection(MongoDatabase db) {
+    protected final MongoCollection<SocialDbo> InitMongoCollection(MongoDatabase db) {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(SocialDbo.class).build()));

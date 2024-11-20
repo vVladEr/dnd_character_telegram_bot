@@ -14,31 +14,45 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.db.dbo.GradeDBo;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
+import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IInnerFieldUpdatable;
+
 import java.util.ArrayList;
 
-public class MongoGradesRepository {
-    private MongoCollection<GradeDBo> spellsCollection;
+public class MongoGradesRepository extends BaseRepo<GradeDBo, GradeCompositeKey> 
+    implements IInnerFieldUpdatable<GradeCompositeKey>
+{
 
     public MongoGradesRepository(MongoDatabase db)
     {
-        CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-				CodecRegistries.fromProviders(PojoCodecProvider.builder()
-						.register(GradeDBo.class).build()));
-        spellsCollection =  db.getCollection("spells", GradeDBo.class).withCodecRegistry(pojoCodecRegistry);
+        super(db);
     }
 
-
-
-    public GradeDBo InsertGrade(GradeDBo grade)
+    @Override
+    protected final MongoCollection<GradeDBo> InitMongoCollection(MongoDatabase db)
     {
-        spellsCollection.insertOne(grade);
-        return grade;
+        CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+        CodecRegistries.fromProviders(PojoCodecProvider.builder()
+                .register(GradeDBo.class, BasicDescriptionDbo.class).build()));
+        return db.getCollection("spells", GradeDBo.class).withCodecRegistry(pojoCodecRegistry);
+
+    }
+
+    @Override
+    public GradeDBo GetDocumentByKey(GradeCompositeKey compositeKey)
+    {
+        var gradeDbo = mongoCollection.find(and(
+            eq("characterId", compositeKey.characterId),
+             eq("grade", compositeKey.grade))).first();
+        return gradeDbo;
+
     }
 
     public ArrayList<GradeDBo> GetCharacterGrades(ObjectId characterId)
     {
-        var dboGrades = spellsCollection.find(eq("characterId", characterId));
+        var dboGrades = mongoCollection.find(eq("characterId", characterId));
         var grades = new ArrayList<GradeDBo>();
         for(var dboGrade: dboGrades)
         {
@@ -47,31 +61,43 @@ public class MongoGradesRepository {
         return grades;
     }
 
-    public GradeDBo GetCharacterGrade(ObjectId characterId, int grade)
-    {
-        var gradeDbo = spellsCollection.find(and(eq("characterId", characterId), eq("grade", grade))).first();
-        return gradeDbo;
-    }
-
-    public void UpdateField(ObjectId characterId, int grade, String fieldName, Object newFieldValue)
+    @Override
+    public void UpdateField(GradeCompositeKey compositeKey, String fieldName, Object newFieldValue)
     {
         var update = Updates.set(fieldName, newFieldValue);
-        var filter = and(eq("characterId", characterId), eq("grade", grade));
+        var filter = and(eq("characterId", compositeKey.characterId), eq("grade", compositeKey.grade));
         var options = new UpdateOptions().upsert(false);
-        spellsCollection.updateOne(filter, update, options);
+        mongoCollection.updateOne(filter, update, options);
     }
 
-    public void UpdateSpellDesc(ObjectId characterId, int grade, String spellName, Object newDesc)
+    public void UpdateInnerField(GradeCompositeKey compositeKey, String spellName, String fieldName, Object newValue)
     {
-        var update = Updates.set("spells." + spellName, newDesc);
-        var filter = and(eq("characterId", characterId), eq("grade", grade));
+        if(fieldName.equals("name"))
+        {
+            var oldSpell = GetDocumentByKey(compositeKey).spells.get(spellName);
+            RemoveSpell(compositeKey, spellName);
+            AddSpell(compositeKey, (String) newValue, oldSpell.description);
+            return;
+        }
+        var update = Updates.set("spells." + spellName + "." + fieldName, newValue);
+        var filter = and(eq("characterId", compositeKey.characterId), eq("grade", compositeKey.grade));
         var options = new UpdateOptions().upsert(false);
-        spellsCollection.updateOne(filter, update, options);
+        mongoCollection.updateOne(filter, update, options);
     }
 
-    public void AddSpell(ObjectId characterId, int grade, String spellName, String spellDesc)
+    public void AddSpell(GradeCompositeKey compositeKey, String spellName, String spellDesc)
     {
-        var filter = and(eq("characterId", characterId), eq("grade", grade));
-        spellsCollection.updateOne(filter, Updates.set("spells." + spellName, spellDesc));
+        var filter = and(eq("characterId", compositeKey.characterId), eq("grade", compositeKey.grade));
+        mongoCollection.updateOne(filter, Updates.set("spells." + spellName, 
+        new BasicDescriptionDbo(
+            compositeKey.characterId,
+             spellName,
+             spellDesc)));
+    }
+
+    private void RemoveSpell(GradeCompositeKey compositeKey, String spellName)
+    {
+        var filter = and(eq("characterId", compositeKey.characterId), eq("grade", compositeKey.grade));
+        mongoCollection.updateOne(filter, Updates.unset("spells." + spellName));
     }
 }

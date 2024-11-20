@@ -1,4 +1,4 @@
-package dnd.bot.maven.eclipse.db.dbo;
+package dnd.bot.maven.eclipse.db.Models.dbo;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
@@ -18,7 +18,7 @@ public class GradeDBo {
     public int CurrentCount;
 
     @BsonProperty
-    public HashMap<String, String> spells;
+    public HashMap<String, BasicDescriptionDbo> spells;
 
     public GradeDBo(){}
 
@@ -26,6 +26,6 @@ public class GradeDBo {
 	{
 		this.characterId = characterId;
 		this.grade = grade;
-		spells = new HashMap<String, String>();
+		spells = new HashMap<String, BasicDescriptionDbo>();
 	}
 }

@@ -10,9 +10,12 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.LevelDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.LevelDbo;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
-public class MongoLevelRepository extends BaseRepo<LevelDbo, ObjectId> {
+public class MongoLevelRepository extends BaseRepo<LevelDbo, ObjectId> 
+    implements IFieldUpdatable<ObjectId>
+{
 
     public MongoLevelRepository(MongoDatabase db) 
     {
@@ -20,7 +23,7 @@ public class MongoLevelRepository extends BaseRepo<LevelDbo, ObjectId> {
     }
     
     @Override
-    protected MongoCollection<LevelDbo> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<LevelDbo> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()

@@ -12,11 +12,14 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import dnd.bot.maven.eclipse.db.dbo.ItemDBO;
+import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
 import java.util.ArrayList;
 
-public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>{
+public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>
+    implements IFieldUpdatable<ObjectId>
+{
 
     public MongoItemsRepository(MongoDatabase db)
     {
@@ -24,12 +27,12 @@ public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>{
     }
     
     @Override
-    protected MongoCollection<ItemDBO> InitMongoCollection(MongoDatabase db)
+    protected final MongoCollection<ItemDBO> InitMongoCollection(MongoDatabase db)
     {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
         CodecRegistries.fromProviders(PojoCodecProvider.builder()
 						.register(ItemDBO.class).build()));
-        return db.getCollection("stats", ItemDBO.class).withCodecRegistry(pojoCodecRegistry);
+        return db.getCollection("items", ItemDBO.class).withCodecRegistry(pojoCodecRegistry);
     }
 
     public ArrayList<ItemDBO> GetCharactersItems(ObjectId characterId)

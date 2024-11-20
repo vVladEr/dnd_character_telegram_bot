@@ -7,7 +7,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.db.dbo.BasicDescriptionDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
+import dnd.bot.maven.eclipse.db.Services.dbConnector;
 import dnd.bot.maven.eclipse.db.repos.MongoPossesionsRepository;
 
 public class PossesionsRepositoryTest {
@@ -18,13 +19,13 @@ public class PossesionsRepositoryTest {
 	public static void SetUp() 
 	{
         conn = new dbConnector("test-java-dnd-bot");
-        rep = new MongoPossesionsRepository(conn.DB);
+        rep = new MongoPossesionsRepository(conn.getDb());
 	}
 	
 	@AfterAll
 	public static void TearDown() 
 	{
-		conn.DB.drop();
+		conn.getDb().drop();
 	}
 	
 	@Test
