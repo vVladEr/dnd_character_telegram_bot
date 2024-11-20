@@ -55,7 +55,7 @@ public class SpellsRepositoryTest {
         var gradeDbo = new GradeDBo(characterId, grade);
         rep.InsertDocument(gradeDbo);
 
-        rep.UpdateField(characterId, grade, "maxCount", 2);
+        rep.UpdateField(compositeKey, "maxCount", 2);
 
         var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
@@ -76,14 +76,14 @@ public class SpellsRepositoryTest {
         var spellDesc = "testDesk";
         rep.InsertDocument(gradeDbo);
 
-        rep.AddSpell(characterId, grade, spellName, spellDesc);
+        rep.AddSpell(compositeKey, spellName, spellDesc);
 
         var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(dbGradeDbo.spells.size() == 1);
         assertTrue(dbGradeDbo.spells.containsKey(spellName));
-        assertTrue(dbGradeDbo.spells.get(spellName).equals(spellDesc));
+        assertTrue(dbGradeDbo.spells.get(spellName).description.equals(spellDesc));
     }
 
     @Test
@@ -98,15 +98,15 @@ public class SpellsRepositoryTest {
         var newSpellDesc = "newTestDesc";
         rep.InsertDocument(gradeDbo);
 
-        rep.AddSpell(characterId, grade, spellName, oldSpellDesc);
-        rep.UpdateSpellDesc(characterId, grade, spellName, newSpellDesc);
+        rep.AddSpell(compositeKey, spellName, oldSpellDesc);
+        rep.UpdateInnerField(compositeKey, spellName, "description" , newSpellDesc);
 
         var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(dbGradeDbo.spells.size() == 1);
         assertTrue(dbGradeDbo.spells.containsKey(spellName));
-        assertFalse(dbGradeDbo.spells.get(spellName).equals(oldSpellDesc));
-        assertTrue(dbGradeDbo.spells.get(spellName).equals(newSpellDesc));
+        assertFalse(dbGradeDbo.spells.get(spellName).description.equals(oldSpellDesc));
+        assertTrue(dbGradeDbo.spells.get(spellName).description.equals(newSpellDesc));
     }
 }

@@ -11,8 +11,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.SocialDbo;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
-public class MongoSocialRepository extends BaseRepo<SocialDbo, ObjectId> {
+public class MongoSocialRepository extends BaseRepo<SocialDbo, ObjectId> 
+    implements IFieldUpdatable<ObjectId>
+{
 
     public MongoSocialRepository(MongoDatabase db)
     {

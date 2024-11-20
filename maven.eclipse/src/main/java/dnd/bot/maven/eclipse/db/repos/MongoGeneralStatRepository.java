@@ -14,14 +14,16 @@ import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
 import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
-import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.IInnerFieldUpdatable;
 
 import java.util.ArrayList;
 
-public class MongoGeneralStatRepository extends BaseRepo<GeneralStatDBO, StatCompositeKey> {
+public class MongoGeneralStatRepository extends BaseRepo<GeneralStatDBO, StatCompositeKey> 
+    implements IInnerFieldUpdatable<StatCompositeKey>
+{
 
     public MongoGeneralStatRepository(MongoDatabase db)
     {
@@ -66,19 +68,19 @@ public class MongoGeneralStatRepository extends BaseRepo<GeneralStatDBO, StatCom
         return stats;
     }
 
-    public void UpdateStatField(ObjectId characterId, StatNameEnum statName, String fieldName, Object fieldNewValue)
+    public void UpdateField(StatCompositeKey compositeKey, String fieldName, Object fieldNewValue)
     {
         var update = Updates.set(fieldName, fieldNewValue);
-        var filter = and(eq("characterId", characterId),
-                         eq("statName", statName));
+        var filter = and(eq("characterId", compositeKey.characterId),
+                         eq("statName", compositeKey.statName));
         var options = new UpdateOptions().upsert(false);
         mongoCollection.updateOne(filter, update, options);
     }
 
-    public void UpdateSkillField(ObjectId characterId, StatNameEnum statName, String skillName, String fieldName, Object fieldNewValue)
+    public void UpdateInnerField(StatCompositeKey compositeKey, String skillName, String fieldName, Object fieldNewValue)
     {
         var update = Updates.set("skills." + skillName + "." + fieldName, fieldNewValue);
-        var filter = and(eq("characterId", characterId), eq("statName", statName));
+        var filter = and(eq("characterId", compositeKey.characterId), eq("statName", compositeKey.statName));
         var options = new UpdateOptions().upsert(false);
         mongoCollection.updateOne(filter, update, options);
     }

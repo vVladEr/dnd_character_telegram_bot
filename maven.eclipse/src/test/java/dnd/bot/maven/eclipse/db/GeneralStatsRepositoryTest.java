@@ -80,7 +80,7 @@ private static MongoGeneralStatRepository rep;
         var oldFieldValue = dbStat.value;
 
         var newValue = 5;
-        rep.UpdateStatField(characterId, statName, "value", newValue);
+        rep.UpdateField(compositeKey, "value", newValue);
         dbStat = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbStat != null);
         assertFalse(dbStat.value == oldFieldValue);
@@ -126,8 +126,8 @@ private static MongoGeneralStatRepository rep;
 
         var newKnowledgeLevelValue = KnowledgeLevel.INTERMEDIATE;
         var newtotalBonusesValue = 10;
-        rep.UpdateSkillField(characterId, statName, skillName, "knowledgeLevel", newKnowledgeLevelValue); 
-        rep.UpdateSkillField(characterId, statName, skillName, "totalBonuses", newtotalBonusesValue); 
+        rep.UpdateInnerField(compositeKey, skillName, "knowledgeLevel", newKnowledgeLevelValue); 
+        rep.UpdateInnerField(compositeKey, skillName, "totalBonuses", newtotalBonusesValue); 
 
         var dbStat = rep.GetDocumentByKey(compositeKey);
         assertTrue(dbStat != null);
