@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
 import dnd.bot.maven.eclipse.db.Services.SkillFactory;
 
-public class GeneralStatDBO {
+public class GeneralStatDBO implements IDbo {
     
     @BsonProperty
     public ObjectId characterId;

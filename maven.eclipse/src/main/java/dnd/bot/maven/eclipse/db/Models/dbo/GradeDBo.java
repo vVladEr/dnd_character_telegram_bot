@@ -4,7 +4,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 import java.util.HashMap;
 
-public class GradeDBo {
+public class GradeDBo implements IDbo {
     @BsonProperty
     public ObjectId characterId;
 

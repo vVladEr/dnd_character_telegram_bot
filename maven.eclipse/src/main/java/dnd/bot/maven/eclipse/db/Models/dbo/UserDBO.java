@@ -8,7 +8,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 
-public final class UserDBO {
+public final class UserDBO implements IDbo {
 
     @BsonId
     public final String id;

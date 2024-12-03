@@ -10,12 +10,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
 import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
 import dnd.bot.maven.eclipse.db.Services.dbConnector;
+import dnd.bot.maven.eclipse.db.repos.KnowledgeLevel;
 import dnd.bot.maven.eclipse.db.repos.MongoGeneralStatRepository;
 
 public class GeneralStatsRepositoryTest {

@@ -23,27 +23,39 @@ public class Bot extends TelegramLongPollingBot{
 	private InlineKeyboardMarkup markup;
 	private List<InlineKeyboardButton> row;
 	private List<SendMessage> sendMessages;
+	private boolean isFirstMessage;
 	
 	public void Init() {
-		router = new Router();
+		isFirstMessage = true;
 		commands = new LinkedHashMap<String, ICommand>();
 		commands.put("/info", new InfoCommand());
 		commands.put("/authors", new AuthorsCommand());
 		commands.put("/help", new HelpCommand(commands));
-		commands.put("/start", new StartCommand(router));
+		commands.put("/start", new StartCommand());
 	}
 	
 	@Override
 	public void onUpdateReceived(Update update) {
 		if (update.hasCallbackQuery()) {
+			if (isFirstMessage) {
+				router = new Router(update.getCallbackQuery().getFrom().getId().toString());
+				isFirstMessage = false;
+			}
 			processClickedButton(update);
 			return;
 		}
 
-	    var msg = update.getMessage();
+		var msg = update.getMessage();
 	    var user = msg.getFrom();
 	    var id = user.getId();
 		var text = msg.getText();
+
+		if (isFirstMessage) {
+			router = new Router(id.toString());
+			isFirstMessage = false;
+		}
+
+	    
 
 	    if (msg.isCommand())
 	    {
@@ -88,19 +100,11 @@ public class Bot extends TelegramLongPollingBot{
 
 	private void processClickedButton(Update update) {
 		var callbackQuery = update.getCallbackQuery();
-		var callback = (callbackQuery == null) ? "" : callbackQuery.getData();
-		var currentState = router.getCurrentState();
+		var callback = callbackQuery.getData();
 
-		for (var callBackText : currentState.possibleTransitions.keySet()) {
-			if (callback.equals(callBackText)) {
-				System.out.println(router.makeTransition(callBackText));
-				break;
-			}
-		}
+		router.makeTransition(callback);
 		
 		var id = callbackQuery.getFrom().getId().toString();
-
-		System.out.println(id);
 
 		packageResponse(id);
 		sendMessages();
@@ -108,8 +112,6 @@ public class Bot extends TelegramLongPollingBot{
 
 	private void packageResponse(String chatId) 
 	{
-		System.out.println(router.getCurrentState().getClass());
-		System.out.println(router.getCurrentState().possibleTransitions);
 		var responseObject = router.getCurrentState().getStateMessages();
 
 		sendMessages = new ArrayList<SendMessage>();

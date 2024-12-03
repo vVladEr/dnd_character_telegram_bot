@@ -12,11 +12,22 @@ public class Combinekey {
 
     private final ObjectId objectIdKey;
 
+    private final String userIdKey;
+
     public Combinekey(ObjectId characterId, int gradeNumber)
     {
         gradeCompositeKey = new GradeCompositeKey(characterId, gradeNumber);
         statCompositeKey = null;
         objectIdKey = null;
+        userIdKey = null;
+    }
+
+    public Combinekey(String userId, ObjectId characterId, int gradeNumber)
+    {
+        gradeCompositeKey = new GradeCompositeKey(characterId, gradeNumber);
+        statCompositeKey = null;
+        objectIdKey = characterId;
+        userIdKey = userId;
     }
     
     public Combinekey(ObjectId characterId, StatNameEnum statName)
@@ -24,6 +35,7 @@ public class Combinekey {
         gradeCompositeKey = null;
         statCompositeKey = new StatCompositeKey(characterId, statName);
         objectIdKey = null;
+        userIdKey = null;
     }
 
     public Combinekey(ObjectId objectId)
@@ -31,6 +43,23 @@ public class Combinekey {
         gradeCompositeKey = null;
         statCompositeKey = null;
         objectIdKey = objectId;
+        userIdKey = null;
+    }
+
+    public Combinekey(String userId)
+    {
+        gradeCompositeKey = null;
+        statCompositeKey = null;
+        objectIdKey = null;
+        userIdKey = userId;
+    }
+
+    public Combinekey(String userId, ObjectId objectId)
+    {
+        gradeCompositeKey = null;
+        statCompositeKey = null;
+        objectIdKey = objectId;
+        userIdKey = userId;
     }
 
     public GradeCompositeKey getGradeCompositeKey() {
@@ -49,5 +78,11 @@ public class Combinekey {
         assert objectIdKey != null;
 
         return objectIdKey;
+    }
+
+    public String getUserIdKey() {
+        assert userIdKey != null;
+
+        return userIdKey;
     }
 }

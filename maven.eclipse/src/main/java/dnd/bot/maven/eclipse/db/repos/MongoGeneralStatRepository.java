@@ -13,7 +13,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
-import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.KnowledgeLevel;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
