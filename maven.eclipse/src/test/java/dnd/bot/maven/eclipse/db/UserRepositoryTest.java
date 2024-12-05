@@ -1,6 +1,7 @@
 package dnd.bot.maven.eclipse.db;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
@@ -16,48 +17,48 @@ public class UserRepositoryTest{
 	private static dbConnector conn;
 	
 	@BeforeAll
-	public static void SetUp() 
+	public static void setUp() 
 	{
         conn = new dbConnector("test-java-dnd-bot");
         rep = new MongoUserRepository(conn.getDb());
 	}
 	
 	@AfterAll
-	public static void TearDown() 
+	public static void tearDown() 
 	{
 		conn.getDb().drop();
 	}
 	
 	@Test
-	public void AddUserTest() 
+	public void addUserTest() 
 	{
 		String userId = new ObjectId().toString();
 		var user = new UserDBO(userId);
 		rep.InsertDocument(user);
 		
         var dbUser = rep.GetDocumentByKey(userId);
-        assertTrue(dbUser != null);
-        assertTrue(dbUser.GetId().equals(user.GetId()));
+        assertNotNull(dbUser);
+        assertEquals(user.GetId(), dbUser.GetId());
 	}
 
 	@Test
-	public void AddCharactersToUserTest() 
+	public void addCharactersToUserTest() 
 	{
 		String userId = new ObjectId().toString();
 		var user = new UserDBO(userId);
 		rep.InsertDocument(user);
 
-		var uuid1 = new ObjectId();
-		var uuid2 = new ObjectId();
-		rep.AddCharacterToUser(userId, uuid1);
-		rep.AddCharacterToUser(userId, uuid2);
+		var characterId1 = new ObjectId();
+		var characterId2 = new ObjectId();
+		rep.AddCharacterToUser(userId, characterId1, "name1");
+		rep.AddCharacterToUser(userId, characterId2, "name2");
 
         var dbUser = rep.GetDocumentByKey(userId);
-        assertTrue(dbUser != null);
-        assertTrue(dbUser.characters.size() == 2);
-        assertTrue(dbUser.GetId().equals(user.GetId()));
-        assertTrue(dbUser.characters.get(0).equals(uuid1));
-        assertTrue(dbUser.characters.get(1).equals(uuid2));
+        assertNotNull(dbUser);
+        assertEquals(2, dbUser.characters.size());
+        assertEquals(user.GetId(), dbUser.GetId());
+        assertEquals(characterId1, dbUser.characters.get(0).CharacterId);
+        assertEquals(characterId2, dbUser.characters.get(1).CharacterId);
 	}
 
 	@Test
@@ -68,21 +69,24 @@ public class UserRepositoryTest{
 		rep.InsertDocument(user);
 
 		var characterId1 = new ObjectId();
+		var characterName1 = "1";
 		var characterId2 = new ObjectId();
-		rep.AddCharacterToUser(userId, characterId1);
-		rep.AddCharacterToUser(userId, characterId2);
+		var characterName2 = "2";
+		rep.AddCharacterToUser(userId, characterId1, characterName1);
+		rep.AddCharacterToUser(userId, characterId2, characterName2);
 
         var dbUser = rep.GetDocumentByKey(userId);
-        assertTrue(dbUser != null);
-        assertTrue(dbUser.characters.size() == 2);
-        assertTrue(dbUser.GetId().equals(user.GetId()));
-        assertTrue(dbUser.characters.get(0).equals(characterId1));
-		assertTrue(dbUser.characters.get(1).equals(characterId2));
+        assertNotNull(dbUser);
+        assertEquals(2, dbUser.characters.size());
+        assertEquals(user.GetId(), dbUser.GetId());
+
+        assertEquals(characterId1, dbUser.characters.get(0).CharacterId);
+		assertEquals(characterId2, dbUser.characters.get(1).CharacterId);
 
 		rep.RemoveCharacterFromUser(userId, characterId1);
 		dbUser = rep.GetDocumentByKey(userId);
-        assertTrue(dbUser != null);
-        assertTrue(dbUser.characters.size() == 1);
-		assertTrue(dbUser.characters.get(0).equals(characterId2));
+        assertNotNull(dbUser);
+        assertEquals(1, dbUser.characters.size());
+		assertEquals(characterId2, dbUser.characters.get(0).CharacterId);
 	}
 }

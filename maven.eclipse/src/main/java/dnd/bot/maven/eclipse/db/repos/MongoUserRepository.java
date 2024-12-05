@@ -1,5 +1,6 @@
 package dnd.bot.maven.eclipse.db.repos;
 
+import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -12,6 +13,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Updates;
 
+import dnd.bot.maven.eclipse.db.Models.dbo.CharacterDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.UserDBO;
 
 
@@ -27,19 +29,27 @@ public class MongoUserRepository extends BaseRepo<UserDBO, String>{
 	{
 		CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 				CodecRegistries.fromProviders(PojoCodecProvider.builder()
-						.register(UserDBO.class).build()));
+						.register(UserDBO.class, CharacterDbo.class).build()));
         return db.getCollection("users", UserDBO.class).withCodecRegistry(pojoCodecRegistry);
 	}
 	
-	public void AddCharacterToUser(String userId, ObjectId characterId) 
+	public void AddCharacterToUser(String userId, ObjectId characterId, String charaterName) 
 	{
-		mongoCollection.updateOne(eq("_id", userId), Updates.addToSet("characters", characterId));
+		var characterDbo = new CharacterDbo(characterId, charaterName);
+		mongoCollection.updateOne(eq("_id", userId),
+		 Updates.addToSet("characters", characterDbo));
 		
 	}
 
 	public void RemoveCharacterFromUser(String userId, ObjectId characterId) 
 	{
-		mongoCollection.updateOne(eq("_id", userId), Updates.pull("characters", characterId));
+		var filter = eq("_id", userId);
+		Document update = new Document("$pull",
+        new Document("characters",
+                new Document("_id", characterId)
+        )
+		);		
+		mongoCollection.updateOne(filter, update);
 		
 	}
 }

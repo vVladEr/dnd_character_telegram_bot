@@ -2,10 +2,10 @@ package dnd.bot.maven.eclipse.db.Models.dbo;
 
 import java.util.ArrayList;
 
+
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.types.ObjectId;
 
 
 public final class UserDBO {
@@ -14,16 +14,16 @@ public final class UserDBO {
     public final String id;
 
     @BsonProperty("characters")
-    public final ArrayList<ObjectId> characters;
+    public final ArrayList<CharacterDbo> characters;
 
     public UserDBO(String userId)
     {
         id = userId;
-        characters = new ArrayList<ObjectId>();
+        characters = new ArrayList<CharacterDbo>();
     }
 
     @BsonCreator
-    public UserDBO(@BsonId String id, @BsonProperty("characters") ArrayList<ObjectId> characters)
+    public UserDBO(@BsonId String id, @BsonProperty("characters") ArrayList<CharacterDbo> characters)
     {
         this.id = id;
         this.characters = characters;
@@ -34,7 +34,7 @@ public final class UserDBO {
         return id;
     }
 
-    public ArrayList<ObjectId> GetCharacters()
+    public ArrayList<CharacterDbo> GetCharacters()
     {
         return characters;
     }

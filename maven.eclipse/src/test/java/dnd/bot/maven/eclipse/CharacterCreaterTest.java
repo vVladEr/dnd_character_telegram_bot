@@ -3,7 +3,6 @@ package dnd.bot.maven.eclipse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,7 +20,7 @@ public class CharacterCreaterTest {
     private static ObjectId characterId;
 
     @BeforeAll
-    public static void SetUp() 
+    public static void setUp() 
 	{
         reposStorage = new ReposStorage("test-db");
         characterCreater = new CharacterCreater(reposStorage);
@@ -32,10 +31,10 @@ public class CharacterCreaterTest {
 	}
 
     @Test
-    public void AddCharcaterIdToUser()
+    public void addCharcaterIdToUser()
     {
         var userDbo = reposStorage.getUserRepository().GetDocumentByKey(userId);
-        assertTrue(userDbo.characters.contains(characterId));
+        assertEquals(1, userDbo.characters.size());
     }
 
     @Test

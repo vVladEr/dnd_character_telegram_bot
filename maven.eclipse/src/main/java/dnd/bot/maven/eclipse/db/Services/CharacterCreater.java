@@ -19,7 +19,7 @@ public class CharacterCreater {
         this.reposStorage = reposStorage;
     }
 
-    public ObjectId CreateCharacter(String userId)
+    public ObjectId CreateCharacter(String userId, String characterName)
     {
         var characterId = new ObjectId();
 
@@ -41,9 +41,14 @@ public class CharacterCreater {
         socialRepository.InsertDocument(new SocialDbo(characterId));
 
         var userRepository = reposStorage.getUserRepository();
-        userRepository.AddCharacterToUser(userId, characterId);
+        userRepository.AddCharacterToUser(userId, characterId, characterName);
 
         return characterId;
+    }
+
+    public ObjectId CreateCharacter(String userId)
+    {
+        return CreateCharacter(userId, "Noname");
     }
 
     private void InsertCharacterStats(ObjectId characterId)
