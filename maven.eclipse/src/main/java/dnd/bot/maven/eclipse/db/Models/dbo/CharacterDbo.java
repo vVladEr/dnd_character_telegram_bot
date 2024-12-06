@@ -7,15 +7,19 @@ import org.bson.types.ObjectId;
 public class CharacterDbo {
 
     @BsonId
-    public ObjectId CharacterId;
+    public ObjectId id;
 
     @BsonProperty
-    public String CharacterName;
+    public String name;
+
+    @BsonProperty
+    public String userId;
 
     public CharacterDbo(){}
 
-    public CharacterDbo(ObjectId characterId, String characterName){
-        CharacterId = characterId;
-        CharacterName = characterName;
+    public CharacterDbo(ObjectId characterId, String characterName, String userId){
+        this.id = characterId;
+        this.name = characterName;
+        this.userId = userId;
     }
 }

@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 
 import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
 import dnd.bot.maven.eclipse.db.Models.dbo.AppearenceDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.CharacterDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.Models.dbo.HPDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.LevelDbo;
@@ -37,8 +38,8 @@ public class CharacterCreater {
         var socialRepository = reposStorage.getSocialRepository();
         socialRepository.insertDocument(new SocialDbo(characterId));
 
-        var userRepository = reposStorage.getUserRepository();
-        userRepository.AddCharacterToUser(userId, characterId, characterName);
+        var userRepository = reposStorage.getCharacterRepository();
+        userRepository.insertDocument(new CharacterDbo(characterId, characterName, userId));
 
         return characterId;
     }

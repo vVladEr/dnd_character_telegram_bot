@@ -8,7 +8,6 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.db.Models.dbo.UserDBO;
 import dnd.bot.maven.eclipse.db.Services.CharacterCreater;
 import dnd.bot.maven.eclipse.db.Services.ReposStorage;
 
@@ -23,16 +22,14 @@ public class CharacterCreaterTest {
     public static void setUp() {
         reposStorage = new ReposStorage("test-db");
         characterCreater = new CharacterCreater(reposStorage);
-        var userRepo = reposStorage.getUserRepository();
         userId = new ObjectId().toString();
-        userRepo.insertDocument(new UserDBO(userId));
         characterId = characterCreater.createCharacter(userId);
     }
 
     @Test
     public void addCharcaterIdToUser() {
-        var userDbo = reposStorage.getUserRepository().getDocumentByKey(userId);
-        assertEquals(1, userDbo.characters.size());
+        var characters = reposStorage.getCharacterRepository().getUserCharacters(userId);
+        assertEquals(1, characters.size());
     }
 
     @Test

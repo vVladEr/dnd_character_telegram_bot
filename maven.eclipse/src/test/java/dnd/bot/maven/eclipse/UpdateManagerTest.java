@@ -17,7 +17,6 @@ import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
 import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
-import dnd.bot.maven.eclipse.db.Models.dbo.UserDBO;
 import dnd.bot.maven.eclipse.db.Services.CharacterCreater;
 import dnd.bot.maven.eclipse.db.Services.ReposStorage;
 import dnd.bot.maven.eclipse.db.Services.UpdateManager;
@@ -33,9 +32,7 @@ public class UpdateManagerTest {
         reposStorage = new ReposStorage("test-db");
         updateManager = new UpdateManager(reposStorage);
         var characterCreater = new CharacterCreater(reposStorage);
-        var userRepo = reposStorage.getUserRepository();
         var userId = new ObjectId().toString();
-        userRepo.insertDocument(new UserDBO(userId));
         characterId = characterCreater.createCharacter(userId);
     }
 
