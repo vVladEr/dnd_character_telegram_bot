@@ -1,14 +1,14 @@
 package dnd.bot.maven.eclipse.db.Services;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
 import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
 
 public final class SkillFactory {
 
-    public static HashMap<String, SkillDbo> getSkillsByStatName(StatNameEnum statName) {
-        var skills = new HashMap<String, SkillDbo>();
+    public static LinkedHashMap<String, SkillDbo> getSkillsByStatName(StatNameEnum statName) {
+        var skills = new LinkedHashMap<String, SkillDbo>();
         switch (statName) {
             case STRENGTH:
                 skills.put("athletics", new SkillDbo("athletics"));

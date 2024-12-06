@@ -15,9 +15,10 @@ public class CharacterDbo {
     @BsonProperty
     public String userId;
 
-    public CharacterDbo(){}
+    public CharacterDbo() {
+    }
 
-    public CharacterDbo(ObjectId characterId, String characterName, String userId){
+    public CharacterDbo(ObjectId characterId, String characterName, String userId) {
         this.id = characterId;
         this.name = characterName;
         this.userId = userId;
