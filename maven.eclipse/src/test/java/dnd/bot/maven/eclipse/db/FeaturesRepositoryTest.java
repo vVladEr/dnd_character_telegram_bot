@@ -12,39 +12,37 @@ import dnd.bot.maven.eclipse.db.Services.dbConnector;
 import dnd.bot.maven.eclipse.db.repos.MongoFeaturesRepository;
 
 public class FeaturesRepositoryTest {
-    private static MongoFeaturesRepository rep;
+	private static MongoFeaturesRepository rep;
 	private static dbConnector conn;
-	
+
 	@BeforeAll
-	public static void SetUp() 
-	{
-        conn = new dbConnector("test-java-dnd-bot");
-        rep = new MongoFeaturesRepository(conn.getDb());
+	public static void setUp() {
+		conn = new dbConnector("test-java-dnd-bot");
+		rep = new MongoFeaturesRepository(conn.getDb());
 	}
-	
+
 	@AfterAll
-	public static void TearDown() 
-	{
+	public static void tearDown() {
 		conn.getDb().drop();
 	}
-	
+
 	@Test
-	public void GetCharactersFeatures() 
-	{
+	public void getCharactersFeatures() {
 		var characterId = new ObjectId();
 		var feature1 = new BasicDescriptionDbo(characterId, "test1", "testDesc1");
-        var feature2 = new BasicDescriptionDbo(characterId, "test2", "testDesc2");
-        var anotherCharacterFeature = new BasicDescriptionDbo(new ObjectId(), "anotherFeature", "feature for another character");
-		rep.InsertDocument(feature1);
-        rep.InsertDocument(feature2);
-        rep.InsertDocument(anotherCharacterFeature);
-        
-        var features = rep.GetCharacterFeatures(characterId);
-        assertTrue(features != null);
-        assertTrue(features.size() == 2);
-        assertTrue(features.get(0).name.equals("test1"));
-        assertTrue(features.get(0).description.equals("testDesc1"));
-        assertTrue(features.get(1).name.equals("test2"));
-        assertTrue(features.get(1).description.equals("testDesc2"));
+		var feature2 = new BasicDescriptionDbo(characterId, "test2", "testDesc2");
+		var anotherCharacterFeature = new BasicDescriptionDbo(new ObjectId(), "anotherFeature",
+				"feature for another character");
+		rep.insertDocument(feature1);
+		rep.insertDocument(feature2);
+		rep.insertDocument(anotherCharacterFeature);
+
+		var features = rep.getCharacterFeatures(characterId);
+		assertTrue(features != null);
+		assertTrue(features.size() == 2);
+		assertTrue(features.get(0).name.equals("test1"));
+		assertTrue(features.get(0).description.equals("testDesc1"));
+		assertTrue(features.get(1).name.equals("test2"));
+		assertTrue(features.get(1).description.equals("testDesc2"));
 	}
 }

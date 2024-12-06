@@ -45,7 +45,7 @@ public class GeneralStatDBO {
 
     public GeneralStatDBO(ObjectId characterId, StatNameEnum statName)
 	{
-        this(characterId, statName, SkillFactory.GetSkillsByStatName(statName));
+        this(characterId, statName, SkillFactory.getSkillsByStatName(statName));
 	}
 
 

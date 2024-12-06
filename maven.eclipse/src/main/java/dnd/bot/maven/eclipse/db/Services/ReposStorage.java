@@ -38,20 +38,17 @@ public class ReposStorage {
 
     private MongoUserRepository userRepository;
 
-    public ReposStorage()
-    {
+    public ReposStorage() {
         var dbConnector = new dbConnector();
-        Init(dbConnector.getDb());
+        init(dbConnector.getDb());
     }
 
-    public ReposStorage(String dbName)
-    {
+    public ReposStorage(String dbName) {
         var dbConnector = new dbConnector(dbName);
-        Init(dbConnector.getDb());
+        init(dbConnector.getDb());
     }
 
-    private void Init(MongoDatabase db)
-    {
+    private void init(MongoDatabase db) {
         appearenceRepository = new MongoAppearenceRepository(db);
         featuresRepository = new MongoFeaturesRepository(db);
         statRepository = new MongoGeneralStatRepository(db);
@@ -65,7 +62,6 @@ public class ReposStorage {
         userRepository = new MongoUserRepository(db);
     }
 
-    
     public MongoAppearenceRepository getAppearenceRepository() {
         return appearenceRepository;
     }

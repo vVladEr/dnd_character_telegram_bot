@@ -7,8 +7,7 @@ import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
 
 public final class SkillFactory {
 
-    public static HashMap<String, SkillDbo> GetSkillsByStatName(StatNameEnum statName)
-    {
+    public static HashMap<String, SkillDbo> getSkillsByStatName(StatNameEnum statName) {
         var skills = new HashMap<String, SkillDbo>();
         switch (statName) {
             case STRENGTH:
@@ -25,7 +24,7 @@ public final class SkillFactory {
                 skills.put("nature", new SkillDbo("nature"));
                 skills.put("religion", new SkillDbo("religion"));
                 break;
-            
+
             case WISDOM:
                 skills.put("animal handling", new SkillDbo("animal handling"));
                 skills.put("insight", new SkillDbo("insight"));
@@ -33,7 +32,7 @@ public final class SkillFactory {
                 skills.put("perception", new SkillDbo("perception"));
                 skills.put("survival", new SkillDbo("survival"));
                 break;
-            
+
             case CHARISMA:
                 skills.put("deception", new SkillDbo("deceptoion"));
                 skills.put("intimidation", new SkillDbo("intimidation"));

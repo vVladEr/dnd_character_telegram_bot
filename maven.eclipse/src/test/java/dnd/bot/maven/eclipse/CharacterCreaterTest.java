@@ -20,34 +20,29 @@ public class CharacterCreaterTest {
     private static ObjectId characterId;
 
     @BeforeAll
-    public static void setUp() 
-	{
+    public static void setUp() {
         reposStorage = new ReposStorage("test-db");
         characterCreater = new CharacterCreater(reposStorage);
         var userRepo = reposStorage.getUserRepository();
         userId = new ObjectId().toString();
-        userRepo.InsertDocument(new UserDBO(userId));
-        characterId = characterCreater.CreateCharacter(userId);
-	}
+        userRepo.insertDocument(new UserDBO(userId));
+        characterId = characterCreater.createCharacter(userId);
+    }
 
     @Test
-    public void addCharcaterIdToUser()
-    {
-        var userDbo = reposStorage.getUserRepository().GetDocumentByKey(userId);
+    public void addCharcaterIdToUser() {
+        var userDbo = reposStorage.getUserRepository().getDocumentByKey(userId);
         assertEquals(1, userDbo.characters.size());
     }
 
     @Test
-    public void addCharacterInfoIntoRepos()
-    {
-        var appearenceDbo = reposStorage.getAppearenceRepository().GetDocumentByKey(characterId);
-        var hpDbo = reposStorage.getHpRepository().GetDocumentByKey(characterId);
-        var levelDbo = reposStorage.getLevelRepository().GetDocumentByKey(characterId);
-        var personalityDbo = reposStorage.getPersonalityRepository().GetDocumentByKey(characterId);
-        var socialDbo = reposStorage.getSocialRepository().GetDocumentByKey(characterId);
-        var characterStats = reposStorage.getStatRepository().GetCharacterStats(characterId);
-
-
+    public void addCharacterInfoIntoRepos() {
+        var appearenceDbo = reposStorage.getAppearenceRepository().getDocumentByKey(characterId);
+        var hpDbo = reposStorage.getHpRepository().getDocumentByKey(characterId);
+        var levelDbo = reposStorage.getLevelRepository().getDocumentByKey(characterId);
+        var personalityDbo = reposStorage.getPersonalityRepository().getDocumentByKey(characterId);
+        var socialDbo = reposStorage.getSocialRepository().getDocumentByKey(characterId);
+        var characterStats = reposStorage.getStatRepository().getCharacterStats(characterId);
 
         assertNotNull(appearenceDbo);
         assertNotNull(hpDbo);
@@ -58,10 +53,8 @@ public class CharacterCreaterTest {
     }
 
     @Test
-    public void addDefaultInfoForLevelRepo()
-    {
-        var levelDbo = reposStorage.getLevelRepository().GetDocumentByKey(characterId);
-
+    public void addDefaultInfoForLevelRepo() {
+        var levelDbo = reposStorage.getLevelRepository().getDocumentByKey(characterId);
 
         assertNotNull(levelDbo);
         assertEquals(0, levelDbo.currentExp);
@@ -70,20 +63,8 @@ public class CharacterCreaterTest {
     }
 
     @Test
-    public void addDefaultInfoForSocialRepo()
-    {
-        var socialDbo = reposStorage.getSocialRepository().GetDocumentByKey(characterId);
-
-
-        assertNotNull(socialDbo);
-        assertEquals("Unknown", socialDbo.characterName);
-    }
-
-    @Test
-    public void addDefaultInfoForStatRepo()
-    {
-        var stats = reposStorage.getStatRepository().GetCharacterStats(characterId);
-
+    public void addDefaultInfoForStatRepo() {
+        var stats = reposStorage.getStatRepository().getCharacterStats(characterId);
 
         assertNotNull(stats);
         assertEquals(6, stats.size());

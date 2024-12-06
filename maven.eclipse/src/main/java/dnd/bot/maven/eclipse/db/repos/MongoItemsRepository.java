@@ -1,6 +1,5 @@
 package dnd.bot.maven.eclipse.db.repos;
 
-import org.bson.codecs.configuration.CodecConfigurationException;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -17,38 +16,27 @@ import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
 import java.util.ArrayList;
 
-public class MongoItemsRepository  extends BaseRepo<ItemDBO, ObjectId>
-    implements IFieldUpdatable<ObjectId>
-{
+public class MongoItemsRepository extends BaseRepo<ItemDBO, ObjectId>
+        implements IFieldUpdatable<ObjectId> {
 
-    public MongoItemsRepository(MongoDatabase db)
-    {
+    public MongoItemsRepository(MongoDatabase db) {
         super(db);
     }
-    
+
     @Override
-    protected final MongoCollection<ItemDBO> InitMongoCollection(MongoDatabase db)
-    {
+    protected final MongoCollection<ItemDBO> initMongoCollection(MongoDatabase db) {
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-        CodecRegistries.fromProviders(PojoCodecProvider.builder()
-						.register(ItemDBO.class).build()));
+                CodecRegistries.fromProviders(PojoCodecProvider.builder()
+                        .register(ItemDBO.class).build()));
         return db.getCollection("items", ItemDBO.class).withCodecRegistry(pojoCodecRegistry);
     }
 
-    public ArrayList<ItemDBO> GetCharactersItems(ObjectId characterId)
-    {
+    public ArrayList<ItemDBO> getCharactersItems(ObjectId characterId) {
         var dboItems = mongoCollection.find(eq("characterId", characterId));
         var items = new ArrayList<ItemDBO>();
-        for(var dboItem: dboItems)
-        {
+        for (var dboItem : dboItems) {
             items.add(dboItem);
         }
         return items;
-    }
-
-    @Override
-    public void UpdateField(ObjectId id, String fieldName, Object newFieldValue) throws CodecConfigurationException
-    {
-        super.UpdateField(id, fieldName, newFieldValue);
     }
 }
