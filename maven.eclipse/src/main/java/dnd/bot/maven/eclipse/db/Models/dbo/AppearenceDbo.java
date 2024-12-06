@@ -4,8 +4,6 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-
-
 public class AppearenceDbo {
     @BsonId
     public ObjectId characterId;
@@ -43,10 +41,10 @@ public class AppearenceDbo {
     @BsonProperty
     public String flaws;
 
-    public AppearenceDbo() {}
+    public AppearenceDbo() {
+    }
 
-    public AppearenceDbo(ObjectId characterId)
-    {
+    public AppearenceDbo(ObjectId characterId) {
         this.characterId = characterId;
     }
 }
