@@ -14,10 +14,10 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.DocumentDeletable;
 
 public class MongoFeaturesRepository extends BaseRepo<BasicDescriptionDbo, ObjectId>
-        implements IFieldUpdatable<ObjectId> {
+    implements DocumentDeletable<ObjectId>{
 
     public MongoFeaturesRepository(MongoDatabase db) {
         super(db);
@@ -38,5 +38,10 @@ public class MongoFeaturesRepository extends BaseRepo<BasicDescriptionDbo, Objec
             features.add(dboStat);
         }
         return features;
+    }
+
+    public void deleteDocument(ObjectId id)
+    {
+        super.deleteDocument(id);
     }
 }

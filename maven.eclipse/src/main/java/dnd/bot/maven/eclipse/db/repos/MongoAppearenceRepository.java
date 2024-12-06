@@ -10,10 +10,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.AppearenceDbo;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
-public class MongoAppearenceRepository extends BaseRepo<AppearenceDbo, ObjectId>
-        implements IFieldUpdatable<ObjectId> {
+public class MongoAppearenceRepository extends BaseRepo<AppearenceDbo, ObjectId> {
 
     public MongoAppearenceRepository(MongoDatabase db) {
         super(db);

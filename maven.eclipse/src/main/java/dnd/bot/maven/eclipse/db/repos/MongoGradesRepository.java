@@ -17,12 +17,12 @@ import com.mongodb.client.model.Updates;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IInnerFieldUpdatable;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.InnerFieldUpdatable;
 
 import java.util.ArrayList;
 
 public class MongoGradesRepository extends BaseRepo<GradeDBo, GradeCompositeKey>
-        implements IInnerFieldUpdatable<GradeCompositeKey> {
+        implements InnerFieldUpdatable<GradeCompositeKey> {
 
     public MongoGradesRepository(MongoDatabase db) {
         super(db);

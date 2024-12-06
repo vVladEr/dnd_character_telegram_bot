@@ -12,12 +12,12 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.DocumentDeletable;
 
 import java.util.ArrayList;
 
 public class MongoItemsRepository extends BaseRepo<ItemDBO, ObjectId>
-        implements IFieldUpdatable<ObjectId> {
+    implements DocumentDeletable<ObjectId>{
 
     public MongoItemsRepository(MongoDatabase db) {
         super(db);
@@ -32,11 +32,16 @@ public class MongoItemsRepository extends BaseRepo<ItemDBO, ObjectId>
     }
 
     public ArrayList<ItemDBO> getCharactersItems(ObjectId characterId) {
-        var dboItems = mongoCollection.find(eq("characterId", characterId));
+        var itemsDbo = mongoCollection.find(eq("characterId", characterId));
         var items = new ArrayList<ItemDBO>();
-        for (var dboItem : dboItems) {
-            items.add(dboItem);
+        for (var itemDbo : itemsDbo) {
+            items.add(itemDbo);
         }
         return items;
+    }
+
+    public void deleteDocument(ObjectId id)
+    {
+        super.deleteDocument(id);
     }
 }

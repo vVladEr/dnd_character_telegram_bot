@@ -14,10 +14,10 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.CharacterDbo;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.DocumentDeletable;
 
 public class MongoCharactersRepository extends BaseRepo<CharacterDbo, ObjectId>
-		implements IFieldUpdatable<ObjectId> {
+		implements DocumentDeletable<ObjectId> {
 	public MongoCharactersRepository(MongoDatabase db) {
 		super(db);
 	}
@@ -30,18 +30,16 @@ public class MongoCharactersRepository extends BaseRepo<CharacterDbo, ObjectId>
 		return db.getCollection("characters", CharacterDbo.class).withCodecRegistry(pojoCodecRegistry);
 	}
 
-	public ArrayList<CharacterDbo> getUserCharacters(String userId)
-	{
+	public ArrayList<CharacterDbo> getUserCharacters(String userId) {
 		var charactersDbo = mongoCollection.find(eq("userId", userId));
-        var characters = new ArrayList<CharacterDbo>();
-        for (var characterDbo : charactersDbo) {
-            characters.add(characterDbo);
-        }
-        return characters;
+		var characters = new ArrayList<CharacterDbo>();
+		for (var characterDbo : charactersDbo) {
+			characters.add(characterDbo);
+		}
+		return characters;
 	}
 
-	@Override
 	public void deleteDocument(ObjectId id) {
-        mongoCollection.findOneAndDelete(eq("_id", id));
-    }
+		super.deleteDocument(id);
+	}
 }

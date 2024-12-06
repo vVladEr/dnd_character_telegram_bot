@@ -29,7 +29,7 @@ public class GeneralStatDBO {
 	public int saveThrowValue;
 
     @BsonProperty
-    public boolean IsMastered;
+    public boolean isMastered;
 
     public GeneralStatDBO()
     {

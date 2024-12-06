@@ -17,12 +17,12 @@ import dnd.bot.maven.eclipse.User.Character.Stats.Stat.Skills.Knowledge.Knowledg
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IInnerFieldUpdatable;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.InnerFieldUpdatable;
 
 import java.util.ArrayList;
 
 public class MongoGeneralStatRepository extends BaseRepo<GeneralStatDBO, StatCompositeKey>
-        implements IInnerFieldUpdatable<StatCompositeKey> {
+        implements InnerFieldUpdatable<StatCompositeKey> {
 
     public MongoGeneralStatRepository(MongoDatabase db) {
         super(db);

@@ -7,21 +7,21 @@ import org.bson.types.ObjectId;
 import dnd.bot.maven.eclipse.db.Models.UpdateFieldRequest;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IInnerFieldUpdatable;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.FieldUpdatable;
+import dnd.bot.maven.eclipse.db.repos.Interfaces.InnerFieldUpdatable;
 
 public class UpdateManager {
 
-    private HashMap<String, IFieldUpdatable<ObjectId>> basicRepos;
+    private HashMap<String, FieldUpdatable<ObjectId>> basicRepos;
 
-    private IInnerFieldUpdatable<StatCompositeKey> statRepo;
+    private InnerFieldUpdatable<StatCompositeKey> statRepo;
 
-    private IInnerFieldUpdatable<GradeCompositeKey> gradeRepo;
+    private InnerFieldUpdatable<GradeCompositeKey> gradeRepo;
 
     public UpdateManager(ReposStorage rs) {
         statRepo = rs.getStatRepository();
         gradeRepo = rs.getGradesRepository();
-        basicRepos = new HashMap<String, IFieldUpdatable<ObjectId>>();
+        basicRepos = new HashMap<String, FieldUpdatable<ObjectId>>();
 
         basicRepos.put("Item", rs.getItemsRepository());
         basicRepos.put("Appearence", rs.getAppearenceRepository());

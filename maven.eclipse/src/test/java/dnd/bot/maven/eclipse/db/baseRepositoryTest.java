@@ -1,6 +1,8 @@
 package dnd.bot.maven.eclipse.db;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.UUID;
 
@@ -9,18 +11,18 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.db.Models.dbo.LevelDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
 import dnd.bot.maven.eclipse.db.Services.dbConnector;
-import dnd.bot.maven.eclipse.db.repos.MongoLevelRepository;
+import dnd.bot.maven.eclipse.db.repos.MongoNotesRepository;
 
 public class BaseRepositoryTest {
-	private static MongoLevelRepository rep;
+	private static MongoNotesRepository rep;
 	private static dbConnector conn;
 
 	@BeforeAll
 	public static void setUp() {
 		conn = new dbConnector("test-java-dnd-bot");
-		rep = new MongoLevelRepository(conn.getDb());
+		rep = new MongoNotesRepository(conn.getDb());
 	}
 
 	@AfterAll
@@ -31,47 +33,54 @@ public class BaseRepositoryTest {
 	@Test
 	public void addDocTest() {
 		var characterId = new ObjectId();
-		var lv = new LevelDbo(characterId);
-		rep.insertDocument(lv);
-		var dbLv = rep.getDocumentByKey(characterId);
-		assertTrue(dbLv != null);
-		assertTrue(dbLv.characterId.equals(lv.characterId));
+		var note = new BasicDescriptionDbo(characterId, "newNote", "newNote");
+		rep.insertDocument(note);
+		var descId = rep.getCharacterNotes(characterId).get(0).descId;
+		var noteDbo = rep.getDocumentByKey(descId);
+		assertNotNull(noteDbo);
+		assertEquals(note.characterId, noteDbo.characterId);
 	}
 
 	@Test
 	public void updateFieldTest() {
 		var characterId = new ObjectId();
-		var lv = new LevelDbo(characterId);
-		rep.insertDocument(lv);
-		rep.updateField(characterId, "currentExp", 5);
-		var dbLv = rep.getDocumentByKey(characterId);
-		assertTrue(dbLv != null);
-		assertTrue(dbLv.currentExp == 5);
+		var desc = "desc";
+		var note = new BasicDescriptionDbo(characterId, "newNote", desc);
+		rep.insertDocument(note);
+		var descId = rep.getCharacterNotes(characterId).get(0).descId;
+		var newDesc = "newDesc";
+		rep.updateField(descId, "description", newDesc);
+		var noteDbo = rep.getDocumentByKey(descId);
+		assertNotNull(noteDbo);
+		assertEquals(note.characterId, noteDbo.characterId);
+		assertEquals(newDesc, noteDbo.description);
 	}
 
 	@Test
 	public void updateUnexpectedField_ShouldNotUpdategAnythingTest() {
 		var characterId = new ObjectId();
-		var lv = new LevelDbo(characterId);
-		rep.insertDocument(lv);
-		rep.updateField(characterId, UUID.randomUUID().toString(), 5);
-		var dbLv = rep.getDocumentByKey(characterId);
-		assertTrue(dbLv != null);
-		assertTrue(dbLv.currentLevel == lv.currentLevel);
-		assertTrue(dbLv.currentExp == lv.currentExp);
-		assertTrue(dbLv.necessaryExp == lv.necessaryExp);
+		var note = new BasicDescriptionDbo(characterId, "newNote", "desc");
+		rep.insertDocument(note);
+		var descId = rep.getCharacterNotes(characterId).get(0).descId;
+		rep.updateField(descId, UUID.randomUUID().toString(), 5);
+		var noteDbo = rep.getDocumentByKey(descId);
+		assertNotNull(noteDbo);
+		assertEquals(note.characterId, noteDbo.characterId);
+		assertEquals(note.name, noteDbo.name);
+		assertEquals(note.description, noteDbo.description);
 	}
 
 	@Test
 	public void deleteDocTest() {
 		var characterId = new ObjectId();
-		var lv = new LevelDbo(characterId);
-		rep.insertDocument(lv);
-		var dbLv = rep.getDocumentByKey(characterId);
-		assertTrue(dbLv != null);
-		assertTrue(dbLv.characterId.equals(lv.characterId));
-		rep.deleteDocument(characterId);
-		dbLv = rep.getDocumentByKey(characterId);
-		assertTrue(dbLv == null);
+		var note = new BasicDescriptionDbo(characterId,"newNote", "newNote");
+		rep.insertDocument(note);
+		var descId = rep.getCharacterNotes(characterId).get(0).descId;
+		var noteDbo = rep.getDocumentByKey(descId);
+		assertNotNull(noteDbo);
+		assertEquals(note.characterId, noteDbo.characterId);
+		rep.deleteDocument(descId);
+		noteDbo = rep.getDocumentByKey(descId);
+		assertNull(noteDbo);
 	}
 }

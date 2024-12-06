@@ -5,11 +5,14 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
+import dnd.bot.maven.eclipse.db.repos.Interfaces.FieldUpdatable;
+
 import static com.mongodb.client.model.Filters.eq;
 
 import org.bson.codecs.configuration.CodecConfigurationException;
 
-public abstract class BaseRepo<T, KeyType> {
+public abstract class BaseRepo<T, KeyType> 
+    implements FieldUpdatable<KeyType>{
     protected MongoCollection<T> mongoCollection;
 
     public BaseRepo(MongoDatabase db) {

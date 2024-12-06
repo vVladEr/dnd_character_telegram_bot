@@ -10,10 +10,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import dnd.bot.maven.eclipse.db.Models.dbo.HPDbo;
-import dnd.bot.maven.eclipse.db.repos.Interfaces.IFieldUpdatable;
 
-public class MongoHPRepository extends BaseRepo<HPDbo, ObjectId>
-        implements IFieldUpdatable<ObjectId> {
+public class MongoHPRepository extends BaseRepo<HPDbo, ObjectId>{
 
     public MongoHPRepository(MongoDatabase db) {
         super(db);
