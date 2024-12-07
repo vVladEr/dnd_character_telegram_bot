@@ -3,7 +3,7 @@ package dnd.bot.maven.eclipse.db;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
@@ -90,7 +90,7 @@ public class GeneralStatsRepositoryTest {
 
         var skillName = "testSkill";
         var skill = new SkillDbo(skillName);
-        var skills = new HashMap<String, SkillDbo>();
+        var skills = new LinkedHashMap<String, SkillDbo>();
 
         skills.put(skillName, skill);
         var stat = new GeneralStatDBO(characterId, statName, skills);
@@ -112,7 +112,7 @@ public class GeneralStatsRepositoryTest {
 
         var skillName = "testSkill";
         var skill = new SkillDbo(skillName);
-        var skills = new HashMap<String, SkillDbo>();
+        var skills = new LinkedHashMap<String, SkillDbo>();
         skills.put(skillName, skill);
         var stat = new GeneralStatDBO(characterId, statName, skills);
         rep.instertStats(stat);
