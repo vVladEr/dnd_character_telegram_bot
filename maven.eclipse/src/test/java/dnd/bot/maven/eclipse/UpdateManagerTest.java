@@ -17,7 +17,6 @@ import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
 import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
-import dnd.bot.maven.eclipse.db.Models.dbo.UserDBO;
 import dnd.bot.maven.eclipse.db.Services.CharacterCreater;
 import dnd.bot.maven.eclipse.db.Services.ReposStorage;
 import dnd.bot.maven.eclipse.db.Services.UpdateManager;
@@ -29,29 +28,25 @@ public class UpdateManagerTest {
     private static ObjectId characterId;
 
     @BeforeAll
-    public static void SetUp()
-    {
+    public static void setUp() {
         reposStorage = new ReposStorage("test-db");
         updateManager = new UpdateManager(reposStorage);
         var characterCreater = new CharacterCreater(reposStorage);
-        var userRepo = reposStorage.getUserRepository();
         var userId = new ObjectId().toString();
-        userRepo.InsertDocument(new UserDBO(userId));
-        characterId = characterCreater.CreateCharacter(userId);
+        characterId = characterCreater.createCharacter(userId);
     }
 
     @Test
-    public void UpdateAppearenceField()
-    {
-        var oldValue = reposStorage.getAppearenceRepository().GetDocumentByKey(characterId).age;
+    public void updateAppearenceField() {
+        var oldValue = reposStorage.getAppearenceRepository().getDocumentByKey(characterId).age;
         var newValue = oldValue + 2;
         var updateRequest = new UpdateFieldRequest(
-            new Combinekey(characterId),
-             "age", newValue,
-              "Appearence");
-        updateManager.UpdateField(updateRequest);
+                new Combinekey(characterId),
+                "age", newValue,
+                "Appearence");
+        updateManager.updateField(updateRequest);
 
-        var updatedDbo = reposStorage.getAppearenceRepository().GetDocumentByKey(characterId);
+        var updatedDbo = reposStorage.getAppearenceRepository().getDocumentByKey(characterId);
 
         assertNotNull(updatedDbo);
         assertNotEquals(oldValue, updatedDbo.age);
@@ -59,19 +54,18 @@ public class UpdateManagerTest {
     }
 
     @Test
-    public void UpdateItemField()
-    {
+    public void updateItemField() {
         var oldItem = new ItemDBO(characterId, "testItem", "just test item");
-        var item = reposStorage.getItemsRepository().InsertDocument(oldItem);
+        var item = reposStorage.getItemsRepository().insertDocument(oldItem);
         var oldValue = oldItem.amount;
         var newValue = oldValue + 2;
         var updateRequest = new UpdateFieldRequest(
-            new Combinekey(item.itemId),
-             "amount", newValue,
-              "Item");
-        updateManager.UpdateField(updateRequest);
+                new Combinekey(item.itemId),
+                "amount", newValue,
+                "Item");
+        updateManager.updateField(updateRequest);
 
-        var updatedDbo = reposStorage.getItemsRepository().GetDocumentByKey(item.itemId);
+        var updatedDbo = reposStorage.getItemsRepository().getDocumentByKey(item.itemId);
 
         assertNotNull(updatedDbo);
         assertNotEquals(oldValue, updatedDbo.amount);
@@ -79,18 +73,17 @@ public class UpdateManagerTest {
     }
 
     @Test
-    public void UpdateSocialField()
-    {
-        var social = reposStorage.getSocialRepository().GetDocumentByKey(characterId);
+    public void updateSocialField() {
+        var social = reposStorage.getSocialRepository().getDocumentByKey(characterId);
         var oldValue = social.race;
         var newValue = "new race";
         var updateRequest = new UpdateFieldRequest(
-            new Combinekey(characterId),
-             "race", newValue,
-              "Social");
-        updateManager.UpdateField(updateRequest);
+                new Combinekey(characterId),
+                "race", newValue,
+                "Social");
+        updateManager.updateField(updateRequest);
 
-        var updatedDbo = reposStorage.getSocialRepository().GetDocumentByKey(characterId);
+        var updatedDbo = reposStorage.getSocialRepository().getDocumentByKey(characterId);
 
         assertNotNull(updatedDbo);
         assertNotEquals(oldValue, updatedDbo.race);
@@ -98,25 +91,24 @@ public class UpdateManagerTest {
     }
 
     @Test
-    public void UpdateStatInnerField()
-    {
+    public void updateStatInnerField() {
         var statName = StatNameEnum.CHARISMA;
         var compositeKey = new StatCompositeKey(characterId, statName);
-        var social = reposStorage.getStatRepository().GetDocumentByKey(compositeKey);
+        var social = reposStorage.getStatRepository().getDocumentByKey(compositeKey);
 
         var skillName = social.skills.keySet().iterator().next();
         var oldValue = social.skills.get(skillName).totalBonuses;
         var newValue = oldValue + 2;
-        
-        var updateRequest = new UpdateFieldRequest(
-            new Combinekey(characterId, statName),
-             skillName, 
-             "totalBonuses",
-              newValue,
-              "Stat");
-        updateManager.UpdateField(updateRequest);
 
-        var updatedDbo = reposStorage.getStatRepository().GetDocumentByKey(compositeKey);
+        var updateRequest = new UpdateFieldRequest(
+                new Combinekey(characterId, statName),
+                skillName,
+                "totalBonuses",
+                newValue,
+                "Stat");
+        updateManager.updateField(updateRequest);
+
+        var updatedDbo = reposStorage.getStatRepository().getDocumentByKey(compositeKey);
 
         assertNotNull(updatedDbo);
         assertNotEquals(oldValue, updatedDbo.skills.get(skillName).totalBonuses);
@@ -124,27 +116,26 @@ public class UpdateManagerTest {
     }
 
     @Test
-    public void UpdateGradeInnerField()
-    {
+    public void updateGradeInnerField() {
         var grade = 1;
         var compositeKey = new GradeCompositeKey(characterId, 1);
-        reposStorage.getGradesRepository().InsertDocument(new GradeDBo(characterId, 1));
+        reposStorage.getGradesRepository().insertDocument(new GradeDBo(characterId, 1));
         var spellName = "testSpell";
         var oldValue = "just test spell";
 
-        reposStorage.getGradesRepository().AddSpell(compositeKey, spellName, oldValue);
+        reposStorage.getGradesRepository().addSpell(compositeKey, spellName, oldValue);
 
         var newValue = "new desc";
-        
-        var updateRequest = new UpdateFieldRequest(
-            new Combinekey(characterId, grade),
-             spellName, 
-             "description",
-              newValue,
-              "Grade");
-        updateManager.UpdateField(updateRequest);
 
-        var updatedDbo = reposStorage.getGradesRepository().GetDocumentByKey(compositeKey);
+        var updateRequest = new UpdateFieldRequest(
+                new Combinekey(characterId, grade),
+                spellName,
+                "description",
+                newValue,
+                "Grade");
+        updateManager.updateField(updateRequest);
+
+        var updatedDbo = reposStorage.getGradesRepository().getDocumentByKey(compositeKey);
 
         assertNotNull(updatedDbo);
         assertNotEquals(oldValue, updatedDbo.spells.get(spellName).description);
@@ -152,27 +143,26 @@ public class UpdateManagerTest {
     }
 
     @Test
-    public void RenameSpell()
-    {
+    public void renameSpell() {
         var grade = 1;
         var compositeKey = new GradeCompositeKey(characterId, 1);
-        reposStorage.getGradesRepository().InsertDocument(new GradeDBo(characterId, 1));
+        reposStorage.getGradesRepository().insertDocument(new GradeDBo(characterId, 1));
         var oldSpellName = "testSpell";
         var desc = "just test spell";
 
-        reposStorage.getGradesRepository().AddSpell(compositeKey, oldSpellName, desc);
+        reposStorage.getGradesRepository().addSpell(compositeKey, oldSpellName, desc);
 
         var newName = "new name";
-        
-        var updateRequest = new UpdateFieldRequest(
-            new Combinekey(characterId, grade),
-             oldSpellName, 
-             "name",
-              newName,
-              "Grade");
-        updateManager.UpdateField(updateRequest);
 
-        var updatedDbo = reposStorage.getGradesRepository().GetDocumentByKey(compositeKey);
+        var updateRequest = new UpdateFieldRequest(
+                new Combinekey(characterId, grade),
+                oldSpellName,
+                "name",
+                newName,
+                "Grade");
+        updateManager.updateField(updateRequest);
+
+        var updatedDbo = reposStorage.getGradesRepository().getDocumentByKey(compositeKey);
 
         assertNotNull(updatedDbo);
         assertFalse(updatedDbo.spells.containsKey(oldSpellName));

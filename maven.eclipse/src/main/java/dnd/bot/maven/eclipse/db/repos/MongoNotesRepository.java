@@ -15,10 +15,10 @@ import com.mongodb.client.MongoDatabase;
 import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
 import dnd.bot.maven.eclipse.db.repos.Interfaces.DocumentDeletable;
 
-public class MongoPossesionsRepository extends BaseRepo<BasicDescriptionDbo, ObjectId>
-implements DocumentDeletable<ObjectId>{
+public class MongoNotesRepository extends BaseRepo<BasicDescriptionDbo, ObjectId>
+        implements DocumentDeletable<ObjectId> {
 
-    public MongoPossesionsRepository(MongoDatabase db) {
+    public MongoNotesRepository(MongoDatabase db) {
         super(db);
     }
 
@@ -27,20 +27,19 @@ implements DocumentDeletable<ObjectId>{
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
                 CodecRegistries.fromProviders(PojoCodecProvider.builder()
                         .register(BasicDescriptionDbo.class).build()));
-        return db.getCollection("possesions", BasicDescriptionDbo.class).withCodecRegistry(pojoCodecRegistry);
+        return db.getCollection("notes", BasicDescriptionDbo.class).withCodecRegistry(pojoCodecRegistry);
     }
 
-    public ArrayList<BasicDescriptionDbo> getCharacterPossesions(ObjectId characterId) {
-        var possesionsDbo = mongoCollection.find(eq("characterId", characterId));
-        var possesions = new ArrayList<BasicDescriptionDbo>();
-        for (var possesionDbo : possesionsDbo) {
-            possesions.add(possesionDbo);
+    public ArrayList<BasicDescriptionDbo> getCharacterNotes(ObjectId characterId) {
+        var notesDbo = mongoCollection.find(eq("characterId", characterId));
+        var notes = new ArrayList<BasicDescriptionDbo>();
+        for (var noteDbo : notesDbo) {
+            notes.add(noteDbo);
         }
-        return possesions;
+        return notes;
     }
 
-    public void deleteDocument(ObjectId id)
-    {
+    public void deleteDocument(ObjectId id) {
         super.deleteDocument(id);
     }
 }

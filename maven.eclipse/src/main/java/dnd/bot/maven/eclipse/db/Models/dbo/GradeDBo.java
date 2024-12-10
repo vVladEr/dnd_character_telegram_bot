@@ -15,7 +15,7 @@ public class GradeDBo implements IDbo {
     public int maxCount;
 
     @BsonProperty 
-    public int CurrentCount;
+    public int currentCount;
 
     @BsonProperty
     public HashMap<String, BasicDescriptionDbo> spells;

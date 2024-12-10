@@ -43,10 +43,10 @@ public class AppearenceDbo implements IDbo {
     @BsonProperty
     public String flaws;
 
-    public AppearenceDbo() {}
+    public AppearenceDbo() {
+    }
 
-    public AppearenceDbo(ObjectId characterId)
-    {
+    public AppearenceDbo(ObjectId characterId) {
         this.characterId = characterId;
     }
 }

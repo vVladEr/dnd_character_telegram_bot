@@ -11,9 +11,6 @@ public class SocialDbo implements IDbo {
 
     @BsonProperty
     public String race;
-    
-    @BsonProperty
-    public String characterName;
 
     @BsonProperty
     public String characterClass;
@@ -23,6 +20,5 @@ public class SocialDbo implements IDbo {
 	public SocialDbo(ObjectId characterId)
 	{
 		this.characterId = characterId;
-		characterName = "Unknown";
 	}
 }

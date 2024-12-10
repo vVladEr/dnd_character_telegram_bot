@@ -15,49 +15,45 @@ import dnd.bot.maven.eclipse.db.repos.MongoGradesRepository;
 
 public class SpellsRepositoryTest {
     private static MongoGradesRepository rep;
-	private static dbConnector conn;
-	
-	@BeforeAll
-	public static void SetUp() 
-	{
+    private static dbConnector conn;
+
+    @BeforeAll
+    public static void setUp() {
         conn = new dbConnector("test-java-dnd-bot");
         rep = new MongoGradesRepository(conn.getDb());
-	}
-	
-	@AfterAll
-	public static void TearDown() 
-	{
-		conn.getDb().drop();
-	}
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        conn.getDb().drop();
+    }
 
     @Test
-    public void AddGradeTest()
-    {
+    public void addGradeTest() {
         var characterId = new ObjectId();
         var grade = 2;
         var compositeKey = new GradeCompositeKey(characterId, grade);
         var gradeDbo = new GradeDBo(characterId, grade);
-        rep.InsertDocument(gradeDbo);
+        rep.insertDocument(gradeDbo);
 
-        var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
+        var dbGradeDbo = rep.getDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(grade == dbGradeDbo.grade);
     }
 
     @Test
-    public void UpdateFuildTest()
-    {
+    public void updateFuildTest() {
         var characterId = new ObjectId();
         var grade = 2;
         var compositeKey = new GradeCompositeKey(characterId, grade);
 
         var gradeDbo = new GradeDBo(characterId, grade);
-        rep.InsertDocument(gradeDbo);
+        rep.insertDocument(gradeDbo);
 
-        rep.UpdateField(compositeKey, "maxCount", 2);
+        rep.updateField(compositeKey, "maxCount", 2);
 
-        var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
+        var dbGradeDbo = rep.getDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(grade == dbGradeDbo.grade);
@@ -66,19 +62,18 @@ public class SpellsRepositoryTest {
     }
 
     @Test
-    public void AddSpellTest()
-    {
+    public void addSpellTest() {
         var characterId = new ObjectId();
         var grade = 2;
         var compositeKey = new GradeCompositeKey(characterId, grade);
         var gradeDbo = new GradeDBo(characterId, grade);
         var spellName = "TestSpell";
         var spellDesc = "testDesk";
-        rep.InsertDocument(gradeDbo);
+        rep.insertDocument(gradeDbo);
 
-        rep.AddSpell(compositeKey, spellName, spellDesc);
+        rep.addSpell(compositeKey, spellName, spellDesc);
 
-        var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
+        var dbGradeDbo = rep.getDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(dbGradeDbo.spells.size() == 1);
@@ -87,8 +82,7 @@ public class SpellsRepositoryTest {
     }
 
     @Test
-    public void UpdateSpellDescTest()
-    {
+    public void updateSpellDescTest() {
         var characterId = new ObjectId();
         var grade = 2;
         var compositeKey = new GradeCompositeKey(characterId, grade);
@@ -96,12 +90,12 @@ public class SpellsRepositoryTest {
         var spellName = "TestSpell";
         var oldSpellDesc = "oldTestDesc";
         var newSpellDesc = "newTestDesc";
-        rep.InsertDocument(gradeDbo);
+        rep.insertDocument(gradeDbo);
 
-        rep.AddSpell(compositeKey, spellName, oldSpellDesc);
-        rep.UpdateInnerField(compositeKey, spellName, "description" , newSpellDesc);
+        rep.addSpell(compositeKey, spellName, oldSpellDesc);
+        rep.updateInnerField(compositeKey, spellName, "description", newSpellDesc);
 
-        var dbGradeDbo = rep.GetDocumentByKey(compositeKey);
+        var dbGradeDbo = rep.getDocumentByKey(compositeKey);
         assertTrue(dbGradeDbo != null);
         assertTrue(characterId.equals(dbGradeDbo.characterId));
         assertTrue(dbGradeDbo.spells.size() == 1);
