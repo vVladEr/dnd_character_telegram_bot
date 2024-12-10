@@ -23,7 +23,7 @@ public class HPGenerator extends BaseGenerator {
         var repo = this.manager.getReposStorage().getHpRepository();
         this.parameters = parameters;
         var characterId = parameters.getObjectIdKey();
-        this.hpDbo = repo.GetDocumentByKey(characterId);
+        this.hpDbo = repo.getDocumentByKey(characterId);
         
         var fields = getFormattedFields(this.hpDbo);
         fields.put("HP", "");

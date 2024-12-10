@@ -27,7 +27,7 @@ public class SpellsState extends BaseState {
     public void addSpell(GeneratorManager manager) {
         var repo = manager.getReposStorage().getGradesRepository();
         var grade = new GradeDBo(this.parameters.getObjectIdKey(), 1);
-        repo.InsertDocument(grade);
+        repo.insertDocument(grade);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class AppearanceGenerator extends BaseGenerator {
     public BaseState generateState(Combinekey parameters) {
         var repo = this.manager.getReposStorage().getAppearenceRepository();
         this.parameters = parameters;
-        var appearance = repo.GetDocumentByKey(parameters.getObjectIdKey());
+        var appearance = repo.getDocumentByKey(parameters.getObjectIdKey());
         
         var fields = getFormattedFields(appearance);
         var buttons = getFormattedButtons();

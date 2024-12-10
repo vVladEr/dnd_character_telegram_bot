@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
-import dnd.bot.maven.eclipse.Routing.States.GeneralState;
 import dnd.bot.maven.eclipse.Routing.States.SpellsState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
@@ -38,7 +37,7 @@ public class SpellsGenerator extends BaseGenerator {
     public LinkedHashMap<String, String> getFormattedButtons() {
         var buttons = new LinkedHashMap<String, String>();
 
-        this.grades = this.repo.GetCharacterGrades(parameters.getObjectIdKey());
+        this.grades = this.repo.getCharacterGrades(parameters.getObjectIdKey());
         
         for (var grade : this.grades) {
             buttons.put(String.format("%s", grade.grade), String.format("gotogrades:%s", grade.grade));

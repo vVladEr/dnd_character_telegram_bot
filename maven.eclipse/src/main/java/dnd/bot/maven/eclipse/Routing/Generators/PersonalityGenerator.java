@@ -23,7 +23,7 @@ public class PersonalityGenerator extends BaseGenerator {
         var repo = this.manager.getReposStorage().getPersonalityRepository();
         this.parameters = parameters;
         var characterId = parameters.getObjectIdKey();
-        this.personalityDbo = repo.GetDocumentByKey(characterId);
+        this.personalityDbo = repo.getDocumentByKey(characterId);
         
         var fields = getFormattedFields(this.personalityDbo);
         fields.put("Личность", "");

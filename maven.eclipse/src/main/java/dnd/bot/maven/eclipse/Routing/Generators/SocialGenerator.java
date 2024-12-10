@@ -23,7 +23,7 @@ public class SocialGenerator extends BaseGenerator {
         var repo = this.manager.getReposStorage().getSocialRepository();
         this.parameters = parameters;
         var characterId = parameters.getObjectIdKey();
-        this.socialDbo = repo.GetDocumentByKey(characterId);
+        this.socialDbo = repo.getDocumentByKey(characterId);
         
         var fields = getFormattedFields(this.socialDbo);
         fields.put("Общественность", "");

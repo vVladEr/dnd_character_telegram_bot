@@ -23,7 +23,7 @@ public class LevelGenerator extends BaseGenerator {
         var repo = this.manager.getReposStorage().getLevelRepository();
         this.parameters = parameters;
         var characterId = parameters.getObjectIdKey();
-        this.levelDbo = repo.GetDocumentByKey(characterId);
+        this.levelDbo = repo.getDocumentByKey(characterId);
         
         var fields = getFormattedFields(this.levelDbo);
         fields.put("Уровень", "");

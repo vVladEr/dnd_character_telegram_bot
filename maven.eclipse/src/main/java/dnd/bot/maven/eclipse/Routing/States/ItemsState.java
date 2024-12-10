@@ -27,7 +27,7 @@ public class ItemsState extends BaseState {
     public void addItem(GeneratorManager manager) {
         var repo = manager.getReposStorage().getItemsRepository();
         var item = new ItemDBO(this.parameters.getObjectIdKey(), "1", "1");
-        repo.InsertDocument(item);
+        repo.insertDocument(item);
     }
 
     @Override

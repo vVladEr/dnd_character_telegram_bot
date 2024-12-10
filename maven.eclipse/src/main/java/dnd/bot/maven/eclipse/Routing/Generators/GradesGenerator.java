@@ -20,7 +20,7 @@ public class GradesGenerator extends BaseGenerator {
     public BaseState generateState(Combinekey parameters) {
         var repo = this.manager.getReposStorage().getGradesRepository();
         this.parameters = parameters;
-        var grade = repo.GetDocumentByKey(parameters.getGradeCompositeKey());
+        var grade = repo.getDocumentByKey(parameters.getGradeCompositeKey());
         var fields = getFormattedFields(grade);
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();

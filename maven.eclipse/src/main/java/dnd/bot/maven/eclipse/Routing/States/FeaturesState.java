@@ -27,7 +27,7 @@ public class FeaturesState extends BaseState {
     public void addFeature(GeneratorManager manager) {
         var repo = manager.getReposStorage().getFeaturesRepository();
         var description = new BasicDescriptionDbo(this.parameters.getObjectIdKey(), "1", "1");
-        repo.InsertDocument(description);
+        repo.insertDocument(description);
     }
 
     @Override

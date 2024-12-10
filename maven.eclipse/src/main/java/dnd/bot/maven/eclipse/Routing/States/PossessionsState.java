@@ -27,7 +27,7 @@ public class PossessionsState extends BaseState {
     public void addPossession(GeneratorManager manager) {
         var repo = manager.getReposStorage().getPossesionsRepository();
         var description = new BasicDescriptionDbo(this.parameters.getObjectIdKey(), "1", "1");
-        repo.InsertDocument(description);
+        repo.insertDocument(description);
     }
 
     @Override

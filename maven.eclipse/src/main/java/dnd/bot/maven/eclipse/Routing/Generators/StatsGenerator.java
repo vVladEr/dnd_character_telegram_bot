@@ -23,7 +23,7 @@ public class StatsGenerator extends BaseGenerator {
     public BaseState generateState(Combinekey parameters) {
         this.parameters = parameters;
         var repo = this.manager.getReposStorage().getStatRepository();
-        var stats = repo.GetCharacterStats(parameters.getObjectIdKey());
+        var stats = repo.getCharacterStats(parameters.getObjectIdKey());
         var fieldsArray = new ArrayList<LinkedHashMap<String, String>>();
 
         var fields = new LinkedHashMap<String, String>();
@@ -48,8 +48,8 @@ public class StatsGenerator extends BaseGenerator {
             try {
                 if (field.getName().equals("skills")) {
                     var skillsValue = field.get(dbo);
-                    if (skillsValue instanceof HashMap<?, ?>) {
-                        var skillsMap = (HashMap<String, SkillDbo>) skillsValue;
+                    if (skillsValue instanceof LinkedHashMap<?, ?>) {
+                        var skillsMap = (LinkedHashMap<String, SkillDbo>) skillsValue;
                         for (var skillEntry : skillsMap.entrySet()) {
                             var skill = skillEntry.getValue();
                             formattedFields.put(

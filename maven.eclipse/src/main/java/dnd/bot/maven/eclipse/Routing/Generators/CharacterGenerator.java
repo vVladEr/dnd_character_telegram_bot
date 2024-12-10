@@ -1,6 +1,5 @@
 package dnd.bot.maven.eclipse.Routing.Generators;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Routing.States.BaseState;

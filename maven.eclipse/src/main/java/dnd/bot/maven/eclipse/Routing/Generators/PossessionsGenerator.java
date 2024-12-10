@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
-import dnd.bot.maven.eclipse.Routing.States.GeneralState;
 import dnd.bot.maven.eclipse.Routing.States.PossessionsState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
 
@@ -21,7 +20,7 @@ public class PossessionsGenerator extends BaseGenerator {
     public BaseState generateState(Combinekey parameters) {
         var repo = this.manager.getReposStorage().getPossesionsRepository();
         this.parameters = parameters;
-        var possessions = repo.GetCharacterPossesions(parameters.getObjectIdKey());
+        var possessions = repo.getCharacterPossesions(parameters.getObjectIdKey());
         
         var fields = new LinkedHashMap<String, String>();
         fields.put("Владения", "");

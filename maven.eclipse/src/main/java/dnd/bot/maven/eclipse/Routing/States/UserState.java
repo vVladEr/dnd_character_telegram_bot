@@ -3,7 +3,6 @@ package dnd.bot.maven.eclipse.Routing.States;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import org.bson.types.ObjectId;
 
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
@@ -30,7 +29,7 @@ public class UserState extends BaseState {
     }
 
     public void addCharacter(GeneratorManager manager) {
-        var characterId = creater.CreateCharacter(this.userId);
+        var characterId = creater.createCharacter(this.userId);
         var combineKey = new Combinekey(this.userId, characterId);
         possibleTransitions.put(String.format("gotocharacter:%s", characterId), combineKey);
     }

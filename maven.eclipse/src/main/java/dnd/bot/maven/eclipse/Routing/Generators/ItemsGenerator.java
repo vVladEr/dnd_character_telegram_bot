@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
-import dnd.bot.maven.eclipse.Routing.States.GeneralState;
 import dnd.bot.maven.eclipse.Routing.States.ItemsState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
 
@@ -21,7 +20,7 @@ public class ItemsGenerator extends BaseGenerator {
     public BaseState generateState(Combinekey parameters) {
         var repo = this.manager.getReposStorage().getItemsRepository();
         this.parameters = parameters;
-        var possessions = repo.GetCharactersItems(parameters.getObjectIdKey());
+        var possessions = repo.getCharactersItems(parameters.getObjectIdKey());
         
         var fields = new LinkedHashMap<String, String>();
         fields.put("Предметы", "");

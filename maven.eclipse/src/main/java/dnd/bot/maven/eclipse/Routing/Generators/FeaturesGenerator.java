@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.FeaturesState;
-import dnd.bot.maven.eclipse.Routing.States.GeneralState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
 
 public class FeaturesGenerator extends BaseGenerator {
@@ -21,7 +20,7 @@ public class FeaturesGenerator extends BaseGenerator {
     public BaseState generateState(Combinekey parameters) {
         var repo = this.manager.getReposStorage().getFeaturesRepository();
         this.parameters = parameters;
-        var features = repo.GetCharacterFeatures(parameters.getObjectIdKey());
+        var features = repo.getCharacterFeatures(parameters.getObjectIdKey());
         
         var fields = new LinkedHashMap<String, String>();
         fields.put("Особенности", "");
