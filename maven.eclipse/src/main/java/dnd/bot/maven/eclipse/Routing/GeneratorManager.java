@@ -69,6 +69,7 @@ public class GeneratorManager {
 
         this.generators.put("gotostats", new StatsGenerator(this));
         this.generators.put("gotoappearance", new AppearanceGenerator(this));
+        this.generators.put("gotogrades", new GradesGenerator(this));
     }
 
     public BaseGenerator getGeneratorByStateName(String stateName) {

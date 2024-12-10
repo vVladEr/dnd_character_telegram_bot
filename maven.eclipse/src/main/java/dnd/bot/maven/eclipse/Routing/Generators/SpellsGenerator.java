@@ -58,7 +58,7 @@ public class SpellsGenerator extends BaseGenerator {
 
         for (var grade : this.grades) {
             possibleTransitions.put(
-                String.format("gotogrades|%s", grade.grade), 
+                String.format("%s", grade.grade), 
                 new Combinekey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), grade.grade)
             );
         }

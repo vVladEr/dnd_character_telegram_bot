@@ -48,8 +48,8 @@ public class StatsGenerator extends BaseGenerator {
             try {
                 if (field.getName().equals("skills")) {
                     var skillsValue = field.get(dbo);
-                    if (skillsValue instanceof LinkedHashMap<?, ?>) {
-                        var skillsMap = (LinkedHashMap<String, SkillDbo>) skillsValue;
+                    if (skillsValue instanceof HashMap<?, ?>) {
+                        var skillsMap = (HashMap<String, SkillDbo>) skillsValue;
                         for (var skillEntry : skillsMap.entrySet()) {
                             var skill = skillEntry.getValue();
                             formattedFields.put(

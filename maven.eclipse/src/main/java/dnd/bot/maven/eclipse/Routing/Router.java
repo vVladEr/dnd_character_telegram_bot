@@ -29,8 +29,12 @@ public class Router {
     } 
 
     private void makeTransitionForCompositeCallback(String[] callbackParts) {
+
         var combineKey = currentState.getPossibleTransitions().get(callbackParts[1]);
-        this.currentState = manager.getGeneratorByStateName(callbackParts[0]).generateState(combineKey);
+        
+        if (combineKey != null) {
+            this.currentState = manager.getGeneratorByStateName(callbackParts[0]).generateState(combineKey);
+        }
     }
 
     private void makeTransitionForSimpleCallback(String callback) {
@@ -59,8 +63,12 @@ public class Router {
                 break;
         }
 
+
         var combineKey = currentState.getPossibleTransitions().get(callback);
-        this.currentState = manager.getGeneratorByStateName(callback).generateState(combineKey);
+
+        if (combineKey != null) {
+            this.currentState = manager.getGeneratorByStateName(callback).generateState(combineKey);
+        }
     }
 
     public BaseState getCurrentState() {
