@@ -1,64 +1,59 @@
 package dnd.bot.maven.eclipse;
+
+import dnd.bot.maven.eclipse.Routing.Router;
+import dnd.bot.maven.eclipse.Routing.States.GeneralState;
+import dnd.bot.maven.eclipse.Routing.States.UserState;
+import dnd.bot.maven.eclipse.db.Services.ReposStorage;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import dnd.bot.maven.eclipse.Response.ResponseObject;
-import dnd.bot.maven.eclipse.Routing.Router;
-import dnd.bot.maven.eclipse.Routing.State;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.HashMap;
-
-public class RouterTest {
-
+class RouterTest {
     private Router router;
-    private TestState state1;
-    private TestState state2;
+    private ReposStorage storage;
 
     @BeforeEach
-    public void setUp() {
-        router = new Router();
-        state1 = new TestState();
-        state2 = new TestState();
-
-        state1.possibleTransitions.put("goToState2", state2);
-        state2.possibleTransitions.put("goToState1", state1);
-
-        router.addState(state1);
+    void setUp() {
+        this.storage = new ReposStorage();
+        this.router = new Router("testUserId");        
     }
 
     @Test
-    public void testGetCurrentState() {
-        assertEquals(state1, router.getCurrentState());
+    void testInitialState() {
+        assertNotNull(this.router.getCurrentState());
+        assertTrue(this.router.getCurrentState() instanceof UserState);
     }
 
     @Test
-    public void testMakeTransitionValid() {
-        router.makeTransition("goToState2");
-        assertEquals(state2, router.getCurrentState());
+    void testMakeTransitionForSimpleCallback() {
+        router.makeTransition("addcharacter");
 
-        router.makeTransition("goToState1");
-        assertEquals(state1, router.getCurrentState());
+        assertTrue(this.router.getCurrentState() instanceof UserState);
     }
 
     @Test
-    public void testMakeTransitionBack() {
-        router.makeTransition("goToState2");
-        assertEquals(state2, router.getCurrentState());
+    void testMakeTransitionForCompositeCallback() {
+        this.router.makeTransition("addcharacter");
 
-        router.makeTransition("back");
-        assertEquals(state1, router.getCurrentState());
+        assertTrue(this.router.getCurrentState() instanceof UserState);
+
+        var user = this.storage.getUserRepository().GetDocumentByKey("testUserId");
+
+        this.router.makeTransition(
+            String.format("gotocharacter:%s", 
+            user.characters.get(0))
+        );
+
+        assertTrue(this.router.getCurrentState() instanceof GeneralState);
     }
 
-    private class TestState extends State {
-        public TestState() {
-            possibleTransitions = new HashMap<>();
-        }
+    @Test
+    void testMakeTransitionWithUnknownCallback() {
+        this.router.makeTransition("unknowncallback");
 
-        @Override
-        public ResponseObject getStateMessages() {
-            return null;
-        }
+        assertTrue(this.router.getCurrentState() instanceof UserState);
     }
 }

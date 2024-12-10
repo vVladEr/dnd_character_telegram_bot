@@ -4,7 +4,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-public class HPDbo {
+public class HPDbo implements IDbo {
     @BsonId
     public ObjectId characterId;
 

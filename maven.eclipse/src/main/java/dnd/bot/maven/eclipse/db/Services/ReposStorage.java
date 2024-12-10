@@ -12,7 +12,7 @@ import dnd.bot.maven.eclipse.db.repos.MongoLevelRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoPersonalityRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoPossesionsRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoSocialRepository;
-import dnd.bot.maven.eclipse.db.repos.MongoUserRepository;
+import dnd.bot.maven.eclipse.db.repos.MongoCharactersRepository;
 
 public class ReposStorage {
 
@@ -36,22 +36,19 @@ public class ReposStorage {
 
     private MongoSocialRepository socialRepository;
 
-    private MongoUserRepository userRepository;
+    private MongoCharactersRepository characterRepository;
 
-    public ReposStorage()
-    {
+    public ReposStorage() {
         var dbConnector = new dbConnector();
-        Init(dbConnector.getDb());
+        init(dbConnector.getDb());
     }
 
-    public ReposStorage(String dbName)
-    {
+    public ReposStorage(String dbName) {
         var dbConnector = new dbConnector(dbName);
-        Init(dbConnector.getDb());
+        init(dbConnector.getDb());
     }
 
-    private void Init(MongoDatabase db)
-    {
+    private void init(MongoDatabase db) {
         appearenceRepository = new MongoAppearenceRepository(db);
         featuresRepository = new MongoFeaturesRepository(db);
         statRepository = new MongoGeneralStatRepository(db);
@@ -62,10 +59,9 @@ public class ReposStorage {
         personalityRepository = new MongoPersonalityRepository(db);
         possesionsRepository = new MongoPossesionsRepository(db);
         socialRepository = new MongoSocialRepository(db);
-        userRepository = new MongoUserRepository(db);
+        characterRepository = new MongoCharactersRepository(db);
     }
 
-    
     public MongoAppearenceRepository getAppearenceRepository() {
         return appearenceRepository;
     }
@@ -106,7 +102,7 @@ public class ReposStorage {
         return socialRepository;
     }
 
-    public MongoUserRepository getUserRepository() {
-        return userRepository;
+    public MongoCharactersRepository getCharacterRepository() {
+        return characterRepository;
     }
 }

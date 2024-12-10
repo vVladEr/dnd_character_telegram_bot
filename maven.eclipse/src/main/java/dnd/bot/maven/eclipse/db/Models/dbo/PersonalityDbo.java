@@ -5,7 +5,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 
-public class PersonalityDbo {
+public class PersonalityDbo implements IDbo {
     @BsonId
     public ObjectId characterId;
 

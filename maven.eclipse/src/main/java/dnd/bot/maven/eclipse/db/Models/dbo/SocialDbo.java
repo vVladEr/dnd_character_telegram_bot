@@ -4,16 +4,13 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
-public class SocialDbo {
+public class SocialDbo implements IDbo {
     
     @BsonId
     public ObjectId characterId;
 
     @BsonProperty
     public String race;
-    
-    @BsonProperty
-    public String characterName;
 
     @BsonProperty
     public String characterClass;
@@ -23,6 +20,5 @@ public class SocialDbo {
 	public SocialDbo(ObjectId characterId)
 	{
 		this.characterId = characterId;
-		characterName = "Unknown";
 	}
 }

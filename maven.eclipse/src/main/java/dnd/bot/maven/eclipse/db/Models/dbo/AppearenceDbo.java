@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 
 
 
-public class AppearenceDbo {
+public class AppearenceDbo implements IDbo {
     @BsonId
     public ObjectId characterId;
 
@@ -43,10 +43,10 @@ public class AppearenceDbo {
     @BsonProperty
     public String flaws;
 
-    public AppearenceDbo() {}
+    public AppearenceDbo() {
+    }
 
-    public AppearenceDbo(ObjectId characterId)
-    {
+    public AppearenceDbo(ObjectId characterId) {
         this.characterId = characterId;
     }
 }

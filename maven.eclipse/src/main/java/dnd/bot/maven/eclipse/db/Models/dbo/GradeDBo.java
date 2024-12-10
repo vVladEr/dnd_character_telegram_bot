@@ -4,7 +4,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 import java.util.HashMap;
 
-public class GradeDBo {
+public class GradeDBo implements IDbo {
     @BsonProperty
     public ObjectId characterId;
 
@@ -15,7 +15,7 @@ public class GradeDBo {
     public int maxCount;
 
     @BsonProperty 
-    public int CurrentCount;
+    public int currentCount;
 
     @BsonProperty
     public HashMap<String, BasicDescriptionDbo> spells;
