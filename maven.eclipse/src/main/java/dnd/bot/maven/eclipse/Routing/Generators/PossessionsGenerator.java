@@ -23,16 +23,16 @@ public class PossessionsGenerator extends BaseGenerator {
         var possessions = repo.getCharacterPossesions(parameters.getObjectIdKey());
         
         var fields = new LinkedHashMap<String, String>();
-        fields.put("Владения", "");
+        fields.put("Владения", "\n");
 
         for (var possession : possessions) {
-            fields.put(possession.name, possession.description);
+            fields.put(possession.name, possession.description + "\n");
         }
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("addpossession", parameters);
-        return new PossessionsState(parameters, fields, buttons, possibleTransitions);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Possessions"));
+        return new PossessionsState(parameters, fields, buttons, possibleTransitions, "Possessions");
     }
 
     @Override

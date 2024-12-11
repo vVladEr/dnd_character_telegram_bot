@@ -24,7 +24,7 @@ public class GradesGenerator extends BaseGenerator {
         var fields = getFormattedFields(grade);
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new GeneralState(fields, buttons, possibleTransitions);
+        return new GeneralState(fields, buttons, possibleTransitions, "Grade");
     }
 
     @Override

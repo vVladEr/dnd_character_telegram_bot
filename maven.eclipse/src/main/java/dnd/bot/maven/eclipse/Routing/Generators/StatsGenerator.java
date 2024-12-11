@@ -36,7 +36,7 @@ public class StatsGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new StatsState(fieldsArray, buttons, possibleTransitions);
+        return new StatsState(fieldsArray, buttons, possibleTransitions, "Stats");
     }
 
     @Override

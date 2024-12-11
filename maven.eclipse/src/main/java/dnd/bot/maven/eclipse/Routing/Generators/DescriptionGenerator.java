@@ -18,7 +18,7 @@ public class DescriptionGenerator extends BaseGenerator {
         fields.put("Описание персонажа", "");
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new GeneralState(fields, buttons, possibleTransitions);
+        return new GeneralState(fields, buttons, possibleTransitions, "Description");
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
-import dnd.bot.maven.eclipse.Routing.States.GeneralState;
+import dnd.bot.maven.eclipse.Routing.States.NotesState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
 
 public class NotesGenerator extends BaseGenerator {
@@ -18,12 +18,13 @@ public class NotesGenerator extends BaseGenerator {
         fields.put("Заметки", "");
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new GeneralState(fields, buttons, possibleTransitions);
+        return new NotesState(parameters, fields, buttons, possibleTransitions, "Notes");
     }
 
     @Override
     public LinkedHashMap<String, String> getFormattedButtons() {
         var buttons = new LinkedHashMap<String, String>();
+        
         
         buttons.put("Назад", "gotocharacter");
 
@@ -34,7 +35,8 @@ public class NotesGenerator extends BaseGenerator {
     public HashMap<String, Combinekey> getPossibleTransitions() {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
-        possibleTransitions.put("gotocharacter", this.parameters);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
+        possibleTransitions.put("gotocharacter", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Character"));
 
         return possibleTransitions;
     }

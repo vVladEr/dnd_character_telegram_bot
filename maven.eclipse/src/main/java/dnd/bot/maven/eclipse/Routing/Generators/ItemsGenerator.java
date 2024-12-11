@@ -20,26 +20,26 @@ public class ItemsGenerator extends BaseGenerator {
     public BaseState generateState(Combinekey parameters) {
         var repo = this.manager.getReposStorage().getItemsRepository();
         this.parameters = parameters;
-        var possessions = repo.getCharactersItems(parameters.getObjectIdKey());
+        var items = repo.getCharactersItems(parameters.getObjectIdKey());
         
         var fields = new LinkedHashMap<String, String>();
-        fields.put("Предметы", "");
+        fields.put("Предметы", "\n");
 
-        for (var possession : possessions) {
-            fields.put(possession.name, possession.description);
+        for (var item : items) {
+            fields.put(item.name, item.description + " " + item.amount + "\n");
         }
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("additem", parameters);
-        return new ItemsState(parameters, fields, buttons, possibleTransitions);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Items"));
+        return new ItemsState(parameters, fields, buttons, possibleTransitions, "Items");
     }
 
     @Override
     public LinkedHashMap<String, String> getFormattedButtons() {
         var buttons = new LinkedHashMap<String, String>();
         
-        buttons.put("Назад", "gotodescription");
+        buttons.put("Назад", "gotoinventory");
 
         return buttons;
     }
@@ -48,7 +48,7 @@ public class ItemsGenerator extends BaseGenerator {
     public HashMap<String, Combinekey> getPossibleTransitions() {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
-        possibleTransitions.put("gotodescription", this.parameters);
+        possibleTransitions.put("gotoinventory", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
 
         return possibleTransitions;
     }

@@ -40,11 +40,11 @@ class RouterTest {
 
         assertTrue(this.router.getCurrentState() instanceof UserState);
 
-        var user = this.storage.getUserRepository().GetDocumentByKey("testUserId");
+        var characters = this.storage.getCharacterRepository().getUserCharacters("testUserId");
 
         this.router.makeTransition(
             String.format("gotocharacter:%s", 
-            user.characters.get(0))
+            characters.get(0).id)
         );
 
         assertTrue(this.router.getCurrentState() instanceof GeneralState);

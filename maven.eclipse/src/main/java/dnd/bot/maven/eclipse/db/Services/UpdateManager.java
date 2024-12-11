@@ -23,8 +23,8 @@ public class UpdateManager {
         gradeRepo = rs.getGradesRepository();
         basicRepos = new HashMap<String, FieldUpdatable<ObjectId>>();
 
-        basicRepos.put("Item", rs.getItemsRepository());
-        basicRepos.put("Appearence", rs.getAppearenceRepository());
+        basicRepos.put("Items", rs.getItemsRepository());
+        basicRepos.put("Appearance", rs.getAppearenceRepository());
         basicRepos.put("Social", rs.getSocialRepository());
         basicRepos.put("Level", rs.getLevelRepository());
         basicRepos.put("HP", rs.getHpRepository());

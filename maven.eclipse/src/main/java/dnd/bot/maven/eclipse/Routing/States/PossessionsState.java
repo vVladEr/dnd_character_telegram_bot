@@ -9,25 +9,31 @@ import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
 import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
 
-public class PossessionsState extends BaseState {
+public class PossessionsState extends BaseState implements IAddable {
     private Combinekey parameters;
 
     public PossessionsState(
         Combinekey parameters,
         LinkedHashMap<String, String> fields, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions
+        HashMap<String, Combinekey> possibleTransitions,
+        String stateName
     ) {
         this.parameters = parameters;
         this.fields = fields;
         this.buttons = buttons;
         this.possibleTransitions = possibleTransitions;
+        this.stateName = stateName;
     }
 
-    public void addPossession(GeneratorManager manager) {
+    public void addElement(GeneratorManager manager, HashMap<String, String> necessaryFields) {
+        var name = necessaryFields.get("название");
+        var description = necessaryFields.get("описание");
+
         var repo = manager.getReposStorage().getPossesionsRepository();
-        var description = new BasicDescriptionDbo(this.parameters.getObjectIdKey(), "1", "1");
-        repo.insertDocument(description);
+        var possession = new BasicDescriptionDbo(this.parameters.getObjectIdKey(), name, description);
+        fields.put(name, description + "\n");
+        repo.insertDocument(possession);
     }
 
     @Override
@@ -43,7 +49,7 @@ public class PossessionsState extends BaseState {
             messageObject.addInlineKeybordButton(getInlineKeybordButton(name, buttons.get(name)));
         }
         
-        messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "addpossession"));
+        messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "add"));
 
         responseObject.addMessageObject(messageObject);
 

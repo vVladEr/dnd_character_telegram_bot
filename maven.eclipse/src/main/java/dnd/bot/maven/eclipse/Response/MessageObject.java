@@ -28,6 +28,10 @@ public class MessageObject {
         message.append(name + ": " + messagePart);
     }
 
+    public void addMessagePart(String name) {
+        message.append(name + ": ");
+    }
+
     public String getMessage() {
         return message.toString();
     }

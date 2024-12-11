@@ -1,50 +1,57 @@
 package dnd.bot.maven.eclipse.Routing.States;
 
-// import java.util.HashMap;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-// import dnd.bot.maven.eclipse.Response.MessageObject;
-// import dnd.bot.maven.eclipse.Response.ResponseObject;
-// import dnd.bot.maven.eclipse.Routing.GeneratorManager;
-// import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
-// import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
+import dnd.bot.maven.eclipse.Response.MessageObject;
+import dnd.bot.maven.eclipse.Response.ResponseObject;
+import dnd.bot.maven.eclipse.Routing.GeneratorManager;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
 
-// public class NotesState extends BaseState {
-//     private Combinekey parameters;
+public class NotesState extends BaseState implements IAddable {
+    private Combinekey parameters;
 
-//     public NotesState(
-//         Combinekey parameters,
-//         HashMap<String, String> fields, 
-//         HashMap<String, String> buttons, 
-//         HashMap<String, Combinekey> possibleTransitions
-//     ) {
-//         this.fields = fields;
-//         this.buttons = buttons;
-//         this.possibleTransitions = possibleTransitions;
-//     }
+    public NotesState(
+        Combinekey parameters,
+        LinkedHashMap<String, String> fields, 
+        LinkedHashMap<String, String> buttons, 
+        HashMap<String, Combinekey> possibleTransitions,
+        String stateName
+    ) {
+        this.parameters = parameters;
+        this.fields = fields;
+        this.buttons = buttons;
+        this.possibleTransitions = possibleTransitions;
+        this.stateName = stateName;
+    }
 
-//     public void addNote(GeneratorManager manager) {
-//         var repo = manager.getReposStorage().();
-//         var description = new BasicDescriptionDbo(parameters.getObjectIdKey(), "", "");
-//         repo.InsertDocument(description);
-//     }
+    public void addElement(GeneratorManager manager, HashMap<String, String> necessaryFields) {
+        var name = necessaryFields.get("название");
+        var description = necessaryFields.get("описание");
 
-//     @Override
-//     public ResponseObject getStateMessages() {
-//         var responseObject = new ResponseObject();
+        var repo = manager.getReposStorage().getNotesRepository();
+        var note = new BasicDescriptionDbo(parameters.getObjectIdKey(), name, description);
+        repo.insertDocument(note);
+    }
+
+    @Override
+    public ResponseObject getStateMessages() {
+        var responseObject = new ResponseObject();
         
-//         var messageObject = new MessageObject();
-//         for (var name : fields.keySet()) {
-//             messageObject.addMessagePart(name, fields.get(name));
-//         }
+        var messageObject = new MessageObject();
+        for (var name : fields.keySet()) {
+            messageObject.addMessagePart(name, fields.get(name));
+        }
 
-//         for (var name : buttons.keySet()) {
-//             messageObject.addInlineKeybordButton(getInlineKeybordButton(name, buttons.get(name)));
-//         }
+        for (var name : buttons.keySet()) {
+            messageObject.addInlineKeybordButton(getInlineKeybordButton(name, buttons.get(name)));
+        }
         
-//         messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "addfeature"));
+        messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "add"));
 
-//         responseObject.addMessageObject(messageObject);
+        responseObject.addMessageObject(messageObject);
 
-//         return responseObject;
-//     }
-// }
+        return responseObject;
+    }
+}

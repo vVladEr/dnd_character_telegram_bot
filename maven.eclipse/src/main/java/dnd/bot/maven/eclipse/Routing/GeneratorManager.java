@@ -2,6 +2,7 @@ package dnd.bot.maven.eclipse.Routing;
 
 import java.util.HashMap;
 
+import dnd.bot.maven.eclipse.Routing.Generators.AddGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.AppearanceGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.BaseGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.CharacterGenerator;
@@ -24,59 +25,46 @@ import dnd.bot.maven.eclipse.db.Services.ReposStorage;
 public class GeneratorManager {
     private HashMap<String, BaseGenerator> generators; 
     private ReposStorage reposStorage;
-    private CharacterGenerator characterGenerator;
 
     public GeneratorManager() {
-        
         Init();
     }
 
     private void Init() {
-        this.reposStorage = new ReposStorage();
-        this.characterGenerator = new CharacterGenerator();
-        var userGenerator = new UserGenerator(this);
-        var featuresGenerator = new FeaturesGenerator(this);
-        var possessionsGenerator = new PossessionsGenerator(this);
-        var itemsGenerator = new ItemsGenerator(this);
-        var gradesGenerator = new GradesGenerator(this);
-        var spellsGenerator = new SpellsGenerator(this);
+        reposStorage = new ReposStorage();
+        generators = new HashMap<>();
 
-        this.generators = new HashMap<>();
-        this.generators.put("gotouser", userGenerator);
+        generators.put("gotouser", new UserGenerator(this));
 
-        this.generators.put("addcharacter", userGenerator);
-        this.generators.put("addfeature", featuresGenerator);
-        this.generators.put("additem", itemsGenerator);
-        this.generators.put("addpossession", possessionsGenerator);
-        this.generators.put("addgrade", gradesGenerator);
-        this.generators.put("addspell", spellsGenerator);
+        generators.put("add", new AddGenerator());
 
-        this.generators.put("gotocharacter", this.characterGenerator);
+        generators.put("gotocharacter", new CharacterGenerator());
 
-        this.generators.put("gotodescription", new DescriptionGenerator());
-        this.generators.put("gotoinventory", new InventoryGenerator());
-        this.generators.put("gotospells", spellsGenerator);
-        this.generators.put("gotonotes", new NotesGenerator());
+        generators.put("gotodescription", new DescriptionGenerator());
+        generators.put("gotoinventory", new InventoryGenerator());
+        generators.put("gotogrades", new GradesGenerator(this));
+        generators.put("gotospells", new SpellsGenerator(this));
+        generators.put("gotonotes", new NotesGenerator());
 
-        this.generators.put("gotopersonality", new PersonalityGenerator(this));
-        this.generators.put("gotohp", new HPGenerator(this));
-        this.generators.put("gotolevel", new LevelGenerator(this));
-        this.generators.put("gotosocial", new SocialGenerator(this));
-        this.generators.put("gotoitems", itemsGenerator);
+        generators.put("gotopersonality", new PersonalityGenerator(this));
+        generators.put("gotohp", new HPGenerator(this));
+        generators.put("gotolevel", new LevelGenerator(this));
+        generators.put("gotosocial", new SocialGenerator(this));
+        generators.put("gotoitems", new ItemsGenerator(this));
 
-        this.generators.put("gotofeatures", featuresGenerator);
-        this.generators.put("gotopossessions", possessionsGenerator);
+        generators.put("gotofeatures", new FeaturesGenerator(this));
+        generators.put("gotopossessions", new PossessionsGenerator(this));
 
-        this.generators.put("gotostats", new StatsGenerator(this));
-        this.generators.put("gotoappearance", new AppearanceGenerator(this));
-        this.generators.put("gotogrades", new GradesGenerator(this));
+        generators.put("gotostats", new StatsGenerator(this));
+        generators.put("gotoappearance", new AppearanceGenerator(this));
+        generators.put("gotogrades", new GradesGenerator(this));
     }
 
     public BaseGenerator getGeneratorByStateName(String stateName) {
-        return this.generators.get(stateName);
+        return generators.get(stateName);
     }
 
     public ReposStorage getReposStorage() {
-        return this.reposStorage;
+        return reposStorage;
     }
 }

@@ -29,8 +29,8 @@ public class SpellsGenerator extends BaseGenerator {
         
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("addspell", parameters);
-        return new SpellsState(parameters, fields, buttons, possibleTransitions);
+        possibleTransitions.put("add", parameters);
+        return new SpellsState(parameters, fields, buttons, possibleTransitions, "Spells");
     }
 
     @Override

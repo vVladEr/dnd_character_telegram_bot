@@ -29,7 +29,7 @@ public class MoneyGenerator extends BaseGenerator {
         fields.put("Уровень", "");
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new GeneralState(fields, buttons, possibleTransitions);
+        return new GeneralState(fields, buttons, possibleTransitions, "Money");
     }
 
     @Override

@@ -8,10 +8,12 @@ public class GeneralState extends BaseState {
     public GeneralState(
         LinkedHashMap<String, String> fields, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions
+        HashMap<String, Combinekey> possibleTransitions,
+        String stateName
     ) {
         this.fields = fields;
         this.buttons = buttons;
         this.possibleTransitions = possibleTransitions;
+        this.stateName = stateName;
     }
 }
