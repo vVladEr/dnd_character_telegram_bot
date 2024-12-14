@@ -35,7 +35,7 @@ public class BaseRepositoryTest {
 		var characterId = new ObjectId();
 		var note = new BasicDescriptionDbo(characterId, "newNote", "newNote");
 		rep.insertDocument(note);
-		var descId = rep.getCharacterNotes(characterId).get(0).descId;
+		var descId = rep.getCharacterNotes(characterId).get(0).id;
 		var noteDbo = rep.getDocumentByKey(descId);
 		assertNotNull(noteDbo);
 		assertEquals(note.characterId, noteDbo.characterId);
@@ -47,7 +47,7 @@ public class BaseRepositoryTest {
 		var desc = "desc";
 		var note = new BasicDescriptionDbo(characterId, "newNote", desc);
 		rep.insertDocument(note);
-		var descId = rep.getCharacterNotes(characterId).get(0).descId;
+		var descId = rep.getCharacterNotes(characterId).get(0).id;
 		var newDesc = "newDesc";
 		rep.updateField(descId, "description", newDesc);
 		var noteDbo = rep.getDocumentByKey(descId);
@@ -61,7 +61,7 @@ public class BaseRepositoryTest {
 		var characterId = new ObjectId();
 		var note = new BasicDescriptionDbo(characterId, "newNote", "desc");
 		rep.insertDocument(note);
-		var descId = rep.getCharacterNotes(characterId).get(0).descId;
+		var descId = rep.getCharacterNotes(characterId).get(0).id;
 		rep.updateField(descId, UUID.randomUUID().toString(), 5);
 		var noteDbo = rep.getDocumentByKey(descId);
 		assertNotNull(noteDbo);
@@ -75,7 +75,7 @@ public class BaseRepositoryTest {
 		var characterId = new ObjectId();
 		var note = new BasicDescriptionDbo(characterId,"newNote", "newNote");
 		rep.insertDocument(note);
-		var descId = rep.getCharacterNotes(characterId).get(0).descId;
+		var descId = rep.getCharacterNotes(characterId).get(0).id;
 		var noteDbo = rep.getDocumentByKey(descId);
 		assertNotNull(noteDbo);
 		assertEquals(note.characterId, noteDbo.characterId);

@@ -35,7 +35,7 @@ public class MoneyManager {
         var newMoneyAmount = req.isAddOperation() 
         ? moneyDbo.amount + moneyInput
         : moneyDbo.amount - moneyInput;
-        
-        itemRepos.updateField(moneyDbo.itemId, "amount", newMoneyAmount);
+
+        itemRepos.updateField(moneyDbo.id, "amount", newMoneyAmount);
     }
 }

@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 public class BasicDescriptionDbo implements IDbo {
 
     @BsonId
-    public ObjectId descId;
+    public ObjectId id;
 
     @BsonProperty
     public ObjectId characterId;

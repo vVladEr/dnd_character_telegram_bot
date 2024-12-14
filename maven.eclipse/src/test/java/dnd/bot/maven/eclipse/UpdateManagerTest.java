@@ -60,12 +60,12 @@ public class UpdateManagerTest {
         var oldValue = oldItem.amount;
         var newValue = oldValue + 2;
         var updateRequest = new UpdateFieldRequest(
-                new Combinekey(item.itemId),
+                new Combinekey(item.id),
                 "amount", newValue,
                 "Items");
         updateManager.updateField(updateRequest);
 
-        var updatedDbo = reposStorage.getItemsRepository().getDocumentByKey(item.itemId);
+        var updatedDbo = reposStorage.getItemsRepository().getDocumentByKey(item.id);
 
         assertNotNull(updatedDbo);
         assertNotEquals(oldValue, updatedDbo.amount);
