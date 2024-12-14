@@ -43,7 +43,7 @@ public class UpdateManagerTest {
         var updateRequest = new UpdateFieldRequest(
                 new Combinekey(characterId),
                 "age", newValue,
-                "Appearence");
+                "Appearance");
         updateManager.updateField(updateRequest);
 
         var updatedDbo = reposStorage.getAppearenceRepository().getDocumentByKey(characterId);
@@ -62,7 +62,7 @@ public class UpdateManagerTest {
         var updateRequest = new UpdateFieldRequest(
                 new Combinekey(item.itemId),
                 "amount", newValue,
-                "Item");
+                "Items");
         updateManager.updateField(updateRequest);
 
         var updatedDbo = reposStorage.getItemsRepository().getDocumentByKey(item.itemId);
