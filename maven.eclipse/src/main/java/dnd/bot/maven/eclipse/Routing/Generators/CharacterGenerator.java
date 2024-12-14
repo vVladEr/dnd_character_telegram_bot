@@ -43,7 +43,7 @@ public class CharacterGenerator extends BaseGenerator {
         possibleTransitions.put("gotoinventory", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
         possibleTransitions.put("gotogrades", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
         possibleTransitions.put("gotonotes", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
-        possibleTransitions.put("gotouser", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "User"));
+        possibleTransitions.put("gotouser", new Combinekey(parameters.getUserIdKey(), "User"));
 
         return possibleTransitions;
     }

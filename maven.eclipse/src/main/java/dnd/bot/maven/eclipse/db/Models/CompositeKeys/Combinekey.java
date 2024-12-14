@@ -184,7 +184,6 @@ public class Combinekey {
     }
 
     public ObjectId getObjectIdKey() {
-        assert objectIdKey != null;
 
         return objectIdKey;
     }

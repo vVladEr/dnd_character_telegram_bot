@@ -13,8 +13,8 @@ public class Router {
     public Boolean isUpdateMode;
 
     public Router(String userId) {
-        this.manager = new GeneratorManager();
-        this.currentState = manager.getGeneratorByStateName("gotouser")
+        manager = new GeneratorManager();
+        currentState = manager.getGeneratorByStateName("gotouser")
                                    .generateState(new Combinekey(userId));
         isUpdateMode = false;
         isAddMode = false;

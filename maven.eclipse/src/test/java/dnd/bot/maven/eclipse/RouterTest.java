@@ -1,59 +1,116 @@
 package dnd.bot.maven.eclipse;
 
-import dnd.bot.maven.eclipse.Routing.Router;
-import dnd.bot.maven.eclipse.Routing.States.GeneralState;
-import dnd.bot.maven.eclipse.Routing.States.UserState;
-import dnd.bot.maven.eclipse.db.Services.ReposStorage;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class RouterTest {
+import dnd.bot.maven.eclipse.Routing.Router;
+import dnd.bot.maven.eclipse.Routing.States.AddState;
+import dnd.bot.maven.eclipse.Routing.States.GeneralState;
+import dnd.bot.maven.eclipse.Routing.States.NotesState;
+import dnd.bot.maven.eclipse.Routing.States.UserState;
+import dnd.bot.maven.eclipse.db.Services.ReposStorage;
+
+public class RouterTest {
     private Router router;
     private ReposStorage storage;
 
     @BeforeEach
     void setUp() {
-        this.storage = new ReposStorage();
-        this.router = new Router("testUserId");        
+        storage = new ReposStorage();
+        router = new Router("testUserId");        
     }
 
     @Test
     void testInitialState() {
-        assertNotNull(this.router.getCurrentState());
-        assertTrue(this.router.getCurrentState() instanceof UserState);
+        assertNotNull(router.getCurrentState());
+        assertTrue(router.getCurrentState() instanceof UserState);
     }
 
     @Test
-    void testMakeTransitionForSimpleCallback() {
+    void testAddCharacter() {
         router.makeTransition("add");
 
-        assertTrue(this.router.getCurrentState() instanceof UserState);
+        assertTrue(router.getCurrentState() instanceof AddState);
+
+        router.makeTransition("Vasya");
+
+        assertTrue(router.getCurrentState() instanceof UserState);
+        assertTrue(storage.getCharacterRepository().getUserCharacters("testUserId").get(0).name.equals("Vasya"));
     }
 
     @Test
     void testMakeTransitionForCompositeCallback() {
-        this.router.makeTransition("add");
+        var id = storage.getCharacterRepository().getUserCharacters("testUserId").get(0).id;
+        router.makeTransition(String.format("gotocharacter:%s", id));
 
-        assertTrue(this.router.getCurrentState() instanceof UserState);
+        assertTrue(router.getCurrentState() instanceof GeneralState);
+    }
 
-        var characters = this.storage.getCharacterRepository().getUserCharacters("testUserId");
+    @Test
+    void testMakeTransitionForSimpleCallback() {
+        var id = storage.getCharacterRepository().getUserCharacters("testUserId").get(0).id;
+        router.makeTransition(String.format("gotocharacter:%s", id));
 
-        this.router.makeTransition(
-            String.format("gotocharacter:%s", 
-            characters.get(0).id)
-        );
+        assertTrue(router.getCurrentState() instanceof GeneralState);
 
-        assertTrue(this.router.getCurrentState() instanceof GeneralState);
+        router.makeTransition("gotonotes");
+
+        assertTrue(router.getCurrentState() instanceof NotesState);
+    }
+
+    @Test
+    void testAddNote() {
+        var id = storage.getCharacterRepository().getUserCharacters("testUserId").get(0).id;
+        router.makeTransition(String.format("gotocharacter:%s", id));
+
+        assertTrue(router.getCurrentState() instanceof GeneralState);
+        
+        router.makeTransition("gotonotes");
+
+        assertTrue(router.getCurrentState() instanceof NotesState);
+
+        router.makeTransition("add");
+
+        assertTrue(router.getCurrentState() instanceof AddState);
+
+        router.makeTransition("first trip");
+        router.makeTransition("problems");
+
+        var newNote = storage.getNotesRepository().getCharacterNotes(id).get(0);
+
+        assertTrue(newNote.name.equals("first trip"));
+        assertTrue(newNote.description.equals("problems"));
+
+        assertTrue(router.getCurrentState() instanceof NotesState);
+
+    }
+
+    @Test
+    void testMakeBackTransition() {
+        var id = storage.getCharacterRepository().getUserCharacters("testUserId").get(0).id;
+        router.makeTransition(String.format("gotocharacter:%s", id));
+
+        assertTrue(router.getCurrentState() instanceof GeneralState);
+        
+        router.makeTransition("gotonotes");
+
+        assertTrue(router.getCurrentState() instanceof NotesState);
+
+        router.makeTransition("gotocharacter");
+
+        assertTrue(router.getCurrentState() instanceof GeneralState);
+
+        router.makeTransition("gotouser");
+
+        assertTrue(router.getCurrentState() instanceof UserState);
     }
 
     @Test
     void testMakeTransitionWithUnknownCallback() {
-        this.router.makeTransition("unknowncallback");
+        router.makeTransition("unknowncallback");
 
-        assertTrue(this.router.getCurrentState() instanceof UserState);
+        assertTrue(router.getCurrentState() instanceof UserState);
     }
 }
