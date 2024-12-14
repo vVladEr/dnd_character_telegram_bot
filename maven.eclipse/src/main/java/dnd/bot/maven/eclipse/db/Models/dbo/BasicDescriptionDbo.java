@@ -18,12 +18,21 @@ public class BasicDescriptionDbo implements IDbo {
     @BsonProperty
     public String description;
 
+    @BsonProperty
+    public String icon;
+
     public BasicDescriptionDbo(){}
 
     public BasicDescriptionDbo(ObjectId characterId, String name, String description)
     {
+        this(characterId, name, description, "");
+    }
+
+    public BasicDescriptionDbo(ObjectId characterId, String name, String description, String icon)
+    {
         this.characterId = characterId;
         this.name = name;
         this.description = description;
+        this.icon = icon;
     }
 }
