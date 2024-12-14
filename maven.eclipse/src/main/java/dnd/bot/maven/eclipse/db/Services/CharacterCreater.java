@@ -7,6 +7,7 @@ import dnd.bot.maven.eclipse.db.Models.dbo.AppearenceDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.CharacterDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.GeneralStatDBO;
 import dnd.bot.maven.eclipse.db.Models.dbo.HPDbo;
+import dnd.bot.maven.eclipse.db.Models.dbo.ItemDBO;
 import dnd.bot.maven.eclipse.db.Models.dbo.LevelDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.PersonalityDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.SocialDbo;
@@ -40,6 +41,11 @@ public class CharacterCreater {
 
         var userRepository = reposStorage.getCharacterRepository();
         userRepository.insertDocument(new CharacterDbo(characterId, characterName, userId));
+
+        var itemRepository = reposStorage.getItemsRepository();
+        itemRepository.insertDocument(new ItemDBO(
+                characterId, "Деньги",
+                "Деньги персонажа в медных монетах", 0));
 
         return characterId;
     }
