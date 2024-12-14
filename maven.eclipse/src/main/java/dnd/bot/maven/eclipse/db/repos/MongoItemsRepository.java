@@ -5,6 +5,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 import com.mongodb.MongoClientSettings;
@@ -38,6 +39,13 @@ public class MongoItemsRepository extends BaseRepo<ItemDBO, ObjectId>
             items.add(itemDbo);
         }
         return items;
+    }
+
+    public ItemDBO getCharactersMoney(ObjectId characterId)
+    {
+        return mongoCollection.find(
+            and(eq("characterId", characterId), eq("name", "Деньги"))).first();
+        
     }
 
     public void deleteDocument(ObjectId id)
