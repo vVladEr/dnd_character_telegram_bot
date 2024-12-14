@@ -8,13 +8,11 @@ import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.SpellsState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
-import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
 import dnd.bot.maven.eclipse.db.repos.MongoGradesRepository;
 
 public class SpellsGenerator extends BaseGenerator {
     private Combinekey parameters;
     private MongoGradesRepository repo;
-    private ArrayList<GradeDBo> grades;
 
     public SpellsGenerator(GeneratorManager manager) {
         this.repo = manager.getReposStorage().getGradesRepository();
@@ -25,28 +23,26 @@ public class SpellsGenerator extends BaseGenerator {
         this.parameters = parameters;
         
         var fields = new LinkedHashMap<String, String>();
-        fields.put("Выберите уровень заклинания", "");
+        fields.put("Заклинания", "\n");
+
+        var grade = repo.getDocumentByKey(parameters.getGradeCompositeKey());
         
+        for (var spell : grade.spells.keySet()) {
+            var description = grade.spells.get(spell);
+            fields.put(description.name, description.description + "\n");
+        }
+
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("addspell", parameters);
-        return new SpellsState(parameters, fields, buttons, possibleTransitions);
+
+        return new SpellsState(parameters, fields, buttons, possibleTransitions, "Spells");
     }
 
     @Override
     public LinkedHashMap<String, String> getFormattedButtons() {
         var buttons = new LinkedHashMap<String, String>();
 
-        this.grades = this.repo.getCharacterGrades(parameters.getObjectIdKey());
-        
-        for (var grade : this.grades) {
-            buttons.put(String.format("%s", grade.grade), String.format("gotogrades:%s", grade.grade));
-        }
-
-        var stateName = new HashMap<String, String>();
-        stateName.put("Спелы", "");
-
-        buttons.put("Назад", "gotocharacter");
+        buttons.put("Назад", "gotograde");
 
         return buttons;
     }
@@ -54,15 +50,9 @@ public class SpellsGenerator extends BaseGenerator {
     @Override
     public HashMap<String, Combinekey> getPossibleTransitions() {
         var possibleTransitions = new HashMap<String, Combinekey>();
-
-        for (var grade : this.grades) {
-            possibleTransitions.put(
-                String.format("%s", grade.grade), 
-                new Combinekey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), grade.grade)
-            );
-        }
         
-        possibleTransitions.put("gotocharacter", this.parameters);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Spells", parameters.getGradeCompositeKey()));
+        possibleTransitions.put("gotograde", this.parameters);
 
         return possibleTransitions;
     }

@@ -14,11 +14,13 @@ public class StatsState extends BaseState {
     public StatsState(
         ArrayList<LinkedHashMap<String, String>> fieldsArray, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions
+        HashMap<String, Combinekey> possibleTransitions,
+        String stateName
     ) {
         this.fieldsArray = fieldsArray;
         this.buttons = buttons;
         this.possibleTransitions = possibleTransitions;
+        this.stateName = stateName;
     }
 
     @Override

@@ -36,6 +36,12 @@ public class Bot extends TelegramLongPollingBot{
 	
 	@Override
 	public void onUpdateReceived(Update update) {
+
+		if (!isFirstMessage && (router.isAddMode || router.isUpdateMode)) {
+			processInputValue(update);
+			return;
+		}
+		
 		if (update.hasCallbackQuery()) {
 			if (isFirstMessage) {
 				router = new Router(update.getCallbackQuery().getFrom().getId().toString());
@@ -49,6 +55,7 @@ public class Bot extends TelegramLongPollingBot{
 	    var user = msg.getFrom();
 	    var id = user.getId();
 		var text = msg.getText();
+
 
 		if (isFirstMessage) {
 			router = new Router(id.toString());
@@ -105,6 +112,17 @@ public class Bot extends TelegramLongPollingBot{
 		router.makeTransition(callback);
 		
 		var id = callbackQuery.getFrom().getId().toString();
+
+		packageResponse(id);
+		sendMessages();
+	}
+
+	private void processInputValue(Update update) {
+		var msg = update.getMessage();
+
+		router.makeTransition(msg.getText());
+		
+		var id = msg.getFrom().getId().toString();
 
 		packageResponse(id);
 		sendMessages();

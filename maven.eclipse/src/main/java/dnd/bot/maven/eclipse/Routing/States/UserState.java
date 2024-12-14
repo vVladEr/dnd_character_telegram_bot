@@ -10,7 +10,7 @@ import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
 import dnd.bot.maven.eclipse.db.Services.CharacterCreater;
 
-public class UserState extends BaseState {
+public class UserState extends BaseState implements IAddable {
     private CharacterCreater creater;
     private String userId;
 
@@ -19,19 +19,24 @@ public class UserState extends BaseState {
         String userId,
         LinkedHashMap<String, String> fields, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions
+        HashMap<String, Combinekey> possibleTransitions,
+        String stateName
     ) {
         this.creater = creater;
         this.userId = userId;
         this.fields = fields;
         this.buttons = buttons;
         this.possibleTransitions = possibleTransitions;
+        this.stateName = stateName;
     }
 
-    public void addCharacter(GeneratorManager manager) {
-        var characterId = creater.createCharacter(this.userId);
+    public void addElement(GeneratorManager manager, HashMap<String, String> necessaryFields) {
+        var name = necessaryFields.get("имя");
+
+        var characterId = creater.createCharacter(this.userId, name);
         var combineKey = new Combinekey(this.userId, characterId);
-        possibleTransitions.put(String.format("gotocharacter:%s", characterId), combineKey);
+        buttons.put(name, String.format("gotocharacter:%s", characterId));
+        possibleTransitions.put(String.format("%s", characterId), combineKey);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class UserState extends BaseState {
             messageObject.addInlineKeybordButton(getInlineKeybordButton(name, buttons.get(name)));
         }
         
-        messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "addcharacter"));
+        messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "add"));
 
         responseObject.addMessageObject(messageObject);
 

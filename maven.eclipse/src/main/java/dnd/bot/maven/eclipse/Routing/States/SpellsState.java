@@ -7,27 +7,31 @@ import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
-import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
 
-public class SpellsState extends BaseState {
+public class SpellsState extends BaseState implements IAddable {
     private Combinekey parameters;
 
     public SpellsState(
         Combinekey parameters,
         LinkedHashMap<String, String> fields, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions
+        HashMap<String, Combinekey> possibleTransitions,
+        String stateName
     ) {
         this.parameters = parameters;
         this.fields = fields;
         this.buttons = buttons;
         this.possibleTransitions = possibleTransitions;
+        this.stateName = stateName;
     }
 
-    public void addSpell(GeneratorManager manager) {
+    public void addElement(GeneratorManager manager, HashMap<String, String> necessaryFields) {
+        var name = necessaryFields.get("название заклинания");
+        var description = necessaryFields.get("описание");
+
         var repo = manager.getReposStorage().getGradesRepository();
-        var grade = new GradeDBo(this.parameters.getObjectIdKey(), 1);
-        repo.insertDocument(grade);
+        fields.put(name, description + "\n");
+        repo.addSpell(parameters.getGradeCompositeKey(), name, description);
     }
 
     @Override
@@ -43,7 +47,7 @@ public class SpellsState extends BaseState {
             messageObject.addInlineKeybordButton(getInlineKeybordButton(name, buttons.get(name)));
         }
         
-        messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "addspell"));
+        messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "add"));
 
         responseObject.addMessageObject(messageObject);
 

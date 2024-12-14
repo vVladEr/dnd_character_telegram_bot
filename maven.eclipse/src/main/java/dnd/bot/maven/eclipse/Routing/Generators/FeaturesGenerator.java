@@ -23,16 +23,16 @@ public class FeaturesGenerator extends BaseGenerator {
         var features = repo.getCharacterFeatures(parameters.getObjectIdKey());
         
         var fields = new LinkedHashMap<String, String>();
-        fields.put("Особенности", "");
+        fields.put("Особенности", "\n");
 
         for (var feature : features) {
-            fields.put(feature.name, feature.description);
+            fields.put(feature.name, feature.description + "\n");
         }
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("addfeature", parameters);
-        return new FeaturesState(parameters, fields, buttons, possibleTransitions);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Features"));
+        return new FeaturesState(parameters, fields, buttons, possibleTransitions, "Features");
     }
 
     @Override

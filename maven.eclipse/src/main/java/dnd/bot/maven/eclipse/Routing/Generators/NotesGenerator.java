@@ -3,22 +3,36 @@ package dnd.bot.maven.eclipse.Routing.Generators;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
-import dnd.bot.maven.eclipse.Routing.States.GeneralState;
+import dnd.bot.maven.eclipse.Routing.States.NotesState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.repos.MongoNotesRepository;
 
 public class NotesGenerator extends BaseGenerator {
     private Combinekey parameters;
+    private MongoNotesRepository repo;
+
+    public NotesGenerator(GeneratorManager manager) {
+        repo = manager.getReposStorage().getNotesRepository();
+    }
+
 
     @Override
     public BaseState generateState(Combinekey parameters) {
         this.parameters = parameters;
-        
+        var notes = repo.getCharacterNotes(parameters.getObjectIdKey());
+
         var fields = new LinkedHashMap<String, String>();
-        fields.put("Заметки", "");
+        fields.put("Заметки", "\n");
+
+        for (var note : notes) {
+            fields.put(note.name, note.description + "\n");
+        }
+
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new GeneralState(fields, buttons, possibleTransitions);
+        return new NotesState(parameters, fields, buttons, possibleTransitions, "Notes");
     }
 
     @Override
@@ -34,7 +48,8 @@ public class NotesGenerator extends BaseGenerator {
     public HashMap<String, Combinekey> getPossibleTransitions() {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
-        possibleTransitions.put("gotocharacter", this.parameters);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
+        possibleTransitions.put("gotocharacter", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Character"));
 
         return possibleTransitions;
     }

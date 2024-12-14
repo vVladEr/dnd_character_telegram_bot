@@ -18,7 +18,7 @@ public class CharacterCreater {
         this.reposStorage = reposStorage;
     }
 
-    public ObjectId CreateCharacter(String userId, String characterName) {
+    public ObjectId createCharacter(String userId, String characterName) {
         var characterId = new ObjectId();
 
         var appearenceRepository = reposStorage.getAppearenceRepository();
@@ -45,7 +45,7 @@ public class CharacterCreater {
     }
 
     public ObjectId createCharacter(String userId) {
-        return CreateCharacter(userId, "Noname");
+        return createCharacter(userId, "Noname");
     }
 
     private void insertCharacterStats(ObjectId characterId) {

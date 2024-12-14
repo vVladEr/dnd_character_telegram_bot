@@ -19,7 +19,7 @@ public class InventoryGenerator extends BaseGenerator {
         fields.put("Инвентарь", "");
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new GeneralState(fields, buttons, possibleTransitions);
+        return new GeneralState(fields, buttons, possibleTransitions, "Inventory");
     }
 
     @Override

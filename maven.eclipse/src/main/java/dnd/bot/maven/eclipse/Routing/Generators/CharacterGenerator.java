@@ -17,7 +17,7 @@ public class CharacterGenerator extends BaseGenerator {
         fields.put("Персонаж", "");
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new GeneralState(fields, buttons, possibleTransitions);
+        return new GeneralState(fields, buttons, possibleTransitions, "Character");
     }
 
     @Override
@@ -27,8 +27,8 @@ public class CharacterGenerator extends BaseGenerator {
         buttons.put("Характеристики", "gotostats");
         buttons.put("Описание персонажа", "gotodescription");
         buttons.put("Инвентарь", "gotoinventory");
-        buttons.put("Спелы", "gotospells");
-        //buttons.put("Заметки", "gotonotes");
+        buttons.put("Уровни заклинаний", "gotogrades");
+        buttons.put("Заметки", "gotonotes");
         buttons.put("Назад", "gotouser");
 
         return buttons;
@@ -38,12 +38,12 @@ public class CharacterGenerator extends BaseGenerator {
     public LinkedHashMap<String, Combinekey> getPossibleTransitions() {
         var possibleTransitions = new LinkedHashMap<String, Combinekey>();
         
-        possibleTransitions.put("gotostats", this.parameters);
-        possibleTransitions.put("gotodescription", this.parameters);
-        possibleTransitions.put("gotoinventory", this.parameters);
-        possibleTransitions.put("gotospells", this.parameters);
-        possibleTransitions.put("gotonotes", this.parameters);
-        possibleTransitions.put("gotouser", this.parameters);
+        possibleTransitions.put("gotostats", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Stats"));
+        possibleTransitions.put("gotodescription", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Description"));
+        possibleTransitions.put("gotoinventory", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
+        possibleTransitions.put("gotogrades", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
+        possibleTransitions.put("gotonotes", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
+        possibleTransitions.put("gotouser", new Combinekey(parameters.getUserIdKey(), "User"));
 
         return possibleTransitions;
     }

@@ -1,5 +1,6 @@
 package dnd.bot.maven.eclipse.Routing.Generators;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -7,12 +8,12 @@ import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.UserState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.dbo.CharacterDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.IDbo;
-import dnd.bot.maven.eclipse.db.Models.dbo.UserDBO;
 import dnd.bot.maven.eclipse.db.Services.CharacterCreater;
 
 public class UserGenerator extends BaseGenerator {
-    private UserDBO userDbo;
+    private ArrayList<CharacterDbo> characters;
     private CharacterCreater creater;
     private Combinekey parameters;
     private GeneratorManager manager;
@@ -24,21 +25,18 @@ public class UserGenerator extends BaseGenerator {
 
     @Override
     public BaseState generateState(Combinekey parameters) {
-        var repo = this.manager.getReposStorage().getUserRepository();
+        var repo = this.manager.getReposStorage().getCharacterRepository();
         this.parameters = parameters;
         var userId = parameters.getUserIdKey();
-        this.userDbo = repo.GetDocumentByKey(userId);
-        if (this.userDbo == null) {
-            repo.InsertDocument(new UserDBO(userId));
-            this.userDbo = repo.GetDocumentByKey(userId);
-        }
+        this.characters = repo.getUserCharacters(userId);
         
         var fields = new LinkedHashMap<String, String>();
         fields.put("Твои персонажи", "");
+
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("addcharacter", parameters);
-        return new UserState(creater, userId, fields, buttons, possibleTransitions);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "User"));
+        return new UserState(creater, userId, fields, buttons, possibleTransitions, "User");
     }
 
     @Override
@@ -66,12 +64,11 @@ public class UserGenerator extends BaseGenerator {
     @Override
     public LinkedHashMap<String, String> getFormattedButtons() {
         var buttons = new LinkedHashMap<String, String>();
-        var characterIds = userDbo.GetCharacters();
-        
-        for (var characterId : characterIds) {
+
+        for (var character : this.characters) {
             buttons.put(
-                String.format("%s", characterId), 
-                String.format("gotocharacter:%s", characterId)
+                String.format("%s", character.name), 
+                String.format("gotocharacter:%s", character.id)
             );
         }
 
@@ -81,11 +78,10 @@ public class UserGenerator extends BaseGenerator {
     @Override
     public HashMap<String, Combinekey> getPossibleTransitions() {
         var possibleTransitions = new HashMap<String, Combinekey>();
-        var characterIds = userDbo.GetCharacters();
 
-        for (var characterId : characterIds) {
-            var combineKey = new Combinekey(this.parameters.getUserIdKey(), characterId);
-            possibleTransitions.put(String.format("%s", characterId), combineKey);
+        for (var character : this.characters) {
+            var combineKey = new Combinekey(this.parameters.getUserIdKey(), character.id, "Character");
+            possibleTransitions.put(String.format("%s", character.id), combineKey);
         }
 
         return possibleTransitions;

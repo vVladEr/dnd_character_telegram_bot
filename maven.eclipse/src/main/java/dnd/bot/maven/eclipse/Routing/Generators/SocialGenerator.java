@@ -29,7 +29,7 @@ public class SocialGenerator extends BaseGenerator {
         fields.put("Общественность", "");
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        return new GeneralState(fields, buttons, possibleTransitions);
+        return new GeneralState(fields, buttons, possibleTransitions, "Social");
     }
 
     @Override

@@ -13,6 +13,7 @@ public abstract class BaseState {
     public HashMap<String, Combinekey> possibleTransitions;
     public LinkedHashMap<String, String> fields;
     public LinkedHashMap<String, String> buttons;
+    public String stateName;
 
     public ResponseObject getStateMessages() {
         var responseObject = new ResponseObject();

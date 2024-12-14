@@ -9,6 +9,7 @@ import dnd.bot.maven.eclipse.db.repos.MongoGradesRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoHPRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoItemsRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoLevelRepository;
+import dnd.bot.maven.eclipse.db.repos.MongoNotesRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoPersonalityRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoPossesionsRepository;
 import dnd.bot.maven.eclipse.db.repos.MongoSocialRepository;
@@ -38,6 +39,8 @@ public class ReposStorage {
 
     private MongoCharactersRepository characterRepository;
 
+    private MongoNotesRepository notesRepository;
+
     public ReposStorage() {
         var dbConnector = new dbConnector();
         init(dbConnector.getDb());
@@ -60,6 +63,11 @@ public class ReposStorage {
         possesionsRepository = new MongoPossesionsRepository(db);
         socialRepository = new MongoSocialRepository(db);
         characterRepository = new MongoCharactersRepository(db);
+        notesRepository = new MongoNotesRepository(db);
+    }
+
+    public MongoNotesRepository getNotesRepository() {
+        return notesRepository;
     }
 
     public MongoAppearenceRepository getAppearenceRepository() {
