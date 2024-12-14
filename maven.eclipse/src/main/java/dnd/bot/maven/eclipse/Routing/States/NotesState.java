@@ -32,6 +32,7 @@ public class NotesState extends BaseState implements IAddable {
 
         var repo = manager.getReposStorage().getNotesRepository();
         var note = new BasicDescriptionDbo(parameters.getObjectIdKey(), name, description);
+        fields.put(name, description + "\n");
         repo.insertDocument(note);
     }
 

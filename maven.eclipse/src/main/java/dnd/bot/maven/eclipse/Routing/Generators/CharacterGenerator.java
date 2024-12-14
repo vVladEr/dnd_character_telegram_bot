@@ -41,7 +41,7 @@ public class CharacterGenerator extends BaseGenerator {
         possibleTransitions.put("gotostats", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Stats"));
         possibleTransitions.put("gotodescription", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Description"));
         possibleTransitions.put("gotoinventory", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
-        possibleTransitions.put("gotospells", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Spells"));
+        possibleTransitions.put("gotogrades", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
         possibleTransitions.put("gotonotes", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
         possibleTransitions.put("gotouser", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "User"));
 

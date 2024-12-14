@@ -26,10 +26,11 @@ public class SpellsState extends BaseState implements IAddable {
     }
 
     public void addElement(GeneratorManager manager, HashMap<String, String> necessaryFields) {
-        var name = necessaryFields.get("название");
+        var name = necessaryFields.get("название заклинания");
         var description = necessaryFields.get("описание");
 
         var repo = manager.getReposStorage().getGradesRepository();
+        fields.put(name, description + "\n");
         repo.addSpell(parameters.getGradeCompositeKey(), name, description);
     }
 

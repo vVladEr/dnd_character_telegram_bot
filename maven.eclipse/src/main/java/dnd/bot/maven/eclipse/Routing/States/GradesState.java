@@ -9,10 +9,10 @@ import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
 
-public class GradeState extends BaseState implements IAddable {
+public class GradesState extends BaseState implements IAddable {
     private Combinekey parameters;
 
-    public GradeState(
+    public GradesState(
         Combinekey parameters,
         LinkedHashMap<String, String> fields, 
         LinkedHashMap<String, String> buttons, 
@@ -31,6 +31,13 @@ public class GradeState extends BaseState implements IAddable {
 
         var repo = manager.getReposStorage().getGradesRepository();
         var gradeDbo = new GradeDBo(parameters.getObjectIdKey(), Integer.parseInt(grade));
+        
+        buttons.put(String.format("%s", grade), String.format("gotograde:%s", grade));
+        possibleTransitions.put(
+            String.format("%s", grade), 
+            new Combinekey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Grade", Integer.parseInt(grade))
+        );
+
         repo.insertDocument(gradeDbo);
     }
 

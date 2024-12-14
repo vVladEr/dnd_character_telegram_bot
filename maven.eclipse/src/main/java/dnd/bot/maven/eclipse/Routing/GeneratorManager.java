@@ -8,6 +8,7 @@ import dnd.bot.maven.eclipse.Routing.Generators.BaseGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.CharacterGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.DescriptionGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.FeaturesGenerator;
+import dnd.bot.maven.eclipse.Routing.Generators.GradeGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.GradesGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.HPGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.InventoryGenerator;
@@ -43,8 +44,7 @@ public class GeneratorManager {
         generators.put("gotodescription", new DescriptionGenerator());
         generators.put("gotoinventory", new InventoryGenerator());
         generators.put("gotogrades", new GradesGenerator(this));
-        generators.put("gotospells", new SpellsGenerator(this));
-        generators.put("gotonotes", new NotesGenerator());
+        generators.put("gotonotes", new NotesGenerator(this));
 
         generators.put("gotopersonality", new PersonalityGenerator(this));
         generators.put("gotohp", new HPGenerator(this));
@@ -57,7 +57,9 @@ public class GeneratorManager {
 
         generators.put("gotostats", new StatsGenerator(this));
         generators.put("gotoappearance", new AppearanceGenerator(this));
-        generators.put("gotogrades", new GradesGenerator(this));
+
+        generators.put("gotograde", new GradeGenerator(this));
+        generators.put("gotospells", new SpellsGenerator(this));
     }
 
     public BaseGenerator getGeneratorByStateName(String stateName) {

@@ -39,7 +39,7 @@ public class AddState extends BaseState {
     }
 
     public Combinekey getSavedData() {
-        return new Combinekey(combineKey.getUserIdKey(), combineKey.getObjectIdKey(), combineKey.getStateName(), receivedFieldsData);
+        return new Combinekey(combineKey.getUserIdKey(), combineKey.getObjectIdKey(), combineKey.getStateName(), combineKey.getGradeCompositeKey(), receivedFieldsData);
     }
 
     @Override

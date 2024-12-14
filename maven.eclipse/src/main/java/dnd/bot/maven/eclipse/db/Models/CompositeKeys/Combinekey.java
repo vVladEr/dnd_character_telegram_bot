@@ -131,9 +131,37 @@ public class Combinekey {
         this.stateName = stateName;
     }
 
-    public GradeCompositeKey getGradeCompositeKey() {
-        assert gradeCompositeKey != null;
+    public Combinekey(String userId, ObjectId characterId, String stateName, GradeCompositeKey gradeCompositeKey, HashMap<String, String> necessaryFields)
+    {
+        this.gradeCompositeKey = gradeCompositeKey;
+        statCompositeKey = null;
+        this.necessaryFields = necessaryFields;
+        objectIdKey = characterId;
+        userIdKey = userId;
+        this.stateName = stateName;
+    }
 
+    public Combinekey(String userId, ObjectId characterId, String stateName, int gradeNumber)
+    {
+        gradeCompositeKey = new GradeCompositeKey(characterId, gradeNumber);
+        statCompositeKey = null;
+        necessaryFields = null;
+        objectIdKey = characterId;
+        userIdKey = userId;
+        this.stateName = stateName;
+    }
+
+    public Combinekey(String userId, ObjectId characterId, String stateName, GradeCompositeKey gradeCompositeKey)
+    {
+        this.gradeCompositeKey = gradeCompositeKey;
+        statCompositeKey = null;
+        necessaryFields = null;
+        objectIdKey = characterId;
+        userIdKey = userId;
+        this.stateName = stateName;
+    }
+
+    public GradeCompositeKey getGradeCompositeKey() {
         return gradeCompositeKey;
     }
 

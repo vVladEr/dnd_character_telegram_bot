@@ -29,14 +29,14 @@ class RouterTest {
 
     @Test
     void testMakeTransitionForSimpleCallback() {
-        router.makeTransition("addcharacter");
+        router.makeTransition("add");
 
         assertTrue(this.router.getCurrentState() instanceof UserState);
     }
 
     @Test
     void testMakeTransitionForCompositeCallback() {
-        this.router.makeTransition("addcharacter");
+        this.router.makeTransition("add");
 
         assertTrue(this.router.getCurrentState() instanceof UserState);
 

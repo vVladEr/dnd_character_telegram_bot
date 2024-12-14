@@ -19,7 +19,7 @@ public class AddGenerator extends BaseGenerator {
                 necessaryFields.add("имя");
                 break;
             case "Spells":
-                necessaryFields.add("название");
+                necessaryFields.add("название заклинания");
                 necessaryFields.add("описание");
                 break;
             case "Possessions":
