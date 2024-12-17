@@ -49,6 +49,7 @@ public class NotesGenerator extends BaseGenerator {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
         possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
+        possibleTransitions.put("update", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
         possibleTransitions.put("gotocharacter", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Character"));
 
         return possibleTransitions;

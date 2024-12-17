@@ -1,5 +1,6 @@
 package dnd.bot.maven.eclipse.Routing;
 
+import dnd.bot.maven.eclipse.Routing.Generators.UpdateGenerator;
 import dnd.bot.maven.eclipse.Routing.States.AddState;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.IAddable;
@@ -11,6 +12,7 @@ public class Router {
     private BaseState currentState;
     public Boolean isAddMode;
     public Boolean isUpdateMode;
+    public Boolean isSelecteField;
 
     public Router(String userId) {
         manager = new GeneratorManager();
@@ -18,6 +20,7 @@ public class Router {
                                    .generateState(new Combinekey(userId));
         isUpdateMode = false;
         isAddMode = false;
+        isSelecteField = false;
     }
 
     public void makeTransition(String callback) {
@@ -55,9 +58,25 @@ public class Router {
     }
 
     private void processingUpdateValue(String value) {
+        var splittedValue = value.split(":");
         var updateState = (UpdateState)currentState;
-        
-        updateState.putValue(value);
+
+        if (splittedValue.length == 2) {
+            updateState.saveUpdates();
+            var combineKey = updateState.getPossibleTransitions().get(splittedValue[1]);
+            currentState = manager.getGeneratorByStateName(String.format("goto%s", splittedValue[1])).generateState(combineKey);
+            isSelecteField = false;
+            isUpdateMode = false;
+        } else {
+            if (!isSelecteField) {
+                updateState.putUpdatedField(splittedValue[0]);
+                isSelecteField = true;
+                return;
+            } 
+
+            updateState.putValue(splittedValue[0]);
+            isSelecteField = false;
+        }
     }
 
     private void makeTransitionForCompositeCallback(String[] callbackParts) {
@@ -79,6 +98,7 @@ public class Router {
         } else {
             isAddMode = false;
             isUpdateMode = false;
+            isSelecteField = false;
         }
 
         combineKey = currentState.getPossibleTransitions().get(callback);

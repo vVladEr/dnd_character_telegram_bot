@@ -46,7 +46,8 @@ public class SpellsState extends BaseState implements IAddable {
         for (var name : buttons.keySet()) {
             messageObject.addInlineKeybordButton(getInlineKeybordButton(name, buttons.get(name)));
         }
-        
+       
+        messageObject.addInlineKeybordButton(getInlineKeybordButton("Изменить", "update"));
         messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "add"));
 
         responseObject.addMessageObject(messageObject);

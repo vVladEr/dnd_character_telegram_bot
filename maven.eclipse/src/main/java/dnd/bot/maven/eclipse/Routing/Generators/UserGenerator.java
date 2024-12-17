@@ -35,7 +35,7 @@ public class UserGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "User"));
+        
         return new UserState(creater, userId, fields, buttons, possibleTransitions, "User");
     }
 
@@ -83,6 +83,9 @@ public class UserGenerator extends BaseGenerator {
             var combineKey = new Combinekey(this.parameters.getUserIdKey(), character.id, "Character");
             possibleTransitions.put(String.format("%s", character.id), combineKey);
         }
+
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "User"));
+        possibleTransitions.put("update", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "User"));
 
         return possibleTransitions;
     }

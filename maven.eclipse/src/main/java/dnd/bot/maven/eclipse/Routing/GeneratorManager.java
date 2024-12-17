@@ -20,8 +20,10 @@ import dnd.bot.maven.eclipse.Routing.Generators.PossessionsGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.SocialGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.SpellsGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.StatsGenerator;
+import dnd.bot.maven.eclipse.Routing.Generators.UpdateGenerator;
 import dnd.bot.maven.eclipse.Routing.Generators.UserGenerator;
 import dnd.bot.maven.eclipse.db.Services.ReposStorage;
+import dnd.bot.maven.eclipse.db.Services.UpdateManager;
 
 public class GeneratorManager {
     private HashMap<String, BaseGenerator> generators; 
@@ -38,6 +40,7 @@ public class GeneratorManager {
         generators.put("gotouser", new UserGenerator(this));
 
         generators.put("add", new AddGenerator());
+        generators.put("update", new UpdateGenerator(new UpdateManager(reposStorage)));
 
         generators.put("gotocharacter", new CharacterGenerator());
 

@@ -52,6 +52,7 @@ public class SpellsGenerator extends BaseGenerator {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
         possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Spells", parameters.getGradeCompositeKey()));
+        possibleTransitions.put("update", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Spells", parameters.getGradeCompositeKey()));
         possibleTransitions.put("gotograde", this.parameters);
 
         return possibleTransitions;

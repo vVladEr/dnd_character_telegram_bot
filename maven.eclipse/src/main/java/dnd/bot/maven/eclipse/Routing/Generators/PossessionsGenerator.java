@@ -31,7 +31,7 @@ public class PossessionsGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Possessions"));
+        
         return new PossessionsState(parameters, fields, buttons, possibleTransitions, "Possessions");
     }
 
@@ -49,6 +49,8 @@ public class PossessionsGenerator extends BaseGenerator {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
         possibleTransitions.put("gotodescription", this.parameters);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Possessions"));
+        possibleTransitions.put("update", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Possessions"));
 
         return possibleTransitions;
     }

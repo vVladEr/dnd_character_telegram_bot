@@ -31,7 +31,7 @@ public class FeaturesGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Features"));
+        
         return new FeaturesState(parameters, fields, buttons, possibleTransitions, "Features");
     }
 
@@ -49,6 +49,8 @@ public class FeaturesGenerator extends BaseGenerator {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
         possibleTransitions.put("gotodescription", this.parameters);
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Features"));
+        possibleTransitions.put("update", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Features"));
 
         return possibleTransitions;
     }

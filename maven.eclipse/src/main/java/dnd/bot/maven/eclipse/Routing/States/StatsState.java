@@ -47,9 +47,12 @@ public class StatsState extends BaseState {
             for (var name : buttons.keySet()) {
                 messageObject.addInlineKeybordButton(getInlineKeybordButton(name, buttons.get(name)));
             }
+            
+            messageObject.addInlineKeybordButton(getInlineKeybordButton("Изменить", "update"));
 
             responseObject.addMessageObject(messageObject);
         }
+        
 
         return responseObject;
     }

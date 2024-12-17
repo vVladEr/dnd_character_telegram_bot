@@ -49,6 +49,7 @@ public class NotesState extends BaseState implements IAddable {
             messageObject.addInlineKeybordButton(getInlineKeybordButton(name, buttons.get(name)));
         }
         
+        messageObject.addInlineKeybordButton(getInlineKeybordButton("Изменить", "update"));
         messageObject.addInlineKeybordButton(getInlineKeybordButton("Добавить", "add"));
 
         responseObject.addMessageObject(messageObject);

@@ -16,22 +16,29 @@ public class UpdateState extends BaseState {
     private HashMap<String, String> updatedFieldsDescription;
     private ArrayList<String> fields;
     private String currentUpdatedField;
-    private String stateName;
 
     public UpdateState( 
         ArrayList<String> fields,
         Combinekey combinekey,
         UpdateManager updateManager
     ) {
+        updatedFields = new HashMap<String, String>();
         this.combineKey = combinekey;
         this.updateManager = updateManager;
         //this.updatedFieldsDescription = updatedFieldsDescription;
         this.fields = fields;
         this.currentUpdatedField = null;
+        stateName = combineKey.getStateName();
+        possibleTransitions = new HashMap<String, Combinekey>();
+        possibleTransitions.put(String.format("goto%s", stateName.toLowerCase()), combinekey);
     }
 
     public void putUpdatedField(String updatedField) {
-        this.currentUpdatedField = updatedField;
+        currentUpdatedField = updatedField;
+    }
+
+    public String getUpdatedField() {
+        return currentUpdatedField;
     }
 
     public void putValue(String value) {
@@ -59,10 +66,10 @@ public class UpdateState extends BaseState {
                 messageObject.addInlineKeybordButton(getInlineKeybordButton(field, field));
             }
 
-            messageObject.addInlineKeybordButton(getInlineKeybordButton("Сохранить", String.format("save:goto%s", combineKey.getStateName().toLowerCase())));
+            messageObject.addInlineKeybordButton(getInlineKeybordButton("Сохранить", String.format("save:goto%s", stateName.toLowerCase())));
 
         } else {
-            messageObject.addMessagePart(String.format("%s", currentUpdatedField), updatedFieldsDescription.get(currentUpdatedField));
+            messageObject.addMessagePart(String.format("%s", currentUpdatedField), currentUpdatedField);
         }
         
         messageObject.addInlineKeybordButton(getInlineKeybordButton("Отмена", String.format("goto%s", combineKey.getStateName().toLowerCase())));

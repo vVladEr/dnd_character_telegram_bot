@@ -31,7 +31,7 @@ public class ItemsGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Items"));
+
         return new ItemsState(parameters, fields, buttons, possibleTransitions, "Items");
     }
 
@@ -49,6 +49,8 @@ public class ItemsGenerator extends BaseGenerator {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
         possibleTransitions.put("gotoinventory", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
+        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Items"));
+        possibleTransitions.put("update", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Items"));
 
         return possibleTransitions;
     }

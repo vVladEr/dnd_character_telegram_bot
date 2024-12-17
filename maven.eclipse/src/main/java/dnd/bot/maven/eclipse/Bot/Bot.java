@@ -37,7 +37,7 @@ public class Bot extends TelegramLongPollingBot{
 	@Override
 	public void onUpdateReceived(Update update) {
 
-		if (!isFirstMessage && (router.isAddMode || router.isUpdateMode)) {
+		if (!isFirstMessage && (router.isAddMode || (router.isUpdateMode && router.isSelecteField))) {
 			processInputValue(update);
 			return;
 		}

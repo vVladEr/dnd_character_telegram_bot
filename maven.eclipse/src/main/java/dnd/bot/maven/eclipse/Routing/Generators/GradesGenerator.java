@@ -55,8 +55,8 @@ public class GradesGenerator extends BaseGenerator {
                 new Combinekey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Grade", grade.grade)
             );
         }
-        
         possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
+        possibleTransitions.put("update", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
         possibleTransitions.put("gotocharacter", this.parameters);
 
         return possibleTransitions;
