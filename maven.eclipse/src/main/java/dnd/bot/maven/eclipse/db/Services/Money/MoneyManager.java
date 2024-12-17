@@ -12,21 +12,18 @@ public class MoneyManager {
 
     private MongoItemsRepository itemRepos;
 
-    public MoneyManager(MongoItemsRepository repo)
-    {
+    public MoneyManager(MongoItemsRepository repo){
         itemRepos = repo;
     }
 
-    public LinkedHashMap<MoneyTypes, Integer> getCharacterCoins(ObjectId characterId)
-    {
+    public LinkedHashMap<MoneyTypes, Integer> getCharacterCoins(ObjectId characterId){
         var money = itemRepos.getCharactersMoney(characterId).amount;
-        return MoneyConverter.ConvertMoneyToCoins(money);
+        return MoneyConverter.convertMoneyToCoins(money);
     }
 
-    public void updateCharacterCoins(ObjectId characterId, ChangeMoneyRequest req) throws IllegalArgumentException
-    {
+    public void updateCharacterCoins(ObjectId characterId, ChangeMoneyRequest req) throws IllegalArgumentException{
         var moneyDbo = itemRepos.getCharactersMoney(characterId);
-        var moneyInput = MoneyConverter.ConvertCoinsToMoney(req.getCoins());
+        var moneyInput = MoneyConverter.convertCoinsToMoney(req.getCoins());
         if (!req.isAddOperation() && moneyInput > moneyDbo.amount)
         {
             throw new IllegalArgumentException();

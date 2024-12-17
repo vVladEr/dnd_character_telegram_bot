@@ -6,8 +6,7 @@ import dnd.bot.maven.eclipse.db.Models.Money.MoneyTypes;
 
 public class MoneyConverter {
 
-    public static LinkedHashMap<MoneyTypes, Integer> ConvertMoneyToCoins(int money)
-    {
+    public static LinkedHashMap<MoneyTypes, Integer> convertMoneyToCoins(int money){
         var coins = new LinkedHashMap<MoneyTypes, Integer>();
         coins.put(MoneyTypes.Copper, money % 10);
         coins.put(MoneyTypes.Silver, (money / 10) % 10);
@@ -16,8 +15,7 @@ public class MoneyConverter {
         return coins;
     }
 
-    public static int  ConvertCoinsToMoney(LinkedHashMap<MoneyTypes, Integer> coins)
-    {
+    public static int convertCoinsToMoney(LinkedHashMap<MoneyTypes, Integer> coins){
         var money = 0;
         money += coins.get(MoneyTypes.Copper);
         money += coins.get(MoneyTypes.Silver)  * 10;
