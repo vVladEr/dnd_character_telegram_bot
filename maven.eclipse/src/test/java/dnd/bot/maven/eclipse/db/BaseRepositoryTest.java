@@ -15,7 +15,7 @@ import dnd.bot.maven.eclipse.db.Models.dbo.BasicDescriptionDbo;
 import dnd.bot.maven.eclipse.db.Services.dbConnector;
 import dnd.bot.maven.eclipse.db.repos.MongoNotesRepository;
 
-public class RepositoryTest {
+public class BaseRepositoryTest {
 	private static MongoNotesRepository rep;
 	private static dbConnector conn;
 
