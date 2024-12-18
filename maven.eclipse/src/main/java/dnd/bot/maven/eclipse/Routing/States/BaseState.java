@@ -7,10 +7,10 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public abstract class BaseState {
-    public HashMap<String, Combinekey> possibleTransitions;
+    public HashMap<String, CombineKey> possibleTransitions;
     public LinkedHashMap<String, String> fields;
     public LinkedHashMap<String, String> buttons;
     public String stateName;
@@ -32,7 +32,7 @@ public abstract class BaseState {
         return responseObject;
     }
 
-    public HashMap<String, Combinekey> getPossibleTransitions() {
+    public HashMap<String, CombineKey> getPossibleTransitions() {
         return possibleTransitions;
     }
 

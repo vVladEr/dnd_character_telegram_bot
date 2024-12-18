@@ -5,18 +5,18 @@ import java.util.HashMap;
 
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class AddState extends BaseState {
     private HashMap<String, String> receivedFieldsData;
     private ArrayList<String> necessaryFields;
     private HashMap<String, String> addFieldsDescription;
     private Integer currentNumber;
-    private Combinekey combineKey;
+    private CombineKey combineKey;
     
     public AddState(
         ArrayList<String> necessaryFields,
-        Combinekey combinekey
+        CombineKey combinekey
     ) {
         receivedFieldsData = new HashMap<>();
         this.combineKey = combinekey;
@@ -38,8 +38,8 @@ public class AddState extends BaseState {
         return false;
     }
 
-    public Combinekey getSavedData() {
-        return new Combinekey(combineKey.getUserIdKey(), combineKey.getObjectIdKey(), combineKey.getStateName(), combineKey.getGradeCompositeKey(), receivedFieldsData);
+    public CombineKey getSavedData() {
+        return new CombineKey(combineKey.getUserIdKey(), combineKey.getObjectIdKey(), combineKey.getStateName(), combineKey.getGradeCompositeKey(), receivedFieldsData);
     }
 
     @Override

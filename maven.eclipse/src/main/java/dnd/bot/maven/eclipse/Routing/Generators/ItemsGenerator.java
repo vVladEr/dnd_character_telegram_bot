@@ -6,10 +6,10 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.ItemsState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class ItemsGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
     private GeneratorManager manager;
 
     public ItemsGenerator(GeneratorManager manager) {
@@ -17,7 +17,7 @@ public class ItemsGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         var repo = this.manager.getReposStorage().getItemsRepository();
         this.parameters = parameters;
         var items = repo.getCharactersItems(parameters.getObjectIdKey());
@@ -31,7 +31,7 @@ public class ItemsGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Items"));
+        possibleTransitions.put("add", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Items"));
         return new ItemsState(parameters, fields, buttons, possibleTransitions, "Items");
     }
 
@@ -45,10 +45,10 @@ public class ItemsGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
         
-        possibleTransitions.put("gotoinventory", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
+        possibleTransitions.put("gotoinventory", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
 
         return possibleTransitions;
     }

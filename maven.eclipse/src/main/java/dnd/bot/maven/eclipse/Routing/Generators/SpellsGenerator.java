@@ -7,11 +7,11 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.SpellsState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.repos.MongoGradesRepository;
 
 public class SpellsGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
     private MongoGradesRepository repo;
 
     public SpellsGenerator(GeneratorManager manager) {
@@ -19,7 +19,7 @@ public class SpellsGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         this.parameters = parameters;
         
         var fields = new LinkedHashMap<String, String>();
@@ -48,10 +48,10 @@ public class SpellsGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
         
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Spells", parameters.getGradeCompositeKey()));
+        possibleTransitions.put("add", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Spells", parameters.getGradeCompositeKey()));
         possibleTransitions.put("gotograde", this.parameters);
 
         return possibleTransitions;

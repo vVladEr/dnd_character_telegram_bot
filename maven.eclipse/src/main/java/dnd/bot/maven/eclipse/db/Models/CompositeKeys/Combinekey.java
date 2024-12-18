@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 
 import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
 
-public class Combinekey {
+public class CombineKey {
 
     private final GradeCompositeKey gradeCompositeKey;
 
@@ -20,7 +20,7 @@ public class Combinekey {
 
     private final HashMap<String, String> necessaryFields;
 
-    public Combinekey(ObjectId characterId, int gradeNumber)
+    public CombineKey(ObjectId characterId, int gradeNumber)
     {
         gradeCompositeKey = new GradeCompositeKey(characterId, gradeNumber);
         statCompositeKey = null;
@@ -30,7 +30,7 @@ public class Combinekey {
         stateName = null;
     }
 
-    public Combinekey(String userId, ObjectId characterId, int gradeNumber)
+    public CombineKey(String userId, ObjectId characterId, int gradeNumber)
     {
         gradeCompositeKey = new GradeCompositeKey(characterId, gradeNumber);
         statCompositeKey = null;
@@ -40,7 +40,7 @@ public class Combinekey {
         stateName = null;
     }
     
-    public Combinekey(ObjectId characterId, StatNameEnum statName)
+    public CombineKey(ObjectId characterId, StatNameEnum statName)
     {
         gradeCompositeKey = null;
         statCompositeKey = new StatCompositeKey(characterId, statName);
@@ -50,7 +50,7 @@ public class Combinekey {
         stateName = null;
     }
 
-    public Combinekey(String userId, ObjectId characterId, String stateName)
+    public CombineKey(String userId, ObjectId characterId, String stateName)
     {
         gradeCompositeKey = null;
         statCompositeKey = null;
@@ -60,7 +60,7 @@ public class Combinekey {
         this.stateName = stateName;
     }
 
-    public Combinekey(ObjectId characterId, StatNameEnum statName, HashMap<String, String> necessaryFields)
+    public CombineKey(ObjectId characterId, StatNameEnum statName, HashMap<String, String> necessaryFields)
     {
         gradeCompositeKey = null;
         statCompositeKey = new StatCompositeKey(characterId, statName);
@@ -70,7 +70,7 @@ public class Combinekey {
         stateName = null;
     }
 
-    public Combinekey(ObjectId objectId)
+    public CombineKey(ObjectId objectId)
     {
         gradeCompositeKey = null;
         statCompositeKey = null;
@@ -80,7 +80,7 @@ public class Combinekey {
         stateName = null;
     }
 
-    public Combinekey(String userId)
+    public CombineKey(String userId)
     {
         gradeCompositeKey = null;
         statCompositeKey = null;
@@ -90,7 +90,7 @@ public class Combinekey {
         stateName = null;
     }
 
-    public Combinekey(String userId, String stateName)
+    public CombineKey(String userId, String stateName)
     {
         gradeCompositeKey = null;
         statCompositeKey = null;
@@ -101,7 +101,7 @@ public class Combinekey {
     }
 
 
-    public Combinekey(String userId, ObjectId objectId)
+    public CombineKey(String userId, ObjectId objectId)
     {
         gradeCompositeKey = null;
         statCompositeKey = null;
@@ -111,7 +111,7 @@ public class Combinekey {
         stateName = null;
     }
 
-    public Combinekey(String userId, ObjectId characterId, HashMap<String, String> necessaryFields)
+    public CombineKey(String userId, ObjectId characterId, HashMap<String, String> necessaryFields)
     {
         gradeCompositeKey = null;
         statCompositeKey = null;
@@ -121,7 +121,7 @@ public class Combinekey {
         stateName = null;
     }
 
-    public Combinekey(String userId, ObjectId characterId, String stateName, HashMap<String, String> necessaryFields)
+    public CombineKey(String userId, ObjectId characterId, String stateName, HashMap<String, String> necessaryFields)
     {
         gradeCompositeKey = null;
         statCompositeKey = null;
@@ -131,7 +131,7 @@ public class Combinekey {
         this.stateName = stateName;
     }
 
-    public Combinekey(String userId, ObjectId characterId, String stateName, GradeCompositeKey gradeCompositeKey, HashMap<String, String> necessaryFields)
+    public CombineKey(String userId, ObjectId characterId, String stateName, GradeCompositeKey gradeCompositeKey, HashMap<String, String> necessaryFields)
     {
         this.gradeCompositeKey = gradeCompositeKey;
         statCompositeKey = null;
@@ -141,7 +141,7 @@ public class Combinekey {
         this.stateName = stateName;
     }
 
-    public Combinekey(String userId, ObjectId characterId, String stateName, int gradeNumber)
+    public CombineKey(String userId, ObjectId characterId, String stateName, int gradeNumber)
     {
         gradeCompositeKey = new GradeCompositeKey(characterId, gradeNumber);
         statCompositeKey = null;
@@ -151,7 +151,7 @@ public class Combinekey {
         this.stateName = stateName;
     }
 
-    public Combinekey(String userId, ObjectId characterId, String stateName, GradeCompositeKey gradeCompositeKey)
+    public CombineKey(String userId, ObjectId characterId, String stateName, GradeCompositeKey gradeCompositeKey)
     {
         this.gradeCompositeKey = gradeCompositeKey;
         statCompositeKey = null;

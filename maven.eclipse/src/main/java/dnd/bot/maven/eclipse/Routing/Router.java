@@ -4,7 +4,7 @@ import dnd.bot.maven.eclipse.Routing.States.AddState;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.IAddable;
 import dnd.bot.maven.eclipse.Routing.States.UpdateState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class Router {
     private GeneratorManager manager;
@@ -15,7 +15,7 @@ public class Router {
     public Router(String userId) {
         manager = new GeneratorManager();
         currentState = manager.getGeneratorByStateName("gotouser")
-                                   .generateState(new Combinekey(userId));
+                                   .generateState(new CombineKey(userId));
         isUpdateMode = false;
         isAddMode = false;
     }
@@ -70,7 +70,7 @@ public class Router {
     }
 
     private void makeTransitionForSimpleCallback(String callback) {
-        Combinekey combineKey;
+        CombineKey combineKey;
 
         if (callback.equals("add")) {
             isAddMode = true;

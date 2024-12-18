@@ -6,17 +6,17 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
 
 public class GradesState extends BaseState implements IAddable {
-    private Combinekey parameters;
+    private CombineKey parameters;
 
     public GradesState(
-        Combinekey parameters,
+        CombineKey parameters,
         LinkedHashMap<String, String> fields, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions,
+        HashMap<String, CombineKey> possibleTransitions,
         String stateName
     ) {
         this.parameters = parameters;
@@ -35,7 +35,7 @@ public class GradesState extends BaseState implements IAddable {
         buttons.put(String.format("%s", grade), String.format("gotograde:%s", grade));
         possibleTransitions.put(
             String.format("%s", grade), 
-            new Combinekey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Grade", Integer.parseInt(grade))
+            new CombineKey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Grade", Integer.parseInt(grade))
         );
 
         repo.insertDocument(gradeDbo);

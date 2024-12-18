@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class StatsState extends BaseState {
     private ArrayList<LinkedHashMap<String, String>> fieldsArray;
@@ -14,7 +14,7 @@ public class StatsState extends BaseState {
     public StatsState(
         ArrayList<LinkedHashMap<String, String>> fieldsArray, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions,
+        HashMap<String, CombineKey> possibleTransitions,
         String stateName
     ) {
         this.fieldsArray = fieldsArray;

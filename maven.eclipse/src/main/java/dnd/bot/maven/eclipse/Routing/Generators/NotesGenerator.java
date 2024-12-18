@@ -6,11 +6,11 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.NotesState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.repos.MongoNotesRepository;
 
 public class NotesGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
     private MongoNotesRepository repo;
 
     public NotesGenerator(GeneratorManager manager) {
@@ -19,7 +19,7 @@ public class NotesGenerator extends BaseGenerator {
 
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         this.parameters = parameters;
         var notes = repo.getCharacterNotes(parameters.getObjectIdKey());
 
@@ -45,11 +45,11 @@ public class NotesGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
         
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
-        possibleTransitions.put("gotocharacter", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Character"));
+        possibleTransitions.put("add", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
+        possibleTransitions.put("gotocharacter", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Character"));
 
         return possibleTransitions;
     }

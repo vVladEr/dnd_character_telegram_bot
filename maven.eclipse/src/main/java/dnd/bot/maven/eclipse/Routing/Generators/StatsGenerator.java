@@ -7,12 +7,12 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.StatsState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.IDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.SkillDbo;
 
 public class StatsGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
     private GeneratorManager manager;
 
     public StatsGenerator(GeneratorManager manager) {
@@ -20,7 +20,7 @@ public class StatsGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         this.parameters = parameters;
         var repo = this.manager.getReposStorage().getStatRepository();
         var stats = repo.getCharacterStats(parameters.getObjectIdKey());
@@ -90,8 +90,8 @@ public class StatsGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
         
         possibleTransitions.put("gotocharacter", this.parameters);
 

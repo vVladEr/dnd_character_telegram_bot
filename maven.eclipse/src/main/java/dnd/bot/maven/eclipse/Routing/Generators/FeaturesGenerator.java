@@ -6,10 +6,10 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.FeaturesState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class FeaturesGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
     private GeneratorManager manager;
 
     public FeaturesGenerator(GeneratorManager manager) {
@@ -17,7 +17,7 @@ public class FeaturesGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         var repo = this.manager.getReposStorage().getFeaturesRepository();
         this.parameters = parameters;
         var features = repo.getCharacterFeatures(parameters.getObjectIdKey());
@@ -31,7 +31,7 @@ public class FeaturesGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Features"));
+        possibleTransitions.put("add", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Features"));
         return new FeaturesState(parameters, fields, buttons, possibleTransitions, "Features");
     }
 
@@ -45,8 +45,8 @@ public class FeaturesGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
         
         possibleTransitions.put("gotodescription", this.parameters);
 

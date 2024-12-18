@@ -6,10 +6,10 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.PossessionsState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class PossessionsGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
     private GeneratorManager manager;
 
     public PossessionsGenerator(GeneratorManager manager) {
@@ -17,7 +17,7 @@ public class PossessionsGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         var repo = this.manager.getReposStorage().getPossesionsRepository();
         this.parameters = parameters;
         var possessions = repo.getCharacterPossesions(parameters.getObjectIdKey());
@@ -31,7 +31,7 @@ public class PossessionsGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Possessions"));
+        possibleTransitions.put("add", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Possessions"));
         return new PossessionsState(parameters, fields, buttons, possibleTransitions, "Possessions");
     }
 
@@ -45,8 +45,8 @@ public class PossessionsGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
         
         possibleTransitions.put("gotodescription", this.parameters);
 

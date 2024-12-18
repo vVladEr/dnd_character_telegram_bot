@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.UserState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.CharacterDbo;
 import dnd.bot.maven.eclipse.db.Models.dbo.IDbo;
 import dnd.bot.maven.eclipse.db.Services.CharacterCreater;
@@ -15,7 +15,7 @@ import dnd.bot.maven.eclipse.db.Services.CharacterCreater;
 public class UserGenerator extends BaseGenerator {
     private ArrayList<CharacterDbo> characters;
     private CharacterCreater creater;
-    private Combinekey parameters;
+    private CombineKey parameters;
     private GeneratorManager manager;
 
     public UserGenerator(GeneratorManager manager) {
@@ -24,7 +24,7 @@ public class UserGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         var repo = this.manager.getReposStorage().getCharacterRepository();
         this.parameters = parameters;
         var userId = parameters.getUserIdKey();
@@ -35,7 +35,7 @@ public class UserGenerator extends BaseGenerator {
 
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "User"));
+        possibleTransitions.put("add", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "User"));
         return new UserState(creater, userId, fields, buttons, possibleTransitions, "User");
     }
 
@@ -76,11 +76,11 @@ public class UserGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
 
         for (var character : this.characters) {
-            var combineKey = new Combinekey(this.parameters.getUserIdKey(), character.id, "Character");
+            var combineKey = new CombineKey(this.parameters.getUserIdKey(), character.id, "Character");
             possibleTransitions.put(String.format("%s", character.id), combineKey);
         }
 

@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.UpdateState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.Services.UpdateManager;
 
 public class UpdateGenerator extends BaseGenerator {
@@ -18,7 +18,7 @@ public class UpdateGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         var fields = new ArrayList<String>();
         
         for (var field : updatedState.fields.keySet()) {
@@ -34,7 +34,7 @@ public class UpdateGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
+    public HashMap<String, CombineKey> getPossibleTransitions() {
         throw new UnsupportedOperationException("Unimplemented method 'getPossibleTransitions'");
     }
 }

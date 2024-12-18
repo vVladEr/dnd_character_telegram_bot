@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import dnd.bot.maven.eclipse.db.Models.StatNameEnum;
 import dnd.bot.maven.eclipse.db.Models.UpdateFieldRequest;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.GradeCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.StatCompositeKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
@@ -41,7 +41,7 @@ public class UpdateManagerTest {
         var oldValue = reposStorage.getAppearenceRepository().getDocumentByKey(characterId).age;
         var newValue = oldValue + 2;
         var updateRequest = new UpdateFieldRequest(
-                new Combinekey(characterId),
+                new CombineKey(characterId),
                 "age", newValue,
                 "Appearance");
         updateManager.updateField(updateRequest);
@@ -60,7 +60,7 @@ public class UpdateManagerTest {
         var oldValue = oldItem.amount;
         var newValue = oldValue + 2;
         var updateRequest = new UpdateFieldRequest(
-                new Combinekey(item.id),
+                new CombineKey(item.id),
                 "amount", newValue,
                 "Items");
         updateManager.updateField(updateRequest);
@@ -78,7 +78,7 @@ public class UpdateManagerTest {
         var oldValue = social.race;
         var newValue = "new race";
         var updateRequest = new UpdateFieldRequest(
-                new Combinekey(characterId),
+                new CombineKey(characterId),
                 "race", newValue,
                 "Social");
         updateManager.updateField(updateRequest);
@@ -101,7 +101,7 @@ public class UpdateManagerTest {
         var newValue = oldValue + 2;
 
         var updateRequest = new UpdateFieldRequest(
-                new Combinekey(characterId, statName),
+                new CombineKey(characterId, statName),
                 skillName,
                 "totalBonuses",
                 newValue,
@@ -128,7 +128,7 @@ public class UpdateManagerTest {
         var newValue = "new desc";
 
         var updateRequest = new UpdateFieldRequest(
-                new Combinekey(characterId, grade),
+                new CombineKey(characterId, grade),
                 spellName,
                 "description",
                 newValue,
@@ -155,7 +155,7 @@ public class UpdateManagerTest {
         var newName = "new name";
 
         var updateRequest = new UpdateFieldRequest(
-                new Combinekey(characterId, grade),
+                new CombineKey(characterId, grade),
                 oldSpellName,
                 "name",
                 newName,

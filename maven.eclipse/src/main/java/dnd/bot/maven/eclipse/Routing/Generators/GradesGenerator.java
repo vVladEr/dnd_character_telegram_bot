@@ -7,11 +7,11 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.GradesState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.Models.dbo.GradeDBo;
 
 public class GradesGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
     private GeneratorManager manager;
     private ArrayList<GradeDBo> grades;
 
@@ -20,7 +20,7 @@ public class GradesGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         this.parameters = parameters;
         this.grades = manager.getReposStorage().getGradesRepository().getCharacterGrades(parameters.getObjectIdKey());
 
@@ -46,17 +46,17 @@ public class GradesGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
 
         for (var grade : this.grades) {
             possibleTransitions.put(
                 String.format("%s", grade.grade), 
-                new Combinekey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Grade", grade.grade)
+                new CombineKey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Grade", grade.grade)
             );
         }
         
-        possibleTransitions.put("add", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
+        possibleTransitions.put("add", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
         possibleTransitions.put("gotocharacter", this.parameters);
 
         return possibleTransitions;

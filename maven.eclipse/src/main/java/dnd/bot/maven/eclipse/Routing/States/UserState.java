@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.Services.CharacterCreater;
 
 public class UserState extends BaseState implements IAddable {
@@ -19,7 +19,7 @@ public class UserState extends BaseState implements IAddable {
         String userId,
         LinkedHashMap<String, String> fields, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions,
+        HashMap<String, CombineKey> possibleTransitions,
         String stateName
     ) {
         this.creater = creater;
@@ -34,7 +34,7 @@ public class UserState extends BaseState implements IAddable {
         var name = necessaryFields.get("имя");
 
         var characterId = creater.createCharacter(this.userId, name);
-        var combineKey = new Combinekey(this.userId, characterId);
+        var combineKey = new CombineKey(this.userId, characterId);
         buttons.put(name, String.format("gotocharacter:%s", characterId));
         possibleTransitions.put(String.format("%s", characterId), combineKey);
     }

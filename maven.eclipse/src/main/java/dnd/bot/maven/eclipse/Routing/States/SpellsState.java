@@ -6,16 +6,16 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class SpellsState extends BaseState implements IAddable {
-    private Combinekey parameters;
+    private CombineKey parameters;
 
     public SpellsState(
-        Combinekey parameters,
+        CombineKey parameters,
         LinkedHashMap<String, String> fields, 
         LinkedHashMap<String, String> buttons, 
-        HashMap<String, Combinekey> possibleTransitions,
+        HashMap<String, CombineKey> possibleTransitions,
         String stateName
     ) {
         this.parameters = parameters;

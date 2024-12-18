@@ -6,10 +6,10 @@ import java.util.LinkedHashMap;
 import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.GeneralState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class GradeGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
     private GeneratorManager manager;
 
     public GradeGenerator(GeneratorManager manager) {
@@ -17,7 +17,7 @@ public class GradeGenerator extends BaseGenerator {
     }
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         var repo = this.manager.getReposStorage().getGradesRepository();
         this.parameters = parameters;
         var grade = repo.getDocumentByKey(parameters.getGradeCompositeKey());
@@ -38,11 +38,11 @@ public class GradeGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
         
-        possibleTransitions.put("gotospells", new Combinekey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Spells", parameters.getGradeCompositeKey()));
-        possibleTransitions.put("gotogrades", new Combinekey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Grades"));
+        possibleTransitions.put("gotospells", new CombineKey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Spells", parameters.getGradeCompositeKey()));
+        possibleTransitions.put("gotogrades", new CombineKey(this.parameters.getUserIdKey(), this.parameters.getObjectIdKey(), "Grades"));
 
         return possibleTransitions;
     }

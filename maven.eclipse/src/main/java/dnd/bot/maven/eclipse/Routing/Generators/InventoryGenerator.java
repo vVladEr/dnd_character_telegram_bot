@@ -5,14 +5,14 @@ import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.GeneralState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 
 public class InventoryGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         this.parameters = parameters;
         
         var fields = new LinkedHashMap<String, String>();
@@ -34,8 +34,8 @@ public class InventoryGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new HashMap<String, Combinekey>();
+    public HashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new HashMap<String, CombineKey>();
         
         possibleTransitions.put("gotoitems", this.parameters);
         possibleTransitions.put("gotomoney", this.parameters);

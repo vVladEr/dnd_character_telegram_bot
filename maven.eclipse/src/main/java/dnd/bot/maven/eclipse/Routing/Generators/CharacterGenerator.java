@@ -4,13 +4,13 @@ import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.GeneralState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class CharacterGenerator extends BaseGenerator {
-    private Combinekey parameters;
+    private CombineKey parameters;
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         this.parameters = parameters;
         
         var fields = new LinkedHashMap<String, String>();
@@ -35,15 +35,15 @@ public class CharacterGenerator extends BaseGenerator {
     }
 
     @Override
-    public LinkedHashMap<String, Combinekey> getPossibleTransitions() {
-        var possibleTransitions = new LinkedHashMap<String, Combinekey>();
+    public LinkedHashMap<String, CombineKey> getPossibleTransitions() {
+        var possibleTransitions = new LinkedHashMap<String, CombineKey>();
         
-        possibleTransitions.put("gotostats", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Stats"));
-        possibleTransitions.put("gotodescription", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Description"));
-        possibleTransitions.put("gotoinventory", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
-        possibleTransitions.put("gotogrades", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
-        possibleTransitions.put("gotonotes", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
-        possibleTransitions.put("gotouser", new Combinekey(parameters.getUserIdKey(), "User"));
+        possibleTransitions.put("gotostats", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Stats"));
+        possibleTransitions.put("gotodescription", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Description"));
+        possibleTransitions.put("gotoinventory", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Inventory"));
+        possibleTransitions.put("gotogrades", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Grades"));
+        possibleTransitions.put("gotonotes", new CombineKey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Notes"));
+        possibleTransitions.put("gotouser", new CombineKey(parameters.getUserIdKey(), "User"));
 
         return possibleTransitions;
     }

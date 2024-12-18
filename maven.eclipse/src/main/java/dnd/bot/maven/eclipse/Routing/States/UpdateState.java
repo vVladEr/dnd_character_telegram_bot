@@ -6,11 +6,11 @@ import java.util.HashMap;
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
 import dnd.bot.maven.eclipse.db.Models.UpdateFieldRequest;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 import dnd.bot.maven.eclipse.db.Services.UpdateManager;
 
 public class UpdateState extends BaseState {
-    private Combinekey combineKey;
+    private CombineKey combineKey;
     private UpdateManager updateManager;
     private HashMap<String, String> updatedFields;
     private HashMap<String, String> updatedFieldsDescription;
@@ -20,7 +20,7 @@ public class UpdateState extends BaseState {
 
     public UpdateState( 
         ArrayList<String> fields,
-        Combinekey combinekey,
+        CombineKey combinekey,
         UpdateManager updateManager
     ) {
         this.combineKey = combinekey;

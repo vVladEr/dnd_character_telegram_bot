@@ -5,12 +5,12 @@ import java.util.HashMap;
 
 import dnd.bot.maven.eclipse.Routing.States.AddState;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
-import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
+import dnd.bot.maven.eclipse.db.Models.CompositeKeys.CombineKey;
 
 public class AddGenerator extends BaseGenerator {
 
     @Override
-    public BaseState generateState(Combinekey parameters) {
+    public BaseState generateState(CombineKey parameters) {
         var necessaryFields = new ArrayList<String>();
         var stateName = parameters.getStateName();
         
@@ -55,7 +55,7 @@ public class AddGenerator extends BaseGenerator {
     }
 
     @Override
-    public HashMap<String, Combinekey> getPossibleTransitions() {
+    public HashMap<String, CombineKey> getPossibleTransitions() {
         throw new UnsupportedOperationException("Unimplemented method 'getPossibleTransitions'");
     }
 }
