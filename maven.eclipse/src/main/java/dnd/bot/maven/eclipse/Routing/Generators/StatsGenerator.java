@@ -42,7 +42,7 @@ public class StatsGenerator extends BaseGenerator {
     @Override
     public LinkedHashMap<String, String> getFormattedFields(IDbo dbo) {
         var formattedFields = new LinkedHashMap<String, String>();
-    
+
         for (var field : dbo.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             try {

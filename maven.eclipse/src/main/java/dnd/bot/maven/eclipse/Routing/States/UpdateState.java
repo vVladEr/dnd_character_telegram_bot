@@ -2,6 +2,7 @@ package dnd.bot.maven.eclipse.Routing.States;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import dnd.bot.maven.eclipse.Response.MessageObject;
 import dnd.bot.maven.eclipse.Response.ResponseObject;
@@ -12,7 +13,7 @@ import dnd.bot.maven.eclipse.db.Services.UpdateManager;
 public class UpdateState extends BaseState {
     private Combinekey combineKey;
     private UpdateManager updateManager;
-    private HashMap<String, String> updatedFields;
+    private LinkedHashMap<String, String> updatedFields;
     private HashMap<String, String> updatedFieldsDescription;
     private ArrayList<String> fields;
     private String currentUpdatedField;
@@ -22,7 +23,7 @@ public class UpdateState extends BaseState {
         Combinekey combinekey,
         UpdateManager updateManager
     ) {
-        updatedFields = new HashMap<String, String>();
+        updatedFields = new LinkedHashMap<String, String>();
         this.combineKey = combinekey;
         this.updateManager = updateManager;
         //this.updatedFieldsDescription = updatedFieldsDescription;
@@ -43,13 +44,13 @@ public class UpdateState extends BaseState {
 
     public void putValue(String value) {
         updatedFields.put(currentUpdatedField, value);
-        this.currentUpdatedField = null;
+        currentUpdatedField = null;
     }
 
     public void saveUpdates() {
         for (var updatedField : updatedFields.keySet()) {
             var updateFieldRequest = new UpdateFieldRequest(combineKey, updatedField, updatedFields.get(updatedField), stateName);
-            this.updateManager.updateField(updateFieldRequest);
+            updateManager.updateField(updateFieldRequest);
         }
     }
 
@@ -60,7 +61,11 @@ public class UpdateState extends BaseState {
         var messageObject = new MessageObject();
 
         if (currentUpdatedField == null) {
-            messageObject.addMessagePart("Выберите поле для изменения");
+            messageObject.addMessagePart("Выберите поле для изменения", "\n");
+
+            for (var field : updatedFields.keySet()) {
+                messageObject.addMessagePart(field, updatedFields.get(field) + "\n");
+            }
 
             for (var field : fields) {
                 messageObject.addInlineKeybordButton(getInlineKeybordButton(field, field));
@@ -69,10 +74,10 @@ public class UpdateState extends BaseState {
             messageObject.addInlineKeybordButton(getInlineKeybordButton("Сохранить", String.format("save:goto%s", stateName.toLowerCase())));
 
         } else {
-            messageObject.addMessagePart(String.format("%s", currentUpdatedField), currentUpdatedField);
+            messageObject.addMessagePart(currentUpdatedField);
         }
         
-        messageObject.addInlineKeybordButton(getInlineKeybordButton("Отмена", String.format("goto%s", combineKey.getStateName().toLowerCase())));
+        messageObject.addInlineKeybordButton(getInlineKeybordButton("Отмена", String.format("cancel:goto%s", combineKey.getStateName().toLowerCase())));
 
         responseObject.addMessageObject(messageObject);
 

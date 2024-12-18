@@ -23,10 +23,17 @@ public class PersonalityGenerator extends BaseGenerator {
         var repo = this.manager.getReposStorage().getPersonalityRepository();
         this.parameters = parameters;
         var characterId = parameters.getObjectIdKey();
-        this.personalityDbo = repo.getDocumentByKey(characterId);
-        
-        var fields = getFormattedFields(this.personalityDbo);
+        personalityDbo = repo.getDocumentByKey(characterId);
+        var fields = new LinkedHashMap<String, String>();
         fields.put("Личность", "");
+
+
+        var formattedFields = getFormattedFields(this.personalityDbo);
+
+        for (var field : getFormattedFields(this.personalityDbo).keySet()){
+            fields.put(field, formattedFields.get(field));
+        }
+        
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
         return new GeneralState(fields, buttons, possibleTransitions, "Personality");
@@ -41,6 +48,8 @@ public class PersonalityGenerator extends BaseGenerator {
         buttons.put("Внешний вид", "gotoappearance");
         buttons.put("Общественность", "gotosocial");
         buttons.put("Назад", "gotodescription");
+        buttons.put("Изменить", "update");
+
 
         return buttons;
     }
@@ -54,6 +63,7 @@ public class PersonalityGenerator extends BaseGenerator {
         possibleTransitions.put("gotosocial", this.parameters);
         possibleTransitions.put("gotoappearance", this.parameters);
         possibleTransitions.put("gotodescription", this.parameters);
+        possibleTransitions.put("update", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Personality", parameters.getGradeCompositeKey()));
 
         return possibleTransitions;
     }

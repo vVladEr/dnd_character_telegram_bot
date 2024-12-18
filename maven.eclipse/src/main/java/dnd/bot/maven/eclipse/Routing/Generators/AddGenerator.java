@@ -34,6 +34,7 @@ public class AddGenerator extends BaseGenerator {
                 necessaryFields.add("название");
                 necessaryFields.add("описание");
                 necessaryFields.add("количество");
+                necessaryFields.add("иконка");
                 break;
             case "Grades":
                 necessaryFields.add("уровень");

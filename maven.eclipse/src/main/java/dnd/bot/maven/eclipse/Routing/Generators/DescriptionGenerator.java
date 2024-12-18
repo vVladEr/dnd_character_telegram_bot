@@ -37,10 +37,10 @@ public class DescriptionGenerator extends BaseGenerator {
     public HashMap<String, Combinekey> getPossibleTransitions() {
         var possibleTransitions = new HashMap<String, Combinekey>();
         
-        possibleTransitions.put("gotopersonality", this.parameters);
-        possibleTransitions.put("gotofeatures", this.parameters);
-        possibleTransitions.put("gotopossessions", this.parameters);
-        possibleTransitions.put("gotocharacter", this.parameters);
+        possibleTransitions.put("gotopersonality", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Personality", parameters.getGradeCompositeKey()));
+        possibleTransitions.put("gotofeatures", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Features", parameters.getGradeCompositeKey()));
+        possibleTransitions.put("gotopossessions", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Possessions", parameters.getGradeCompositeKey()));
+        possibleTransitions.put("gotocharacter", new Combinekey(parameters.getUserIdKey(), parameters.getObjectIdKey(), "Character", parameters.getGradeCompositeKey()));
 
         return possibleTransitions;
     }

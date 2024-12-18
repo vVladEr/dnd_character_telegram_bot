@@ -1,6 +1,5 @@
 package dnd.bot.maven.eclipse.Routing;
 
-import dnd.bot.maven.eclipse.Routing.Generators.UpdateGenerator;
 import dnd.bot.maven.eclipse.Routing.States.AddState;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.IAddable;
@@ -62,11 +61,15 @@ public class Router {
         var updateState = (UpdateState)currentState;
 
         if (splittedValue.length == 2) {
-            updateState.saveUpdates();
+            if (splittedValue[0].equals("save")) {
+                updateState.saveUpdates();
+            }
+
             var combineKey = updateState.getPossibleTransitions().get(splittedValue[1]);
-            currentState = manager.getGeneratorByStateName(String.format("goto%s", splittedValue[1])).generateState(combineKey);
+            currentState = manager.getGeneratorByStateName(splittedValue[1]).generateState(combineKey);
             isSelecteField = false;
             isUpdateMode = false;
+
         } else {
             if (!isSelecteField) {
                 updateState.putUpdatedField(splittedValue[0]);

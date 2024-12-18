@@ -7,10 +7,8 @@ import dnd.bot.maven.eclipse.Routing.GeneratorManager;
 import dnd.bot.maven.eclipse.Routing.States.BaseState;
 import dnd.bot.maven.eclipse.Routing.States.GeneralState;
 import dnd.bot.maven.eclipse.db.Models.CompositeKeys.Combinekey;
-import dnd.bot.maven.eclipse.db.Models.dbo.LevelDbo;
 
 public class MoneyGenerator extends BaseGenerator {
-    private LevelDbo levelDbo;
     private Combinekey parameters;
     private GeneratorManager manager;
 
@@ -23,10 +21,10 @@ public class MoneyGenerator extends BaseGenerator {
         var repo = this.manager.getReposStorage().getLevelRepository();
         this.parameters = parameters;
         var characterId = parameters.getObjectIdKey();
-        this.levelDbo = repo.getDocumentByKey(characterId);
+        var levelDbo = repo.getDocumentByKey(characterId);
         
-        var fields = getFormattedFields(this.levelDbo);
-        fields.put("Уровень", "");
+        var fields = getFormattedFields(levelDbo);
+        fields.put("Деньги", "");
         var buttons = getFormattedButtons();
         var possibleTransitions = getPossibleTransitions();
         return new GeneralState(fields, buttons, possibleTransitions, "Money");

@@ -30,6 +30,7 @@ public class ItemsState extends BaseState implements IAddable {
         var name = necessaryFields.get("название");
         var description = necessaryFields.get("описание");
         var amount = necessaryFields.get("количество");
+        var icon = necessaryFields.get("иконка");
 
         var repo = manager.getReposStorage().getItemsRepository();
         var item = new ItemDBO(parameters.getObjectIdKey(), name, description, Integer.parseInt(amount));
