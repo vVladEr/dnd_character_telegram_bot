@@ -31,6 +31,7 @@ public class UpdateManager {
         basicRepos.put("Personality", rs.getPersonalityRepository());
         basicRepos.put("Features", rs.getFeaturesRepository());
         basicRepos.put("Possesions", rs.getPossesionsRepository());
+        basicRepos.put("Characters", rs.getCharacterRepository());
 
     }
 
