@@ -23,7 +23,7 @@ public class AppearenceDbo implements IDbo {
     public int weight;
 
     @BsonProperty
-    public String backGround;
+    public String background;
 
     @BsonProperty
     public String characterBackground;
